@@ -1,4 +1,4 @@
-image::web/dashboard/src/images/logo.png[Tiger,200,200,float="right",align="center"]
+image::web/dashboard/src/images/logo.png[logo,200,200,align="center"]
 
 
 ## APP版本管理系统
