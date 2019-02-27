@@ -171,17 +171,20 @@
                         <groupId>org.jruby</groupId>
                         <artifactId>jruby-complete</artifactId>
                         <version>${jruby.version}</version>
+                        <optional>true</optional>
                     </dependency>
                     <!-- Comment this section to use the default AsciidoctorJ artifact provided by the plugin -->
                     <dependency>
                         <groupId>org.asciidoctor</groupId>
                         <artifactId>asciidoctorj</artifactId>
                         <version>${asciidoctorj.version}</version>
+                        <optional>true</optional>
                     </dependency>
                     <dependency>
                         <groupId>org.asciidoctor</groupId>
                         <artifactId>asciidoctorj-diagram</artifactId>
                         <version>${asciidoctorj.diagram.version}</version>
+                        <optional>true</optional>
                     </dependency>
                 </dependencies>
                 <configuration>
@@ -194,7 +197,7 @@
                             </includes>
                         </resource>
                     </resources>
-                    <!--<outputDirectory>${project.build.directory}/book</outputDirectory>-->
+                    <outputDirectory>${project.basedir}/docs</outputDirectory>
                     <!--<sourceDirectory>${project.basedir}</sourceDirectory>-->
                     <!--<sourceDocumentName>book.adoc</sourceDocumentName>-->
                     <imagesDir>./</imagesDir>
