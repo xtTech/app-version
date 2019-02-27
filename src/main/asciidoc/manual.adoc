@@ -7,11 +7,9 @@ v1.0.0,2019-2-19
 :toclevels: 3
 :numbered:
 
-//APP版本管理是一套关于应用更新发版的管理平台。用户可以通过部署本管理系统，以实现对自己的APP在不同平台及渠道上的各个版本的管理。
-
 ifndef::imagesdir[:imagesdir: ./images]
 
-//include::../README.adoc[]
+include::../../../README.adoc[]
 
 include::_chapter/get-started.adoc[]
 

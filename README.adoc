@@ -1,12 +1,14 @@
+image::web/dashboard/src/images/logo.png[logo,200,200,align="center"]
+
+
 ## APP版本管理系统
 
-该系统重构自 运营监测系统-APP版本管理
 
-原系统由于历史原因，在对多应用的管理上存在诸多缺陷和不规范，
+image::https://img.shields.io/badge/Release-1.0.0-blue.svg?style=flat-square&logo=appveyor[]
 
-且在架构和技术方面比较老旧，为了应对公司业务和流量的需求，
+APP版本管理是一套多应用更新发版的管理平台。用户可以通过部署本管理系统，以实现对多APP的多平台多渠道上的版本管理。
 
-故开发此新版本，目的是为了适应公司未来多APP的发展道路。
+
 
 ### 项目结构
 
@@ -20,3 +22,9 @@ app-version
 └───web
     └───dashboard (前端)
 ```
+
+### 项目预览
+本项目使用iView框架搭建，简洁美观。
+
+image::docs/images/show1.png[show1,100%,100%,align="center"]
+image::docs/images/show2.png[show2,100%,100%,align="center"]
