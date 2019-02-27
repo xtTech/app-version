@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/app_version_manager_open_source?characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    pool:
+      max-active: 10
+      max-wait: -1
+      max-idle: 1
+      min-idle: 0
+
+server:
+  port: 8084
+
+rest:
+  base:
+    url: http://localhost:8084

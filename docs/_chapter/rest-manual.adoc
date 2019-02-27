@@ -1,0 +1,125 @@
+=== 版本查询接口
+
+主要提供给应用使用，所以具有较高的流量,所以应该单独部署。
+// todo 根据get started部分的内容适当调整此处内容
+
+
+
+==== 查询 IOS/Android 新版本
+|===
+|接口地址 |/v/{tenantAppId}-{version}-{channelCode}-{platform}
+|请求方式 |GET
+|接口描述 |根据当前应用的版本号，渠道号，平台获取当前应用的最新版本
+|===
+[NOTE]
+====
+`请求参数`
+|===
+|参数名称|说明|参数类型|是否必须|类型
+
+|tenantAppId|应用appId|path|true|string
+|version|版本号|path|true|string
+|channelCode|渠道码，官方渠道的渠道码为official|path|true|string
+|platform|平台，值应为 `ios` 或 `android`|path|true|string
+|===
+====
+
+==== 直接下载应用的最新APK包
+|===
+|接口地址 |/v/apk/download/{appId}
+|请求方式 |GET
+|接口描述 |根据应用ID下载最新的APK包，默认下载官方渠道的最新APK包
+|===
+
+[NOTE]
+====
+请求参数
+|===
+|参数名称|说明|参数类型|是否必须|类型
+
+|appId|应用的appId|path|`true`|string
+|channelCode|渠道码，非必填，默认为下载官方渠道的APK包|query	|false|string
+|===
+====
+
+==== 查询RN包
+|===
+|接口地址 |/bundles/{version}-{tenantAppId}-{platform}-{status}
+|请求方式 |GET
+|接口描述 |根据版本号、应用ID、平台、状态获取RN包信息，根据[更新时间]倒序
+|===
+
+[NOTE]
+====
+请求参数
+|===
+|参数名称|说明|参数类型|是否必须|类型
+
+|version|版本号|path|true|string
+|tenantAppId|应用appId|path|true|string
+|platform|平台，值应为 `ios` 或 `android`|path|true|string
+|status|RN包状态，0:关闭 1:线上开启 2:测试需要|path|true|string
+|===
+====
+
+==== 查询RN路由
+|===
+|接口地址 |/route/{version}-{tenantAppId}-{platform}-{status}
+|请求方式 |GET
+|接口描述 |根据版本号、应用ID、平台、状态获取RN路由信息，根据“更新时间”倒序
+|===
+
+[NOTE]
+====
+请求参数
+|===
+|参数名称|说明|参数类型|是否必须|类型
+
+|version|版本号|path|true|string
+|tenantAppId|应用appId|path|true|string
+|platform|平台，值应为 `ios` 或 `android`|path|true|string
+|status|RN路由状态，0:关闭 1:线上开启 2:测试需要|path|true|string
+|===
+====
+
+==== 查询自定义接口
+|===
+|接口地址 |/c/{tenantAppId}/{key}/{version}/{platform}
+|请求方式 |GET
+|接口描述 |根据应用ID、接口KEY、版本、平台获取自定义接口信息
+|===
+
+[NOTE]
+====
+请求参数
+|===
+|参数名称|说明|参数类型|是否必须|类型
+
+|tenantAppId|应用appId|path|true|string
+|key|自定义接口的key|path|true|string
+|platform|平台，值应为 `ios` 或 `android`	|path|true|string
+|version|版本号|path|true|string
+|===
+====
+
+==== 接口响应参数及状态
+
+- 响应参数 +
+接口响应参数为一个 `ServiceResult` 类，下表为其各字段的说明：
+|===
+|参数名称	|类型	|说明
+
+|code		|int32	|正常接口请求成功，code值为200，业务逻辑错误的code值为非200的数值
+|data		|object	|接口响应的数据
+|message	|string |通常code为非200时，message会提示业务逻辑错误信息
+|===
+
+- 响应状态
+|===
+|状态码	|说明
+
+|200	|OK
+|401	|Unauthorized
+|403	|Forbidden
+|404	|Not Found
+|===

@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db.fengdai.org:3306/app_version_manager_open_source?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: csp
+    password: csp2017DEV9
+  redis:
+    host: dev-ucenter-redis.fengdai.org
+    port: 6379
+    password: tairanchina.com
+    database: 0
+    pool:
+      max-active: 10
+      max-wait: -1
+      max-idle: 1
+      min-idle: 0
+
+server:
+  port: 8086
+
+csp:
+  sdk:
+    basic:
+      host: ucenter.fengdai.org
+      url: http://ucenter.fengdai.org/gateway
+      app-id: ucccc1d645f088febd
+      app-secret: 5c1413f9911a4d75bc1116ddc4668191

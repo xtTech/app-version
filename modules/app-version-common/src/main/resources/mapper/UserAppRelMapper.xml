@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tairanchina.csp.avm.mapper.UserAppRelMapper">
+
+    <select id="listBindApp" parameterType="java.lang.String" resultType="java.util.HashMap">
+        select * from user_app_rel
+        left join app on app.id = user_app_rel.app_id
+        where user_id = #{userId} and app.del_flag = 0
+    </select>
+</mapper>

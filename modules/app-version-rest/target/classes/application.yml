@@ -1,0 +1,58 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: app-version-rest
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  typeAliasesPackage: com.tairanchina.csp.avr.entity
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    #序列接口实现类配置
+    #key-generator: com.baomidou.springboot.xxx
+    #逻辑删除配置
+    #logic-delete-value: 0
+    #logic-not-delete-value: 1
+    #自定义填充策略接口实现
+    #meta-object-handler: com.baomidou.springboot.xxx
+    #自定义SQL注入器
+    #sql-injector: com.baomidou.springboot.xxx
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+dew:
+  cluster:
+    cache: redis
+    lock: redis # 可选 redis/hazelcast
+    mq: redis
+    config:
+      ha-enabled: true
+  basic:
+    doc:
+      base-package: com.tairanchina.csp.avr
+    version: 1.1.0
+    name: APP版本管理
+    desc: 负责公司APP的版本信息，RN路由等信息的管理
+    web-site: appmanager.trc.com
+
+
+logging:
+  file: avr.log
+  path: ./logs

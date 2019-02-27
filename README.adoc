@@ -1,0 +1,22 @@
+## APP版本管理系统3.0
+
+该系统重构自 运营监测系统-APP版本管理
+
+原系统由于历史原因，在对多应用的管理上存在诸多缺陷和不规范，
+
+且在架构和技术方面比较老旧，为了应对公司业务和流量的需求，
+
+故开发此新版本，目的是为了适应公司未来多APP的发展道路。
+
+### 项目结构
+
+```
+app-version
+│   README.md
+└───modules
+│   └───app-version-common (公共代码 实体类 工具类等)
+│   └───app-version-manager (后台管理模块)
+│   └───app-version-rest (与APP交互的Rest接口模块)
+└───web
+    └───dashboard (前端)
+```

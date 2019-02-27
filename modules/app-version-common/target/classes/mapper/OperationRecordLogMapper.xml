@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tairanchina.csp.avm.mapper.OperationRecordLogMapper">
+
+    <select id="selectLogExtByQuery" parameterType="java.lang.String"
+            resultType="com.tairanchina.csp.avm.dto.OperationRecordLogExt">
+        SELECT
+        l.*, u.phone, u.nick_name
+        FROM
+        operation_record_log l
+        LEFT JOIN `user` u
+        ON l.created_by = u.user_id
+        WHERE 1=1
+        <if test="phone != null and phone != ''">
+            AND u.phone LIKE "%"#{phone,jdbcType=VARCHAR}"%"
+        </if>
+        <if test="nickName != null and nickName != ''">
+            AND u.nick_name LIKE "%"#{nickName,jdbcType=VARCHAR}"%"
+        </if>
+        <if test="appId != null and appId!= ''">
+            AND l.app_id = #{appId,jdbcType=INTEGER}
+        </if>
+        <if test="operationResource != null and operationResource != ''">
+            AND l.operation_resource = #{operationResource,jdbcType=VARCHAR}
+        </if>
+        <if test="operationDescription != null and operationDescription != ''">
+            AND l.operation_description = #{operationDescription,jdbcType=VARCHAR}
+        </if>
+        <if test="operationType != null and operationResource != ''">
+            AND l.operation_type = #{operationType,jdbcType=VARCHAR}
+        </if>
+        <if test="startDate != null and startDate != '' ">
+            AND l.created_time >= #{startDate,jdbcType=VARCHAR}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            AND l.created_time &lt;= #{endDate,jdbcType=VARCHAR}
+        </if>
+        AND l.del_flag = 0
+        ORDER BY created_time DESC
+    </select>
+
+</mapper>
