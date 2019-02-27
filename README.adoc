@@ -21,5 +21,5 @@ app-version
 ### 项目预览
 本项目使用iView框架搭建，简洁美观。
 
-image::docs/images/show1.png[show1,49%,50%,align="center"]
-image::docs/images/show2.png[show2,49%,50%,align="center"]
+image::docs/images/show1.png[show1,100%,100%,align="center"]
+image::docs/images/show2.png[show2,100%,100%,align="center"]
