@@ -1,0 +1,8 @@
+# Set default behaviour, in case users don't have core.autocrlf set.
+* text=auto
+
+# Declare files that will always have LF
+*.sh text eol=lf
+
+# Declare files that will always have CRLF line endings on checkout.
+*.sln text eol=crlf

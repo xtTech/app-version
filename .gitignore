@@ -1,25 +1,38 @@
-/target/
-!.mvn/wrapper/maven-wrapper.jar
+log/
+logs/
+*.log
+tmp/
+*.tmp
+*.bak
+.vertx/
+.cluster/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+target/
 
-### IntelliJ IDEA ###
+.mvn/
+mvnw
+mvnw.cmd
+
+node_modules/
+dist/
+out/
 .idea
+.DS_Store
 *.iws
 *.iml
 *.ipr
-.vscode/
-### NetBeans ###
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+
+.settings/
+.classpath
+.project
+.apt_generated
+.factorypath
+.springBeans
+
+metastore_db/
+/spark-warehouse/
+*.jar
+
+api-docs/
+
+*.crc
