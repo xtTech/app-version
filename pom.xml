@@ -197,10 +197,10 @@
                             </includes>
                         </resource>
                     </resources>
-                    <outputDirectory>${project.basedir}/src/main/asciidoc</outputDirectory>
+                    <outputDirectory>${project.basedir}/docs</outputDirectory>
                     <sourceDirectory>${project.basedir}/src/main/asciidoc</sourceDirectory>
                     <!--<sourceDocumentName>book.adoc</sourceDocumentName>-->
-                    <imagesDir>./</imagesDir>
+                    <!--<imagesDir>./</imagesDir>-->
                     <preserveDirectories>true</preserveDirectories>
                     <requires>
                         <require>asciidoctor-diagram</require>
