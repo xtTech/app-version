@@ -1,4 +1,4 @@
-image::web/dashboard/src/images/logo.png[logo,200,200,align="center"]
+image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/logo.png[logo,200,200,align="center"]
 
 
 ## APP版本管理系统
@@ -7,7 +7,8 @@ image::web/dashboard/src/images/logo.png[logo,200,200,align="center"]
 image::https://img.shields.io/badge/Release-1.0.0-blue.svg?style=flat-square&logo=appveyor[]
 image:https://api.codacy.com/project/badge/Grade/2f50f68e20d64479b5d8b79112d9b341["Codacy code quality", link="https://www.codacy.com/app/lzx2005/app-version?utm_source=github.com&utm_medium=referral&utm_content=xtTech/app-version&utm_campaign=Badge_Grade"]
 
-APP版本管理是一套多应用更新发版的管理平台。用户可以通过部署本管理系统，以实现对多APP的多平台多渠道上的版本管理。
+APP版本管理是一套多应用更新发版的管理平台。 +
+用户可以通过部署本管理系统，以实现对多APP的多平台多渠道上的版本管理。
 
 
 
@@ -15,17 +16,21 @@ APP版本管理是一套多应用更新发版的管理平台。用户可以通�
 
 ```
 app-version
-│   README.md
+│   README.adoc
 └───modules
 │   └───app-version-common (公共代码 实体类 工具类等)
 │   └───app-version-manager (后台管理模块)
 │   └───app-version-rest (与APP交互的Rest接口模块)
 └───web
-    └───dashboard (前端)
+│   └───dashboard (前端)
+└───src
+│   └───main
+│       └───asciidoc 相关文档
+└───bin 脚本文件
 ```
 
 ### 项目预览
 本项目使用iView框架搭建，简洁美观。
 
-image::docs/images/show1.png[show1,100%,100%,align="center"]
-image::docs/images/show2.png[show2,100%,100%,align="center"]
+image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/show1.png[show1,100%,100%,align="center"]
+image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/show2.png[show2,100%,100%,align="center"]
