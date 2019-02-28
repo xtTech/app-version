@@ -155,7 +155,9 @@ public class UserServiceImpl implements UserService {
             } else {
                 String newPass = $.security.digest.digest(password + phone, ALGORITHM);
                 user.setPassword(newPass);
-                Integer integer = userMapper.updateById(user);
+                EntityWrapper<User> userEntityWrapper = new EntityWrapper<>();
+                userEntityWrapper.eq("user_id", user.getUserId());
+                Integer integer = userMapper.update(user, userEntityWrapper);
                 if (integer > 0) {
                     return ServiceResult.ok(null);
                 } else {

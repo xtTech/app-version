@@ -12,7 +12,6 @@ import java.util.Date;
  */
 public class User {
 
-    @TableId("user_id")
     private String userId;
     private String phone;
     private String username;
