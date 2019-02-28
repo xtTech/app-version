@@ -1,9 +1,6 @@
 package com.tairanchina.csp.avm.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.dingtalk.chatbot.message.MarkdownMessage;
-import com.dingtalk.chatbot.message.Message;
-import com.dingtalk.chatbot.message.TextMessage;
 import com.tairanchina.csp.avm.ServiceException;
 import com.tairanchina.csp.avm.constants.MQKey;
 import com.tairanchina.csp.avm.constants.ServiceResultConstants;

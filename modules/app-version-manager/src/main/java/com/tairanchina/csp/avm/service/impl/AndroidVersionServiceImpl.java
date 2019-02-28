@@ -33,9 +33,6 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
     private AndroidVersionMapper androidVersionMapper;
 
     @Autowired
-    private ChannelMapper channelMapper;
-
-    @Autowired
     private ApkMapper apkMapper;
 
     @Autowired

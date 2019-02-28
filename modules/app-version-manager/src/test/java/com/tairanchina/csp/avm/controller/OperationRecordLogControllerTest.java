@@ -22,10 +22,7 @@ public class OperationRecordLogControllerTest extends BaseControllerTest {
     @Test
     public void list() throws Exception {
         String url = "";
-        String phone = "";
         String operationType = "IOS版本下架";
-        String operationResource = "";
-        String nickName = "";
         String endDate = "2018-06-27 19:10:27";
         Integer appId = 24;
         url = uri + "?" +

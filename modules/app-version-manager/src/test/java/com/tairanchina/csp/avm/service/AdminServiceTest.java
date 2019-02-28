@@ -70,7 +70,6 @@ public class AdminServiceTest extends BaseTest {
         App app = new App();
         app.setAppName("testEditAPP");
         app.setTenantAppId("testEditTenantAppId");
-        Integer insert = appMapper.insert(app);
         ServiceResult result = adminService.editApp(app.getId(), app.getAppName(), app.getTenantAppId());
         if (result.getData() != null) {
             logger.info(result.getData().toString());
