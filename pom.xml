@@ -197,8 +197,8 @@
                             </includes>
                         </resource>
                     </resources>
-                    <outputDirectory>${project.basedir}/docs</outputDirectory>
-                    <!--<sourceDirectory>${project.basedir}</sourceDirectory>-->
+                    <outputDirectory>${project.basedir}/src/main/asciidoc</outputDirectory>
+                    <sourceDirectory>${project.basedir}/src/main/asciidoc</sourceDirectory>
                     <!--<sourceDocumentName>book.adoc</sourceDocumentName>-->
                     <imagesDir>./</imagesDir>
                     <preserveDirectories>true</preserveDirectories>

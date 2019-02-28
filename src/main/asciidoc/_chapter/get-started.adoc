@@ -1,3 +1,29 @@
 [[get-started]]
 == GetStarted
 === APP Version Manager(APP版本管理)
+
+==== 开发手册
+
+* 启动项目(开发环境)： +
+** 启动后端： +
+*** 管理系统模块（app-version-manager）： 启动类AppVersionManagerApplication
+*** REST接口模块（app-version-rest）： 启动类AppVersionRestApplication
+** 启动前端： +
+*** 注意修改目录下 `.env.development` 文件内的 `VUE_APP_HTTP_API` 值为自己的IP
+[source,bash]
+ cd web/dashboard
+ yarn install
+ yarn serve
+
+
+==== 部署手册
+
+环境版本参考：
+jdk 1.8.0_144
+mysql 5.7.18
+redis 3.2.10
+nginx 1.12.2
+node v8.11.4
+
+
+
