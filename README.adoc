@@ -1,17 +1,21 @@
 image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/logo.png[logo,200,200,align="center"]
 
 
-## APP版本管理系统
+= APP版本管理系统
 
 [[License]]
-image::https://img.shields.io/badge/License-Apache%202.0-blue.svg[role="left", link="https://opensource.org/licenses/Apache-2.0"]
+image::https://img.shields.io/badge/License-Apache%202.0-blue.svg[link="https://opensource.org/licenses/Apache-2.0"]
 image::https://img.shields.io/badge/Release-1.0.0-blue.svg?style=flat-square&logo=appveyor[]
-image:https://api.codacy.com/project/badge/Grade/2f50f68e20d64479b5d8b79112d9b341[role="right","Codacy code quality", link="https://www.codacy.com/app/lzx2005/app-version?utm_source=github.com&utm_medium=referral&utm_content=xtTech/app-version&utm_campaign=Badge_Grade"] +
+image:https://api.codacy.com/project/badge/Grade/2f50f68e20d64479b5d8b79112d9b341["Codacy code quality", link="https://www.codacy.com/app/lzx2005/app-version?utm_source=github.com&utm_medium=referral&utm_content=xtTech/app-version&utm_campaign=Badge_Grade"] +
 
 APP版本管理是一套多应用更新发版的管理平台。 +
 通过部署本管理系统，以实现对多APP的多平台多渠道上的版本管理。
 
-### 项目结构
+== 功能概览
+
+TBD
+
+== 项目结构
 
 ```
 app-version
@@ -28,8 +32,34 @@ app-version
 └───bin 脚本文件
 ```
 
-### 项目预览
+== 项目预览
 本项目使用iView框架搭建，简洁美观。
 
 image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/show1.png[show1,100%,100%,align="center"]
 image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/show2.png[show2,100%,100%,align="center"]
+
+== 要求
+
+JDK > 1.8
+
+推荐配置：
+
+* JDK: 1.8.0_144
+
+* node: 8.11.4
+
+* mysql: 5.7.18
+
+* redis: 3.2.10
+
+== 配置
+
+== 打包
+
+== 部署
+
+== 启动
+
+== License
+
+Apache Licensed. 具体查看 `License`
