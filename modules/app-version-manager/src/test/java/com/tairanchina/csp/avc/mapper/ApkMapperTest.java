@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class ApkMapperTest extends BaseTest{
+public class ApkMapperTest extends BaseTest {
 
     private static final Logger logger = LoggerFactory.getLogger(ApkMapperTest.class);
 
@@ -32,6 +32,7 @@ public class ApkMapperTest extends BaseTest{
 
         apkExts = apkMapper.selectApkWithChannelCode(apkPage, null, "", "", null);
         logger.info("apkExts..." + apkExts.size());
+        assert apkExts.size() > 0;
     }
 
 }
