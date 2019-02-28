@@ -49,7 +49,13 @@ public class UserServiceImpl implements UserService {
         if (integer > 0) {
             return ServiceResultConstants.USER_EXISTS;
         }
+        Integer count = userMapper.selectCount(new EntityWrapper<>());
         User user = new User();
+        if (count > 0) {
+            user.setIsAdmin(0);
+        } else {
+            user.setIsAdmin(1);
+        }
         user.setUserId($.field.createUUID());
         user.setIsAdmin(0);
         user.setFirstLoginTime(new Date());
