@@ -15,10 +15,10 @@ public class RnRouteServiceTest extends BaseTest {
     private static final Logger logger = LoggerFactory.getLogger(RnRouteServiceTest.class);
 
     @Autowired
-    RnRouteService rnRouteService;
+    private RnRouteService rnRouteService;
 
     @Autowired
-    BasicService basicService;
+    private BasicService basicService;
 
     @Test
     public void create() throws Exception {

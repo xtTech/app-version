@@ -18,7 +18,7 @@ public class AndroidVersionServiceTest extends BaseTest {
     private String baseUrl;
 
     @Autowired
-    AndroidVersionService androidVersionService;
+    private AndroidVersionService androidVersionService;
 
 
     @Test

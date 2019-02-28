@@ -27,10 +27,10 @@ import javax.validation.Valid;
 public class CustomApiController {
 
     @Autowired
-    BasicService basicService;
+    private BasicService basicService;
 
     @Autowired
-    CustomApiService customApiService;
+    private CustomApiService customApiService;
 
     @ApiOperation(
             value = "列出当前选择的APP内所有RN包（可分页，查询）",

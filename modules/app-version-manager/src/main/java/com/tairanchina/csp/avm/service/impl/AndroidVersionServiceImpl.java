@@ -288,6 +288,8 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
             case 4:
                 sb.append("> **更新类型** ：静默可忽略更新\n\n");
                 break;
+            default:
+                break;
         }
         Integer versionStatus = androidVersion.getVersionStatus();
         if(versionStatus!=null){
@@ -297,6 +299,8 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
                     break;
                 case 1:
                     sb.append("> **发布状态** ：已上架\n\n");
+                    break;
+                default:
                     break;
             }
         }

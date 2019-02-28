@@ -12,9 +12,6 @@ public class LinkMessage implements Message {
     private String picUrl;
     private String messageUrl;
 
-    public LinkMessage() {
-    }
-
     public String getTitle() {
         return this.title;
     }

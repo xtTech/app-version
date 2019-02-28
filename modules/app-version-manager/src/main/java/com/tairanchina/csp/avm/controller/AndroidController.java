@@ -112,10 +112,8 @@ public class AndroidController {
         String appVersion = androidVersionRequestDTO.getAppVersion();
         String allowLowestVersion = androidVersionRequestDTO.getAllowLowestVersion();
         //校验版本区间
-        if (StringUtilsExt.hasNotBlank(allowLowestVersion, appVersion)) {
-            if (basicService.compareVersion(appVersion, allowLowestVersion) < 0) {
-                return ServiceResultConstants.ALLOWLOWESTVERSION_BIG_THAN_APPVERSION;
-            }
+        if (StringUtilsExt.hasNotBlank(allowLowestVersion, appVersion) && basicService.compareVersion(appVersion, allowLowestVersion) < 0) {
+            return ServiceResultConstants.ALLOWLOWESTVERSION_BIG_THAN_APPVERSION;
         }
         AndroidVersion androidVersion = new AndroidVersion();
         BeanUtils.copyProperties(androidVersionRequestDTO, androidVersion);

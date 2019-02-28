@@ -33,10 +33,12 @@ public class BaseControllerTest {
 
     public static MockMvc mockMvc;
     public static HttpHeaders httpHeaders;
+
     @Autowired
-    WebApplicationContext webApplicationContext;
+    private WebApplicationContext webApplicationContext;
+
     @MockBean(name = "restTemplate")
-    RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     @Before
     public void setUp() throws Exception {

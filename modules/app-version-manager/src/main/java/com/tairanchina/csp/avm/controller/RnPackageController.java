@@ -103,10 +103,8 @@ public class RnPackageController {
             return ServiceResultConstants.NEED_PARAMS;
         }
         //校验版本区间
-        if (StringUtilsExt.hasNotBlank(rnPackageRequestDTO.getVersionMin(), rnPackageRequestDTO.getVersionMax())) {
-            if (basicService.compareVersion(rnPackageRequestDTO.getVersionMax(), rnPackageRequestDTO.getVersionMin()) <= 0) {
-                return ServiceResultConstants.MIN_BIG_THAN_MAX;
-            }
+        if (StringUtilsExt.hasNotBlank(rnPackageRequestDTO.getVersionMin(), rnPackageRequestDTO.getVersionMax()) && basicService.compareVersion(rnPackageRequestDTO.getVersionMax(), rnPackageRequestDTO.getVersionMin()) <= 0) {
+            return ServiceResultConstants.MIN_BIG_THAN_MAX;
         }
         RnPackage rnPackage = new RnPackage();
         BeanUtils.copyProperties(rnPackageRequestDTO, rnPackage);

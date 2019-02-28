@@ -97,13 +97,11 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
         }
 
         for (AndroidVersion androidVersion : androidVersions) {
-            if (channelSelected != null) {
-                if (channelSelected.getChannelStatus() == 1) {
-                    HashMap<String, Object> apk = this.findApk(androidVersion, appSelected.getId(), channelSelected.getId());
-                    if (apk != null) {
-                        logger.debug("结果：{}", $.json.toJsonString(apk));
-                        return ServiceResult.ok(apk);
-                    }
+            if (channelSelected != null && channelSelected.getChannelStatus() == 1) {
+                HashMap<String, Object> apk = this.findApk(androidVersion, appSelected.getId(), channelSelected.getId());
+                if (apk != null) {
+                    logger.debug("结果：{}", $.json.toJsonString(apk));
+                    return ServiceResult.ok(apk);
                 }
             }
             if (officialChannel != null) {

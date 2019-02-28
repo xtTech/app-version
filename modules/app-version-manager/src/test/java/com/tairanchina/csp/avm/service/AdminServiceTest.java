@@ -19,9 +19,10 @@ public class AdminServiceTest extends BaseTest {
     private static final Logger logger = LoggerFactory.getLogger(AdminServiceTest.class);
 
     @Autowired
-    AdminService adminService;
+    private AdminService adminService;
+
     @Autowired
-    AppMapper appMapper;
+    private AppMapper appMapper;
 
 
     @Test

@@ -15,7 +15,7 @@ public class OperationRecordLogServiceTest extends BaseTest {
     private static final Logger logger = LoggerFactory.getLogger(OperationRecordLogServiceTest.class);
 
     @Autowired
-    OperationRecordLogService operationRecordLogService;
+    private OperationRecordLogService operationRecordLogService;
 
     @Test
     public void createOperationRecordLog() throws Exception {

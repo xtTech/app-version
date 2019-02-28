@@ -11,7 +11,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 public class DingtalkChatbotClient {
-    HttpClient httpclient = HttpClients.createDefault();
+    private HttpClient httpclient = HttpClients.createDefault();
 
     public DingtalkChatbotClient() {
     }
