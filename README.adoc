@@ -4,9 +4,10 @@ image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/reso
 = APP版本管理系统
 
 [[License]]
-image::https://img.shields.io/badge/License-Apache%202.0-blue.svg[link="https://opensource.org/licenses/Apache-2.0"]
+image::https://img.shields.io/badge/License-Apache%202.0-blue.svg[link="https://opensource.org/licenses/Apache-2.0"] 
 image::https://img.shields.io/badge/Release-1.0.0-blue.svg?style=flat-square&logo=appveyor[]
-image:https://api.codacy.com/project/badge/Grade/2f50f68e20d64479b5d8b79112d9b341["Codacy code quality", link="https://www.codacy.com/app/lzx2005/app-version?utm_source=github.com&utm_medium=referral&utm_content=xtTech/app-version&utm_campaign=Badge_Grade"] +
+image::https://api.codacy.com/project/badge/Grade/2f50f68e20d64479b5d8b79112d9b341["Codacy code quality", link="https://www.codacy.com/app/lzx2005/app-version?utm_source=github.com&utm_medium=referral&utm_content=xtTech/app-version&utm_campaign=Badge_Grade"]
+
 
 APP版本管理是一套多应用更新发版的管理平台。 +
 通过部署本管理系统，以实现对多APP的多平台多渠道上的版本管理。
