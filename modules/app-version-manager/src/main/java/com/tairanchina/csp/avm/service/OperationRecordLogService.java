@@ -16,5 +16,14 @@ public interface OperationRecordLogService {
 
     ServiceResult list(int page, int pageSize, EntityWrapper<OperationRecordLog> wrapper);
 
-    ServiceResult getListByQuery(int page, int pageSize, String phone, String nickName, Integer appId, String operationResource, String operationDescription, String operationType, String startDate, String endDate);
+    ServiceResult getListByQuery(int page,
+                                 int pageSize,
+                                 String phone,
+                                 String nickName,
+                                 Integer appId,
+                                 String operationResource,
+                                 String operationDescription,
+                                 String operationType,
+                                 String startDate,
+                                 String endDate);
 }

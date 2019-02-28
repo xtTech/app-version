@@ -1,8 +1,6 @@
 package com.tairanchina.csp.avm.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
@@ -12,7 +10,6 @@ import java.util.Date;
  */
 public class User {
 
-    @TableId("user_id")
     private String userId;
     private String phone;
     private String username;

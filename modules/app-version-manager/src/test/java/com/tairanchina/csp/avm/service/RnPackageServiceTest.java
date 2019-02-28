@@ -15,10 +15,10 @@ public class RnPackageServiceTest extends BaseTest {
     private static final Logger logger = LoggerFactory.getLogger(RnPackageServiceTest.class);
 
     @Autowired
-    RnPackageService rnPackageService;
+    private RnPackageService rnPackageService;
 
     @Autowired
-    BasicService basicService;
+    private BasicService basicService;
 
     @Test
     public void create() throws Exception {

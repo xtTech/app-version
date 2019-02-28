@@ -15,9 +15,6 @@ public class SingleTargetActionCardMessage implements Message {
     private String singleURL;
     private boolean hideAvatar;
 
-    public SingleTargetActionCardMessage() {
-    }
-
     public boolean isHideAvatar() {
         return this.hideAvatar;
     }

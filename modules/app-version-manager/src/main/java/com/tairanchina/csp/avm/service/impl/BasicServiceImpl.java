@@ -28,8 +28,6 @@ import java.util.stream.Collectors;
 @Service
 public class BasicServiceImpl implements BasicService {
 
-    private static final Logger logger = LoggerFactory.getLogger(BasicServiceImpl.class);
-
     @Autowired
     private UserMapper userMapper;
 

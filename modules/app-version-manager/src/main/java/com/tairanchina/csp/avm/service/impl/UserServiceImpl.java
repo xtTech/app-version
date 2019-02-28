@@ -49,9 +49,14 @@ public class UserServiceImpl implements UserService {
         if (integer > 0) {
             return ServiceResultConstants.USER_EXISTS;
         }
+        Integer count = userMapper.selectCount(new EntityWrapper<>());
         User user = new User();
+        if (count > 0) {
+            user.setIsAdmin(0);
+        } else {
+            user.setIsAdmin(1);
+        }
         user.setUserId($.field.createUUID());
-        user.setIsAdmin(0);
         user.setFirstLoginTime(new Date());
         user.setPhone(phone);
         user.setNickName(phone);
@@ -149,7 +154,9 @@ public class UserServiceImpl implements UserService {
             } else {
                 String newPass = $.security.digest.digest(password + phone, ALGORITHM);
                 user.setPassword(newPass);
-                Integer integer = userMapper.updateById(user);
+                EntityWrapper<User> userEntityWrapper = new EntityWrapper<>();
+                userEntityWrapper.eq("user_id", user.getUserId());
+                Integer integer = userMapper.update(user, userEntityWrapper);
                 if (integer > 0) {
                     return ServiceResult.ok(null);
                 } else {

@@ -10,9 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 public class FeedCardMessage implements Message {
     private List<FeedCardMessageItem> feedItems;
 
-    public FeedCardMessage() {
-    }
-
     public List<FeedCardMessageItem> getFeedItems() {
         return this.feedItems;
     }

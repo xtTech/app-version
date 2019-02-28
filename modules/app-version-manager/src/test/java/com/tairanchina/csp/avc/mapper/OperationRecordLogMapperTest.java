@@ -23,7 +23,6 @@ public class OperationRecordLogMapperTest extends BaseTest {
         Page<OperationRecordLogExt> page = new Page<>();
         page.setCurrent(1);
         page.setSize(10);
-        String operationDescription = "IOS版本下架";
         String endDate = "2018-06-27 19:10:27";
 
         List list = operationRecordLogMapper.selectLogExtByQuery(page, null, null, null, null, null, null,null,endDate);

@@ -16,7 +16,7 @@ public class ChannelServiceTest extends BaseTest {
     private static final Logger logger = LoggerFactory.getLogger(ChannelServiceTest.class);
 
     @Autowired
-    ChannelService channelService;
+    private ChannelService channelService;
 
     @Test
     public void createChannel() throws Exception {

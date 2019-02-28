@@ -13,7 +13,7 @@ public class AppServiceTest extends BaseTest {
     private static final Logger logger = LoggerFactory.getLogger(AppServiceTest.class);
 
     @Autowired
-    AppService appService;
+    private AppService appService;
 
     @Test
     public void getAppListWithUserId() throws Exception {

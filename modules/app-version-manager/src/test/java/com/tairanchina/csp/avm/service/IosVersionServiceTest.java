@@ -16,7 +16,7 @@ public class IosVersionServiceTest extends BaseTest {
     private static final Logger logger = LoggerFactory.getLogger(IosVersionServiceTest.class);
 
     @Autowired
-    IosVersionService iosVersionService;
+    private IosVersionService iosVersionService;
 
     @Test
     public void create() throws Exception {

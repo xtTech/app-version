@@ -23,7 +23,7 @@ public class OperationAspect {
     private static final Logger logger = LoggerFactory.getLogger(OperationAspect.class);
 
     @Autowired
-    OperationRecordLogMapper operationRecordLogMapper;
+    private OperationRecordLogMapper operationRecordLogMapper;
 
     @AfterReturning(value = "@annotation(operationRecord)", returning = "serviceResult")
     public void recordOperationLog(JoinPoint joinPoint, OperationRecord operationRecord, ServiceResult serviceResult) {

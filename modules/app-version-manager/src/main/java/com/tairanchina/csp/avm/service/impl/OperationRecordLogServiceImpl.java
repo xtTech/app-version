@@ -19,10 +19,10 @@ import java.util.List;
 public class OperationRecordLogServiceImpl implements OperationRecordLogService {
 
     @Autowired
-    OperationRecordLogMapper operationRecordLogMapper;
+    private OperationRecordLogMapper operationRecordLogMapper;
 
     @Autowired
-    BasicService basicService;
+    private BasicService basicService;
 
     @Override
     public ServiceResult createOperationRecordLog(OperationRecordLog operationRecordLog) {

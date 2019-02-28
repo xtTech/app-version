@@ -18,9 +18,10 @@ import java.util.List;
 public class AppWhiteListServiceImpl implements AppWhiteListService {
 
     @Autowired
-    AppWhiteListMapper appWhiteListMapper;
+    private AppWhiteListMapper appWhiteListMapper;
+    
     @Autowired
-    BasicService basicService;
+    private BasicService basicService;
 
     @Override
     public ServiceResult checkBatchName(String batchName) {
@@ -153,10 +154,8 @@ public class AppWhiteListServiceImpl implements AppWhiteListService {
     @Override
     public ServiceResult deleteOneForever(Integer id) {
         AppWhiteList appWhiteList = appWhiteListMapper.selectById(id);
-        if(appWhiteList!=null){
-            if(!appWhiteList.getAppId().equals(ThreadLocalUtils.USER_THREAD_LOCAL.get().getAppId())){
-                return ServiceResultConstants.RESOURCE_NOT_BELONG_APP;
-            }
+        if(appWhiteList!=null && !appWhiteList.getAppId().equals(ThreadLocalUtils.USER_THREAD_LOCAL.get().getAppId())){
+            return ServiceResultConstants.RESOURCE_NOT_BELONG_APP;
         }
         Integer result = appWhiteListMapper.deleteById(id);
         if (result > 0) {

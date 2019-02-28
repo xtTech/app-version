@@ -41,22 +41,22 @@ public class AppWhiteListController {
     private static final Logger logger = LoggerFactory.getLogger(AppWhiteListController.class);
 
     @Autowired
-    AppWhiteListService appWhiteListService;
+    private AppWhiteListService appWhiteListService;
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
-    @GetMapping("/templet/{type}")
-    public Object generateTemplet(@NotBlank @PathVariable String type) {
+    @GetMapping("/templet/{stype}")
+    public Object generateTemplet(@NotBlank @PathVariable String stype) {
         String typeRegex = "^ip|phone$";
-        if (!type.matches(typeRegex)) {
+        if (!stype.matches(typeRegex)) {
             return ServiceResultConstants.PARAMS_TYPE_ERROR;
         }
         try {
-            if ("phone".equals(type)) {
-                type = "手机号";
+            if ("phone".equals(stype)) {
+                stype = "手机号";
             }
-            String[] title = {type + "白名单"};
+            String[] title = {stype + "白名单"};
             HSSFWorkbook workbook = ExcelUtil.getHSSFWorkbook("白名单批量添加模板", title, null, null);
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             workbook.write(outputStream);
@@ -65,7 +65,7 @@ public class AppWhiteListController {
 
             byte[] buffer = outputStream.toByteArray();
             HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLEncoder.encode(type + "白名单批量添加模板.xls", "UTF-8"));
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLEncoder.encode(stype + "白名单批量添加模板.xls", "UTF-8"));
             headers.add("Content-type", "application/octet-stream;charset=UTF-8");
             headers.add("Cache-Control", "no-cache");
             Resource resource = new InputStreamResource(new ByteArrayInputStream(buffer));

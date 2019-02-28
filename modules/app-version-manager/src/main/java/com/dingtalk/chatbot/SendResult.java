@@ -10,9 +10,6 @@ public class SendResult {
     private Integer errorCode;
     private String errorMsg;
 
-    public SendResult() {
-    }
-
     public boolean isSuccess() {
         return this.isSuccess;
     }

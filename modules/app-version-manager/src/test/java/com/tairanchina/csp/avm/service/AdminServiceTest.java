@@ -19,9 +19,10 @@ public class AdminServiceTest extends BaseTest {
     private static final Logger logger = LoggerFactory.getLogger(AdminServiceTest.class);
 
     @Autowired
-    AdminService adminService;
+    private AdminService adminService;
+
     @Autowired
-    AppMapper appMapper;
+    private AppMapper appMapper;
 
 
     @Test
@@ -69,7 +70,6 @@ public class AdminServiceTest extends BaseTest {
         App app = new App();
         app.setAppName("testEditAPP");
         app.setTenantAppId("testEditTenantAppId");
-        Integer insert = appMapper.insert(app);
         ServiceResult result = adminService.editApp(app.getId(), app.getAppName(), app.getTenantAppId());
         if (result.getData() != null) {
             logger.info(result.getData().toString());

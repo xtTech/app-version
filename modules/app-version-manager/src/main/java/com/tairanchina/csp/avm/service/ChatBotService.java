@@ -1,7 +1,5 @@
 package com.tairanchina.csp.avm.service;
 
-import com.dingtalk.chatbot.message.MarkdownMessage;
-import com.dingtalk.chatbot.message.Message;
 import com.tairanchina.csp.avm.dto.ServiceResult;
 import com.tairanchina.csp.avm.enums.ChatBotEventType;
 

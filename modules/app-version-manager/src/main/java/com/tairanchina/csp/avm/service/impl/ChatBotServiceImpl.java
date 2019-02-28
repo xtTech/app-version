@@ -1,9 +1,7 @@
 package com.tairanchina.csp.avm.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.dingtalk.chatbot.message.MarkdownMessage;
-import com.dingtalk.chatbot.message.Message;
-import com.dingtalk.chatbot.message.TextMessage;
+import com.tairanchina.csp.avm.ServiceException;
 import com.tairanchina.csp.avm.constants.MQKey;
 import com.tairanchina.csp.avm.constants.ServiceResultConstants;
 import com.tairanchina.csp.avm.mq.ChatBotMQEvent;
@@ -70,7 +68,7 @@ public class ChatBotServiceImpl implements ChatBotService {
         chatBot.setCreatedTime(new Date());
         Integer insert = chatBotMapper.insert(chatBot);
         if (insert < 1) {
-            throw new RuntimeException("ChatBot插入失败"); // 回滚
+            throw new ServiceException("ChatBot插入失败"); // 回滚
         }
         return ServiceResult.ok(chatBot);
     }
@@ -97,7 +95,7 @@ public class ChatBotServiceImpl implements ChatBotService {
         chatBotSelected.setUpdatedTime(new Date());
         Integer integer = chatBotMapper.updateById(chatBotSelected);
         if (integer < 1) {
-            throw new RuntimeException("ChatBot修改失败"); // 回滚
+            throw new ServiceException("ChatBot修改失败"); // 回滚
         }
         return ServiceResult.ok(chatBotSelected);
     }

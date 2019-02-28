@@ -23,7 +23,7 @@ public class UserAgentUtils {
     private static String windows = "Windows";
     private static String noDevice = "未知设备";
 
-    static String regex = ";\\s?(\\S*?\\s?\\S*?)\\s?(Build)?/";
+    private static String regex = ";\\s?(\\S*?\\s?\\S*?)\\s?(Build)?/";
 
 
     //获取用户os信息

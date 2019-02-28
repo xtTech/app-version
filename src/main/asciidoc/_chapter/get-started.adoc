@@ -1,3 +1,39 @@
 [[get-started]]
 == GetStarted
-=== APP Version Manager(APP版本管理)
+
+=== 开发手册
+
+* 启动项目(开发环境)： +
+** 启动后端： +
+*** 请先配置mysql和redis数据库连接，并执行/bin/app_version_manager.sql,添加表结构
+*** 管理系统模块（app-version-manager）： 启动类AppVersionManagerApplication
+*** REST接口模块（app-version-rest）： 启动类AppVersionRestApplication
+** 启动前端： +
+*** 注意修改目录下 `.env.development` 文件内的 `VUE_APP_HTTP_API` 值为自己部署的 `管理系统模块` 的IP。 +
+关于不同环境的配置请参考
+https://cli.vuejs.org/zh/guide/cli-service.html#cli-%E6%9C%8D%E5%8A%A1[vue-cli-service]
+
+    [source,bash]
+     cd web/dashboard
+     yarn install
+     yarn serve
+
+=== 部署手册
+
+==== 环境相关
+JDK > 1.8 +
+推荐配置：
+
+* JDK: 1.8.0_144
+
+* node: 8.11.4
+
+* mysql: 5.7.18
+
+* redis: 3.2.10
+
+
+
+
+
+

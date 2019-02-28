@@ -16,7 +16,7 @@ public class AppWhiteListServiceTest extends BaseTest {
     private static final Logger logger = LoggerFactory.getLogger(AppWhiteListServiceTest.class);
 
     @Autowired
-    AppWhiteListService appWhiteListService;
+    private AppWhiteListService appWhiteListService;
 
 //    @Before
 //    public void setUp() throws Exception {
@@ -191,9 +191,7 @@ public class AppWhiteListServiceTest extends BaseTest {
         Integer batchId = 91;
         ServiceResult result = appWhiteListService.deleteOneForever(batchId);
         if (result.getData() != null) {
-            if (result.getData() != null) {
-                logger.info(result.getData().toString());
-            }
+            logger.info(result.getData().toString());
         }
     }
 
