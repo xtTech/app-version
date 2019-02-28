@@ -10,15 +10,13 @@
 *** REST接口模块（app-version-rest）： 启动类AppVersionRestApplication
 ** 启动前端： +
 *** 注意修改目录下 `.env.development` 文件内的 `VUE_APP_HTTP_API` 值为自己的IP。 +
-
-关于不同环境的配置请参考https://cli.vuejs.org/zh/guide/cli-service.html#cli-%E6%9C%8D%E5%8A%A1[vue-cli-service]
+关于不同环境的配置请参考
+https://cli.vuejs.org/zh/guide/cli-service.html#cli-%E6%9C%8D%E5%8A%A1[vue-cli-service]
 
     [source,bash]
      cd web/dashboard
-     yarn install    s
+     yarn install
      yarn serve
-
-
 
 ==== 部署手册
 
