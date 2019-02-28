@@ -12,7 +12,7 @@ import org.junit.Test;
 public class VersionCompareUtilsTest {
 
     @Test
-    public void Test001() {
+    public void test001() {
         String version1 = "1.0.0";
         String version2 = "1.0.1";
         int diff = VersionCompareUtils.compareVersion(version1, version2);

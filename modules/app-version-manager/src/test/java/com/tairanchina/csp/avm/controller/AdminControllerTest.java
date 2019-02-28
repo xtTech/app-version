@@ -109,6 +109,8 @@ public class AdminControllerTest extends BaseControllerTest {
         app.setTenantAppId("dfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfdfsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
         contentAsString = post(url, app);
         logger.info(contentAsString);
+
+        assert contentAsString.length() > 0;
     }
 
     @Test
@@ -215,6 +217,8 @@ public class AdminControllerTest extends BaseControllerTest {
         url = uri + "app/list/only/bind?userId=" + userId;
         contentAsString = get(url);
         logger.info(contentAsString);
+
+        assert contentAsString.length() > 0;
     }
 
     @Test
@@ -264,6 +268,8 @@ public class AdminControllerTest extends BaseControllerTest {
         user.setUserId(userId);
         contentAsString = put(url, user);
         logger.info(contentAsString);
+
+        assert contentAsString.length() > 0;
     }
 
 }
