@@ -1,5 +1,6 @@
-image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/logo.png[logo,200,200,align="center"]
+ifndef::imagesdir[:imagesdir: src/main/resources/images/]
 
+image::logo.png[logo,200,200,align="center"]
 
 = APP版本管理系统
 
@@ -36,8 +37,8 @@ app-version
 == 项目预览
 本项目使用iView框架搭建，简洁美观。
 
-image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/show1.png[show1,100%,100%,align="center"]
-image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/show2.png[show2,100%,100%,align="center"]
+image::show1.png[]
+image::show2.png[]
 
 == 要求
 

@@ -449,10 +449,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#license">9. License</a></li>
 <li><a href="#get-started">10. GetStarted</a>
 <ul class="sectlevel2">
-<li><a href="#app_version_manager_app版本管理">10.1. APP Version Manager(APP版本管理)</a>
+<li><a href="#开发手册">10.1. 开发手册</a></li>
+<li><a href="#部署手册">10.2. 部署手册</a>
 <ul class="sectlevel3">
-<li><a href="#开发手册">10.1.1. 开发手册</a></li>
-<li><a href="#部署手册">10.1.2. 部署手册</a></li>
+<li><a href="#环境相关">10.2.1. 环境相关</a></li>
 </ul>
 </li>
 </ul>
@@ -523,7 +523,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="imageblock" style="text-align: center">
 <div class="content">
-<img src="https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/logo.png" alt="logo" width="200" height="200">
+<img src="images/logo.png" alt="logo" width="200" height="200">
 </div>
 </div>
 </div>
@@ -541,8 +541,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <img src="https://img.shields.io/badge/Release-1.0.0-blue.svg?style=flat-square&logo=appveyor" alt="Release 1.0.0 blue">
 </div>
 </div>
-<div class="paragraph">
-<p><span class="image"><a class="image" href="https://www.codacy.com/app/lzx2005/app-version?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=xtTech/app-version&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/2f50f68e20d64479b5d8b79112d9b341" alt="Codacy code quality"></a></span><br></p>
+<div class="imageblock">
+<div class="content">
+<a class="image" href="https://www.codacy.com/app/lzx2005/app-version?utm_source=github.com&utm_medium=referral&utm_content=xtTech/app-version&utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/2f50f68e20d64479b5d8b79112d9b341" alt="Codacy code quality"></a>
+</div>
 </div>
 <div class="paragraph">
 <p>APP版本管理是一套多应用更新发版的管理平台。<br>
@@ -585,14 +587,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>本项目使用iView框架搭建，简洁美观。</p>
 </div>
-<div class="imageblock" style="text-align: center">
+<div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/show1.png" alt="show1" width="100%" height="100%">
+<img src="images/show1.png" alt="show1">
 </div>
 </div>
-<div class="imageblock" style="text-align: center">
+<div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/show2.png" alt="show2" width="100%" height="100%">
+<img src="images/show2.png" alt="show2">
 </div>
 </div>
 </div>
@@ -660,9 +662,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="get-started"><a class="anchor" href="#get-started"></a>10. GetStarted</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="app_version_manager_app版本管理"><a class="anchor" href="#app_version_manager_app版本管理"></a>10.1. APP Version Manager(APP版本管理)</h3>
-<div class="sect3">
-<h4 id="开发手册"><a class="anchor" href="#开发手册"></a>10.1.1. 开发手册</h4>
+<h3 id="开发手册"><a class="anchor" href="#开发手册"></a>10.1. 开发手册</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -673,6 +673,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>启动后端：<br></p>
 <div class="ulist">
 <ul>
+<li>
+<p>请先配置mysql和redis数据库连接，并执行/bin/app_version_manager.sql,添加表结构</p>
+</li>
 <li>
 <p>管理系统模块（app-version-manager）： 启动类AppVersionManagerApplication</p>
 </li>
@@ -687,7 +690,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p>注意修改目录下 <code>.env.development</code> 文件内的 <code>VUE_APP_HTTP_API</code> 值为自己的IP。<br>
+<p>注意修改目录下 <code>.env.development</code> 文件内的 <code>VUE_APP_HTTP_API</code> 值为自己部署的 <code>管理系统模块</code> 的IP。<br>
 关于不同环境的配置请参考
 <a href="https://cli.vuejs.org/zh/guide/cli-service.html#cli-%E6%9C%8D%E5%8A%A1">vue-cli-service</a></p>
 <div class="literalblock">
@@ -708,15 +711,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="部署手册"><a class="anchor" href="#部署手册"></a>10.2. 部署手册</h3>
 <div class="sect3">
-<h4 id="部署手册"><a class="anchor" href="#部署手册"></a>10.1.2. 部署手册</h4>
+<h4 id="环境相关"><a class="anchor" href="#环境相关"></a>10.2.1. 环境相关</h4>
 <div class="paragraph">
-<p>环境版本参考：
-jdk 1.8.0_144
-mysql 5.7.18
-redis 3.2.10
-nginx 1.12.2
-node v8.11.4</p>
+<p>JDK &gt; 1.8<br>
+推荐配置：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>JDK: 1.8.0_144</p>
+</li>
+<li>
+<p>node: 8.11.4</p>
+</li>
+<li>
+<p>mysql: 5.7.18</p>
+</li>
+<li>
+<p>redis: 3.2.10</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -728,8 +745,23 @@ node v8.11.4</p>
 <div class="sect2">
 <h3 id="before_you_begin"><a class="anchor" href="#before_you_begin"></a>11.1. Before you begin</h3>
 <div class="paragraph">
-<p>首先参考Get Started章节,将本系统部署完毕。
-首先需要注册一个本系统的用户，创建自己想要管理的应用（可以多个），然后将应用与用户绑定，刷新页面，选择要进行管理的应用即可。</p>
+<p>首先参考Get Started章节,将本系统部署完毕。<br>
+然后需要注册一个本系统的用户，创建自己想要管理的应用（可以多个），便可选择刚刚创建的应用进行管理。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>目前默认本系统第一个注册的用户拥有 <code>管理员权限</code>，后续注册用户如需对 <code>已创建过</code> 的应用进行管理，请登录第一个注册的用户来为需要应用管理权限的应用进行 <code>绑定应用</code>。
+操作方法：点击左侧侧边栏 <code>管理员</code> &#8594; <code>用户管理</code> &#8594; 找到对应用户，点击 <code>绑定应用</code> 按钮对该用户授权应用。</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -780,7 +812,7 @@ node v8.11.4</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/android-1.png" alt="android 1">
+<img src="images/android-1.png" alt="android 1">
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -806,7 +838,7 @@ node v8.11.4</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/android-2.png" alt="android 2">
+<img src="images/android-2.png" alt="android 2">
 </div>
 </div>
 </div>
@@ -814,7 +846,7 @@ node v8.11.4</p>
 <h4 id="上架APK包"><a class="anchor" href="#上架APK包"></a>11.2.4. 上架 APK 包</h4>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/android-3.png" alt="android 3">
+<img src="images/android-3.png" alt="android 3">
 </div>
 </div>
 <div class="paragraph">
@@ -856,7 +888,7 @@ node v8.11.4</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/ios-1.png" alt="ios 1">
+<img src="images/ios-1.png" alt="ios 1">
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -912,7 +944,7 @@ node v8.11.4</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/rn-1.png" alt="rn 1">
+<img src="images/rn-1.png" alt="rn 1">
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -955,7 +987,7 @@ node v8.11.4</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/router-1.png" alt="router 1">
+<img src="images/router-1.png" alt="router 1">
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -997,7 +1029,7 @@ node v8.11.4</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/capi-1.png" alt="capi 1">
+<img src="images/capi-1.png" alt="capi 1">
 </div>
 </div>
 <div class="admonitionblock tip">
@@ -1072,7 +1104,7 @@ node v8.11.4</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>对于 iOS AppStore 的更新来说：静默更新、可忽略更新、静默可忽略更新都 <strong>只弹一次</strong> 提示更新的对话框。</p>
+<p>对于 IOS AppStore 的更新来说：静默更新、可忽略更新、静默可忽略更新都 <strong>只弹一次</strong> 提示更新的对话框。</p>
 </div>
 </td>
 </tr>
@@ -1091,7 +1123,7 @@ node v8.11.4</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><code>应用管理：</code> 编辑创建删除应用</p>
+<p><code>应用管理：</code> 编辑创建删除应用；添加钉钉群机器人，方便接收应用动态</p>
 </li>
 <li>
 <p><code>用户管理：</code> 给用户修改昵称，为用户绑定一个他可以进行管理的应用。</p>
@@ -1603,7 +1635,7 @@ node v8.11.4</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-02-28 11:51:06 CST
+Last updated 2019-02-28 11:53:02 CST
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
