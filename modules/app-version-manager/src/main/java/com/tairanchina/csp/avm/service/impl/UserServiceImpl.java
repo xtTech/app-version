@@ -57,7 +57,6 @@ public class UserServiceImpl implements UserService {
             user.setIsAdmin(1);
         }
         user.setUserId($.field.createUUID());
-        user.setIsAdmin(0);
         user.setFirstLoginTime(new Date());
         user.setPhone(phone);
         user.setNickName(phone);

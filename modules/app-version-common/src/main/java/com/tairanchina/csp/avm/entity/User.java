@@ -1,8 +1,6 @@
 package com.tairanchina.csp.avm.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.data.annotation.Id;
 
 import java.util.Date;
 
