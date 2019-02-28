@@ -2,10 +2,8 @@
 == 使用手册
 
 === Before you begin
-// todo 需要确认此处链接的效果
-首先参考link:../../../../docs/manual.html#get-started[Get Started],将本系统部署完毕。
+首先参考Get Started章节,将本系统部署完毕。
 首先需要注册一个本系统的用户，创建自己想要管理的应用（可以多个），然后将应用与用户绑定，刷新页面，选择要进行管理的应用即可。
-// todo 需要根据用户管理调整的情况来修改这里的内容
 
 === 发布 Android 版本
 要发布一个安卓版本,可参考以下说明:
@@ -29,7 +27,7 @@
 按照页面操作即可创建一个安卓版本。
 创建好的版本 `默认为下架状态`。
 
-image::../../resources/images/android-1.png[]
+image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/android-1.png[]
 
 TIP: `更新类型` 选项的详细解释可以参考<<版本更新类型说明>>
 
@@ -40,16 +38,14 @@ TIP: `更新类型` 选项的详细解释可以参考<<版本更新类型说明>
 渠道码可以填入官方渠道码 `official` 或已经添加好的渠道码。之后完成上传，APK包就添加成功了。
 上传好的APK包 `默认为下架状态`。
 
-image::../../resources/images/android-2.png[]
+image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/android-2.png[]
 
 [[上架APK包]]
 ==== 上架 APK 包
+image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/android-3.png[]
 如果需要将安卓版本或对应的APK包上架，那么点击上下架开关
-
-image::../../resources/images/android-3.png[]
 ，输入要上架的版本号，通过校验即可上架。
 注意把要上架的 `APK 包开启上架`。
-//todo 确认图标大小，不合适要删掉
 
 === 发布 IOS 版本
 [NOTE]
@@ -64,17 +60,13 @@ image::../../resources/images/android-3.png[]
 点开左侧菜单栏 `版本管理` 选择 `iOS 版本管理` 点击 `添加 iOS 版本` 按钮，即可打开添加页面。
 默认为新建的IOS版本为 `未上架状态`。
 
-image::../../resources/images/ios-1.png[]
+image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/ios-1.png[]
 
 TIP: `更新类型` 选项的详细解释可以参考<<版本更新类型说明>>
 
 [[上架IOS版本]]
 ==== 上架 IOS 版本
-可以通过打开对应版本的IOS版本开关
-
-image::../../resources/images/android-3.png[]
-，按提示进行校验，即可将该版本上架。
-//todo 确认图标大小，不合适要删掉
+可以通过打开对应版本的IOS版本开关，按提示进行校验，即可将该版本上架。
 
 
 === 渠道管理
@@ -99,7 +91,7 @@ image::../../resources/images/android-3.png[]
 ==== 添加 RN 包
 点开 `RN 管理` 选择 `RN 包管理` 点击 `添加 RN 包` 按钮，按页面显示输入即可添加。
 
-image::../../resources/images/rn-1.png[]
+image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/rn-1.png[]
 
 [TIP]
 ====
@@ -116,7 +108,7 @@ image::../../resources/images/rn-1.png[]
 ==== 添加 RN 路由
 点开 `RN 管理` 选择 `RN 路由管理` 点击 `添加 RN 路由` 按钮，按页面操作即可添加。
 
-image::../../resources/images/router-1.png[]
+image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/router-1.png[]
 
 [TIP]
 ====
@@ -133,7 +125,7 @@ image::../../resources/images/router-1.png[]
 使用者可以通过添加自定义接口来获取自己需要的接口信息。
 点开左侧菜单栏 `自定义接口` -> `接口设置` -> `添加自定义接口`，在弹窗内填入需要的内容，即可完成添加。
 
-image::../../resources/images/capi-1.png[]
+image::https://raw.githubusercontent.com/xtTech/app-version/master/src/main/resources/images/capi-1.png[]
 
 TIP: 自定义接口的 `默认状态为关闭状态`，如需线上使用，请通过编辑修改为 `线上开启`。
 

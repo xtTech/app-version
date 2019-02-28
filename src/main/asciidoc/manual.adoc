@@ -7,7 +7,6 @@ v1.0.0,2019-2-19
 :toclevels: 3
 :numbered:
 
-ifndef::imagesdir[:imagesdir: ./images]
 
 include::../../../README.adoc[]
 
