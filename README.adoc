@@ -1,7 +1,5 @@
 ifndef::imagesdir[:imagesdir: src/main/resources/images/]
 
-:toc:
-
 image::logo.png[logo,200,200,align="center"]
 
 = APP版本管理系统
@@ -38,11 +36,11 @@ app-version
 image::show1.png[]
 image::show2.png[]
 
-include::src/main/asciidoc/_chapter/get-started.adoc[]
+include::src/main/asciidoc/_chapter/get-started.adoc[Get started]
 
-include::src/main/asciidoc/_chapter/user-manual.adoc[]
+include::src/main/asciidoc/_chapter/user-manual.adoc[使用手册]
 
-include::src/main/asciidoc/_chapter/rest-manual.adoc[]
+include::src/main/asciidoc/_chapter/rest-manual.adoc[版本查询接口]
 
 == License
 
