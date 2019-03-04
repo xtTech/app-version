@@ -86,23 +86,21 @@ export default {
 };
 </script>
 <style lang="scss">
-    #home{
-        .select{
-
-        }
-    }
-</style>
-<style scoped lang="scss">
     .admin-app-modal{
-        .ivu-modal {
-            width: 60% !important;
-            max-width: 600px;
-        }
         .ivu-modal-footer {
-            display: none;
+            display: none!important;
         }
     }
     #home {
+        .admin-app-modal{
+            .ivu-modal {
+                width: 60% !important;
+                max-width: 600px;
+            }
+            .ivu-modal-footer {
+                display: none;
+            }
+        }
         .logo {
             text-align: center;
             img {
