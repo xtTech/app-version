@@ -1,7 +1,7 @@
-<script src="../../../../../../report/src/main.js"></script>
+<script src="../../../../../../report/src/main.js"/>
 <template>
     <div id="rn-edit">
-        <Form ref="editFormRule" :model="editForm" :rules="editFormRule" :label-width="110" style="position: relative">
+        <Form v-if="uploadFileToOSS" ref="editFormRule" :model="editForm" :rules="editFormRule" :label-width="110" style="position: relative">
             <FormItem label="模块名称" prop="rnName">
                 <Input v-model="editForm.rnName" placeholder=""/>
             </FormItem>
@@ -92,6 +92,24 @@
                 </Col>
             </Row>
         </Form>
+
+        <div v-else>
+            请填写完整的OSS参数
+            <br/>
+            在项目的：/.env.development 配置文件中
+            <br/>
+            # OSS 配置
+            <br/>
+            VUE_APP_OSS_REGION = ""
+            <br/>
+            VUE_APP_OSS_KEYID = ""
+            <br/>
+            VUE_APP_OSS_KEYSECRET = ""
+            <br/>
+            VUE_APP_OSS_BUCKET = ""
+            <br/>
+            访问 <a href="https://www.aliyun.com/product/oss/" target="_blank">阿里云OSS</a> 以获取更多的帮助
+        </div>
     </div>
 </template>
 <script>
@@ -194,6 +212,7 @@
 			}
 		},
 		created() {
+		    this.checkOss();
 			if (this.rnId > 0) {
 				this.isEdit = true;
 				this.getPackage(this.rnId);
@@ -365,7 +384,13 @@
 			},
 			fmtFileSize(a) {
 				return fmtFileSize(a);
-			}
+			},
+            checkOss(){
+			    if(!this.uploadFileToOSS){
+                    this.$Message.error('OSS初始化失败!');
+                }
+                return this.uploadFileToOSS ? true:false
+            }
 		},
 		watch: {
 			'editForm.rnType'(type) {
