@@ -1,5 +1,7 @@
 ifndef::imagesdir[:imagesdir: src/main/resources/images/]
 
+:toc:
+
 image::logo.png[logo,200,200,align="center"]
 
 = APP版本管理系统
@@ -12,10 +14,6 @@ image::https://api.codacy.com/project/badge/Grade/2f50f68e20d64479b5d8b79112d9b3
 
 APP版本管理是一套多应用更新发版的管理平台。 +
 通过部署本管理系统，以实现对多APP的多平台多渠道上的版本管理。
-
-== 功能概览
-
-TBD
 
 == 项目结构
 
@@ -40,27 +38,11 @@ app-version
 image::show1.png[]
 image::show2.png[]
 
-== 要求
+include::src/main/asciidoc/_chapter/get-started.adoc[]
 
-JDK > 1.8
+include::src/main/asciidoc/_chapter/user-manual.adoc[]
 
-推荐配置：
-
-* JDK: 1.8.0_144
-
-* node: 8.11.4
-
-* mysql: 5.7.18
-
-* redis: 3.2.10
-
-== 配置
-
-== 打包
-
-== 部署
-
-== 启动
+include::src/main/asciidoc/_chapter/rest-manual.adoc[]
 
 == License
 
