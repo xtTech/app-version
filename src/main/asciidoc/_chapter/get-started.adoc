@@ -30,7 +30,7 @@ https://cli.vuejs.org/zh/guide/cli-service.html#cli-%E6%9C%8D%E5%8A%A1[vue-cli-s
 
 * redis: 3.2.10
 
-===== 后端部署
+==== 后端部署
 
 - 用maven打包
 
@@ -64,7 +64,7 @@ link:/bin/spring.sh[spring.sh]
 注意修改各模块yml文件中相关的mysql、redis的连接配置
 ====
 
-===== 前端部署
+==== 前端部署
 
 前端打包：
 [source:bash]

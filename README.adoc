@@ -2,7 +2,7 @@ ifndef::imagesdir[:imagesdir: src/main/resources/images/]
 
 image::logo.png[logo,200,200,align="center"]
 
-= APP版本管理系统
+== APP版本管理系统
 
 [[License]]
 image::https://img.shields.io/badge/License-Apache%202.0-blue.svg[link="https://opensource.org/licenses/Apache-2.0"] 
@@ -13,7 +13,7 @@ image::https://api.codacy.com/project/badge/Grade/2f50f68e20d64479b5d8b79112d9b3
 APP版本管理是一套多应用更新发版的管理平台。 +
 通过部署本管理系统，以实现对多APP的多平台多渠道上的版本管理。
 
-== 项目结构
+=== 项目结构
 
 ```
 app-version
@@ -30,18 +30,20 @@ app-version
 └───bin 脚本文件
 ```
 
-== 项目预览
+=== 项目预览
 本项目使用iView框架搭建，简洁美观。
 
 image::show1.png[]
 image::show2.png[]
 
-include::src/main/asciidoc/_chapter/get-started.adoc[Get started]
+=== 相关文档
 
-include::src/main/asciidoc/_chapter/user-manual.adoc[使用手册]
+link:src/main/asciidoc/_chapter/get-started.adoc[开发/部署手册]
 
-include::src/main/asciidoc/_chapter/rest-manual.adoc[版本查询接口]
+link:src/main/asciidoc/_chapter/user-manual.adoc[使用手册]
 
-== License
+link:src/main/asciidoc/_chapter/rest-manual.adoc[版本查询 API 接口]
+
+=== License
 
 Apache Licensed. 具体查看 `License`
