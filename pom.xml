@@ -134,10 +134,10 @@
     <build>
         <!--<defaultGoal>process-resources</defaultGoal>-->
         <!--<resources>-->
-            <!--<resource>-->
-                <!--<directory>src/main/resources</directory>-->
-                <!--<targetPath>${project.build.directory}/book</targetPath>-->
-            <!--</resource>-->
+        <!--<resource>-->
+        <!--<directory>src/main/resources</directory>-->
+        <!--<targetPath>${project.build.directory}/book</targetPath>-->
+        <!--</resource>-->
         <!--</resources>-->
         <plugins>
             <plugin>
@@ -206,6 +206,10 @@
                         <require>asciidoctor-diagram</require>
                     </requires>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

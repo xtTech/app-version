@@ -8,8 +8,6 @@ v1.0.0,2019-2-19
 :numbered:
 
 
-include::../../../README.adoc[]
-
 include::_chapter/get-started.adoc[]
 
 include::_chapter/user-manual.adoc[]

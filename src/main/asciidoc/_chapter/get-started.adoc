@@ -1,5 +1,5 @@
 [[get-started]]
-== GetStarted
+== Get Started
 
 === 开发手册
 
@@ -9,11 +9,10 @@
 *** 管理系统模块（app-version-manager）： 启动类AppVersionManagerApplication
 *** REST接口模块（app-version-rest）： 启动类AppVersionRestApplication
 ** 启动前端： +
-*** 注意修改目录下 `.env.development` 文件内的 `VUE_APP_HTTP_API` 值为自己部署的 `管理系统模块` 的IP。 +
+*** 注意修改目录下 `.env.development` 文件内的 `VUE_APP_HTTP_API` 值为自己部署的 `管理系统模块` 的IP，以及阿里云OSS的相关配置（APK包上传使用的是OSS存储） +
 关于不同环境的配置请参考
 https://cli.vuejs.org/zh/guide/cli-service.html#cli-%E6%9C%8D%E5%8A%A1[vue-cli-service]
 
-    [source,bash]
      cd web/dashboard
      yarn install
      yarn serve
@@ -21,7 +20,6 @@ https://cli.vuejs.org/zh/guide/cli-service.html#cli-%E6%9C%8D%E5%8A%A1[vue-cli-s
 === 部署手册
 
 ==== 环境相关
-JDK > 1.8 +
 推荐配置：
 
 * JDK: 1.8.0_144
@@ -32,8 +30,78 @@ JDK > 1.8 +
 
 * redis: 3.2.10
 
+==== 后端部署
 
+- 用maven打包
 
+[source,bash]
+----
+git clone https://github.com/xtTech/app-version.git
+cd app-version/modules/app-version-manager
+mvn -Dmaven.test.skip=true clean install
+cd ..
+cd app-version-rest
+mvn -Dmaven.test.skip=true clean install
+----
+    生成的jar包的位置：
+     ./modules/app-version-manager/target/`avm.jar`
+     ./modules/app-version-manager/target/`avr.jar`
 
+- 启动项目
 
+启动脚本为：
+link:/bin/spring.sh[spring.sh]
+将脚本和打出的jar包放在同级目录下，执行
+[source/bash]
+----
+./spring.sh avm-start
+./spring.sh avr-start
+----
+相关命令参考：avm-start|avm-stop|avm-restart|avm-status|avr-start|avr-stop|avr-restart|avr-status
 
+[TIP]
+====
+注意修改各模块yml文件中相关的mysql、redis的连接配置
+====
+
+==== 前端部署
+
+前端打包：
+[source:bash]
+----
+cd web/dashboard
+npm install
+npm build
+----
+然后会在dashboard目录下生成一个dist文件夹，将文件夹下内容复制到nginx的html文件夹内。
+参考以下内容配置你的nginx的nginx.conf文件。
+[source,bash]
+----
+http {
+    # 省略其他参数...
+    server {
+	   listen 80;
+	   server_name app.com;    # 指定域名
+	   location / {
+			 try_files $uri $uri/ /index.html;
+			 index index.html;
+			 root /data/static/;   # 前端打包后的存储位置
+			 allow all;
+	   }
+	   location ^~ /rest/ {
+			charset utf-8;
+			default_type application/json;
+			proxy_pass http://localhost:8084/;   # 访问Rest接口Java后台
+	   }
+	   location ^~ /manager/ {
+			proxy_pass http://localhost:8086/;     # 访问管理平台接口Java后台
+	   }
+	}
+    # 省略其他参数...
+}
+----
+
+[TIP]
+====
+注意修改env文件的配置
+====
