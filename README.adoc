@@ -30,11 +30,6 @@ app-version
 └───bin 脚本文件
 ```
 
-=== 项目预览
-本项目使用iView框架搭建，简洁美观。
-
-image::show1.png[]
-image::show2.png[]
 
 === 相关文档
 
@@ -43,6 +38,12 @@ link:src/main/asciidoc/_chapter/get-started.adoc[开发/部署手册]
 link:src/main/asciidoc/_chapter/user-manual.adoc[使用手册]
 
 link:src/main/asciidoc/_chapter/rest-manual.adoc[版本查询 API 接口]
+
+=== 项目预览
+本项目使用iView框架搭建，简洁美观。
+
+image::show1.png[]
+image::show2.png[]
 
 === License
 
