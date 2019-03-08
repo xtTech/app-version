@@ -32,7 +32,6 @@ public class RnController {
             @ApiImplicitParam(name = "platform", value = "平台，值应为 ios 或 android", required = true),
             @ApiImplicitParam(name = "status", value = "RN路由状态，0:关闭 1:线上开启 2:测试需要", required = true),
     })
-    //    @AccessRecord(api = "/route/{version}-{tenantAppId}-{platform}-{status}", apiDescription = AccessLog.ApiDescription.SELECT_RN_ROUTE)
     public ServiceResult route(@PathVariable String version,
                                @PathVariable String tenantAppId,
                                @PathVariable String platform,
@@ -54,7 +53,6 @@ public class RnController {
             @ApiImplicitParam(name = "platform", value = "平台，值应为 ios 或 android", required = true),
             @ApiImplicitParam(name = "status", value = "RN包状态，0:关闭 1:线上开启 2:测试需要", required = true),
     })
-    //    @AccessRecord(api = "/bundles/{version}-{tenantAppId}-{platform}-{status}", apiDescription = AccessLog.ApiDescription.SELECT_RN_PACKAGE)
     public ServiceResult bundles(@PathVariable String version,
                                  @PathVariable String tenantAppId,
                                  @PathVariable String platform,

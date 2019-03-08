@@ -42,3 +42,4 @@ dew:
   cluster:
     cache: redis
     lock: redis # 可选 redis/hazelcast
+    mq: redis

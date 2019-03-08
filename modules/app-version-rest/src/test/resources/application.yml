@@ -37,13 +37,6 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 
-dew:
-  cluster:
-    cache: redis
-    lock: redis # 可选 redis/hazelcast
-    map: redis # 可选 redis/hazelcast
-    mq: redis
-
 logging:
   file: avr.log
   path: ./logs

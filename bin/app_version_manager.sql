@@ -120,26 +120,6 @@ CREATE TABLE `app`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for app_white_list
--- ----------------------------
-DROP TABLE IF EXISTS `app_white_list`;
-CREATE TABLE `app_white_list`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `app_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'APPID',
-  `batch_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '白名单组的名称',
-  `white_type` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '白名单类型：ip,phone',
-  `white_value` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '白名单内容:手机号或IP',
-  `batch_id` int(10) NOT NULL DEFAULT 0 COMMENT '白名单组的id',
-  `is_batch` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否是白名单组',
-  `created_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `created_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '创建人',
-  `updated_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-  `updated_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '更新人',
-  `del_flag` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Table structure for channel
 -- ----------------------------
 DROP TABLE IF EXISTS `channel`;
