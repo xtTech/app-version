@@ -48,6 +48,7 @@ dew:
   cluster:
     cache: redis
     lock: redis
+    mq: redis
     config:
       ha-enabled: false #使用到MQ的时候最好设为true，提高MQ消息收发的完整性
 logging:
