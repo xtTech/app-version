@@ -24,6 +24,6 @@
         <blockquote>
             <p>对于 iOS AppStore 的更新来说：静默更新、可忽略更新、静默可忽略更新都<code>只弹一次提示更新</code>的对话框</p>
         </blockquote>
-        <div class="end"><b>如有疑问 @韩拓</b></div>
+        <div class="end"></div>
     </div>
 </template>
