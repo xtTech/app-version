@@ -61,7 +61,6 @@ public class VersionController {
             @ApiImplicitParam(name = "platform", value = "平台，值应为 ios 或 android", required = true),
     })
     @GetMapping("/{tenantAppId}-{version}-{channelCode}-{platform}")
-//    @AccessRecord(api = "/v/{tenantAppId}-{version}-{channelCode}-{platform}", apiDescription = AccessLog.ApiDescription.SELECT_NEW_VERSION)
     public ServiceResult version(@PathVariable String tenantAppId,
                                  @PathVariable String version,
                                  @PathVariable String channelCode,
@@ -106,7 +105,6 @@ public class VersionController {
             @ApiImplicitParam(name = "apkId", value = "APK包的ID", required = true),
     })
     @GetMapping("/download/{apkId}")
-//    @AccessRecord(api = "/v/download/{apkId}", apiDescription = AccessLog.ApiDescription.DOWNLOAD_APK)
     public ServiceResult download(@PathVariable int apkId) throws IOException {
         logger.info("下载了APK[{}]", apkId);
 

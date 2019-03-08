@@ -38,7 +38,6 @@ public class CustomApiController {
             @ApiImplicitParam(name = "version", value = "版本号", required = true),
     })
     @GetMapping("/{tenantAppId}/{key}/{version}/{platform}")
-//    @AccessRecord(api = "/c/{tenantAppId}/{key}/{version}/{platform}", apiDescription = AccessLog.ApiDescription.SELECT_CUSTON_API)
     public ServiceResult custom(@PathVariable String tenantAppId,
                                 @PathVariable String key,
                                 @PathVariable String platform,

@@ -38,12 +38,6 @@ mybatis-plus:
     cache-enabled: false
 
 dew:
-  cluster:
-    cache: redis
-    lock: redis # 可选 redis/hazelcast
-    mq: redis
-    config:
-      ha-enabled: true
   basic:
     doc:
       base-package: com.tairanchina.csp.avr
