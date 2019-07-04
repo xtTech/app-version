@@ -1,6 +1,7 @@
 package com.tairanchina.csp.avm.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.ecfront.dew.common.$;
 import com.tairanchina.csp.avm.constants.ServiceResultConstants;
 import com.tairanchina.csp.avm.dto.ServiceResult;
 import com.tairanchina.csp.avm.entity.App;
@@ -8,9 +9,10 @@ import com.tairanchina.csp.avm.entity.RnPackage;
 import com.tairanchina.csp.avm.entity.RnRoute;
 import com.tairanchina.csp.avm.mapper.RnPackageMapper;
 import com.tairanchina.csp.avm.mapper.RnRouteMapper;
-import com.tairanchina.csp.avm.wapper.ExtWrapper;
 import com.tairanchina.csp.avm.service.AppService;
 import com.tairanchina.csp.avm.service.RnService;
+import com.tairanchina.csp.avm.utils.VersionCompareUtils;
+import com.tairanchina.csp.avm.wapper.ExtWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class RnServiceImpl implements RnService {
+
     private static final Logger logger = LoggerFactory.getLogger(RnServiceImpl.class);
 
     @Autowired
@@ -44,12 +47,8 @@ public class RnServiceImpl implements RnService {
         EntityWrapper<RnRoute> wrapper = new EntityWrapper<>();
         if ("android".equals(platform)) {
             wrapper.eq("android_enabled", 1);
-            wrapper.le("android_min", version);
-            wrapper.gt("android_max", version);
         } else if ("ios".equals(platform)) {
             wrapper.eq("ios_enabled", 1);
-            wrapper.le("ios_min", version);
-            wrapper.gt("ios_max", version);
         } else {
             return ServiceResultConstants.PLATFORM_ERROR;
         }
@@ -58,8 +57,24 @@ public class RnServiceImpl implements RnService {
         wrapper.eq("app_id", appSelected.getId());
         wrapper.eq("route_status", routeStatus);
         List<RnRoute> rnRoutes = rnRouteMapper.selectList(wrapper);
+
+        List<RnRoute> rnRoutesResult = new ArrayList<>();
+        if ("ios".equalsIgnoreCase(platform)) {
+            for (RnRoute r : rnRoutes) {
+                if (VersionCompareUtils.compareVersion(r.getIosMax(), version) > 0 && VersionCompareUtils.compareVersion(version, r.getIosMin()) >= 0) {
+                    rnRoutesResult.add(r);
+                }
+            }
+        } else if ("android".equalsIgnoreCase(platform)) {
+            for (RnRoute r : rnRoutes) {
+                if (VersionCompareUtils.compareVersion(r.getAndroidMax(), version) > 0 && VersionCompareUtils.compareVersion(version, r.getAndroidMin()) >= 0) {
+                    rnRoutesResult.add(r);
+                }
+            }
+        }
+
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        rnRoutes.forEach(action -> map.put(action.getRouteKey(), action.getRouteValue()));
+        rnRoutesResult.forEach(action -> map.put(action.getRouteKey(), action.getRouteValue()));
         return ServiceResult.ok(map);
     }
 
@@ -70,8 +85,6 @@ public class RnServiceImpl implements RnService {
             return ServiceResultConstants.APP_NOT_EXISTS;
         }
         ExtWrapper<RnPackage> wrapper = new ExtWrapper<>();
-        wrapper.le("version_min", version);
-        wrapper.gt("version_max", version);
         if ("android".equals(platform)) {
             wrapper.eq("rn_type", 1);
         } else if ("ios".equals(platform)) {
@@ -84,8 +97,16 @@ public class RnServiceImpl implements RnService {
         wrapper.eq("app_id", appSelected.getId());
         wrapper.eq("rn_status", rnStatus);
         List<RnPackage> rnPackages = rnPackageMapper.selectList(wrapper);
+
+        List<RnPackage> rnPackagesResult = new ArrayList<>();
+        for (RnPackage r : rnPackages) {
+            if (VersionCompareUtils.compareVersion(r.getVersionMax(), version) > 0 && VersionCompareUtils.compareVersion(version, r.getVersionMin()) >= 0) {
+                rnPackagesResult.add(r);
+            }
+        }
+        logger.debug("rnPackagesResult={}", $.json.toJsonString(rnPackagesResult));
         HashSet<String> set = new HashSet<>();
-        List<HashMap<String, Object>> collect = rnPackages.stream().filter(mapper -> !set.contains(mapper.getRnName())).map(mapper -> {
+        List<HashMap<String, Object>> collect = rnPackagesResult.stream().filter(mapper -> !set.contains(mapper.getRnName())).map(mapper -> {
             HashMap<String, Object> map = new HashMap<>();
             map.put("name", mapper.getRnName());
             map.put("version", mapper.getRnVersion());
