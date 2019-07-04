@@ -11,7 +11,7 @@
 
     <groupId>com.tairanchina.csp.avm</groupId>
     <artifactId>app-version</artifactId>
-    <version>1.0.0-RC</version>
+    <version>1.0.1-RC</version>
     <packaging>pom</packaging>
     <name>app-version</name>
     <description>App版本管理</description>
@@ -206,10 +206,6 @@
                         <require>asciidoctor-diagram</require>
                     </requires>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
