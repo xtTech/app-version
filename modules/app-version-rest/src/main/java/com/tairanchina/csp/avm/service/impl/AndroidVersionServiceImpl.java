@@ -11,6 +11,7 @@ import com.tairanchina.csp.avm.entity.Channel;
 import com.tairanchina.csp.avm.mapper.AndroidVersionMapper;
 import com.tairanchina.csp.avm.mapper.ApkMapper;
 import com.tairanchina.csp.avm.mapper.ChannelMapper;
+import com.tairanchina.csp.avm.utils.VersionCompareUtils;
 import com.tairanchina.csp.avm.wapper.ExtWrapper;
 import com.tairanchina.csp.avm.service.AndroidVersionService;
 import com.tairanchina.csp.avm.service.AppService;
@@ -24,7 +25,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -56,18 +59,33 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
         logger.debug("找到应用:{}", appSelected.getAppName());
 
         ExtWrapper<AndroidVersion> androidVersionEntityWrapper = new ExtWrapper<>();
-        androidVersionEntityWrapper.and().gt("app_version", version);
         androidVersionEntityWrapper.and().eq("app_id", appSelected.getId());
         androidVersionEntityWrapper.and().eq("del_flag", 0);
         androidVersionEntityWrapper.and().eq("version_status", 1);
         androidVersionEntityWrapper.setVersionSort("app_version", false);
         List<AndroidVersion> androidVersions = androidVersionMapper.selectList(androidVersionEntityWrapper);
-        logger.debug("查询到的版本：");
-        androidVersions.forEach(androidVersion -> logger.debug(androidVersion.getAppVersion()));
         if (androidVersions.isEmpty()) {
             logger.debug("查询不到新版本或者新版本未上架，当前版本为最新");
             return ServiceResultConstants.NO_NEW_VERSION;
         }
+        // 将查询结果再次进行筛选，选出大于传入version的安卓版本，然后再找出最新版本
+        List<AndroidVersion> androidVersionsResult = new LinkedList<>();
+        androidVersionsResult.addAll(androidVersions);
+        if (VersionCompareUtils.compareVersion(version, androidVersions.get(androidVersions.size() - 1).getAppVersion()) > 0) {
+            Collections.reverse(androidVersions);
+            for (AndroidVersion a : androidVersions) {
+                String androidVersionMin = a.getAppVersion();
+                if (VersionCompareUtils.compareVersion(version, androidVersionMin) >= 0) {
+                    androidVersionsResult.remove(a);
+                }
+            }
+        }
+        if (androidVersionsResult.isEmpty()) {
+            logger.debug("查询不到新版本或者新版本未上架，当前版本为最新");
+            return ServiceResultConstants.NO_NEW_VERSION;
+        }
+        logger.debug("查询到的筛选过的版本：");
+        androidVersionsResult.forEach(androidVersion -> logger.debug(androidVersion.getAppVersion()));
 
         //查找指定渠道
         logger.debug("查询channelCode为{}的渠道...", channelCode);
@@ -96,12 +114,14 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
             logger.debug("找到官方渠道：{}", officialChannel.toString());
         }
 
-        for (AndroidVersion androidVersion : androidVersions) {
-            if (channelSelected != null && channelSelected.getChannelStatus() == 1) {
-                HashMap<String, Object> apk = this.findApk(androidVersion, appSelected.getId(), channelSelected.getId());
-                if (apk != null) {
-                    logger.debug("结果：{}", $.json.toJsonString(apk));
-                    return ServiceResult.ok(apk);
+        for (AndroidVersion androidVersion : androidVersionsResult) {
+            if (channelSelected != null) {
+                if (channelSelected.getChannelStatus() == 1) {
+                    HashMap<String, Object> apk = this.findApk(androidVersion, appSelected.getId(), channelSelected.getId());
+                    if (apk != null) {
+                        logger.debug("结果：{}", $.json.toJsonString(apk));
+                        return ServiceResult.ok(apk);
+                    }
                 }
             }
             if (officialChannel != null) {
