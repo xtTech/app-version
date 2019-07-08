@@ -42,10 +42,10 @@ git clone https://github.com/xtTech/app-version.git
 cd app-version/modules/app-version-common
 mvn -Dmaven.test.skip=true clean install
 cd app-version/modules/app-version-manager
-mvn -Dmaven.test.skip=true clean install
+mvn -Dmaven.test.skip=true clean install -P fatjar
 cd ..
 cd app-version-rest
-mvn -Dmaven.test.skip=true clean install
+mvn -Dmaven.test.skip=true clean install -P fatjar
 ----
     生成的jar包的位置：
      ./modules/app-version-manager/target/`avm.jar`

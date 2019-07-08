@@ -15,6 +15,10 @@
     <description>APP版本管理服务</description>
     <packaging>jar</packaging>
 
+    <properties>
+        <project.fatjar.name>avm</project.fatjar.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.tairanchina.csp.avm</groupId>
@@ -64,9 +68,5 @@
         </dependency>
 
     </dependencies>
-
-    <build>
-        <finalName>avm</finalName>
-    </build>
 
 </project>
