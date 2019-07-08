@@ -15,6 +15,10 @@
     <description>APP 版本管理 REST 端</description>
     <packaging>jar</packaging>
 
+    <properties>
+        <project.fatjar.name>avr</project.fatjar.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.tairanchina.csp.avm</groupId>
@@ -36,11 +40,7 @@
             <scope>test</scope>
         </dependency>
 
-
     </dependencies>
 
-    <build>
-        <finalName>avr</finalName>
-    </build>
 
 </project>
