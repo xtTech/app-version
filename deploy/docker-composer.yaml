@@ -32,6 +32,12 @@ services:
       - mysql
       - redis
     restart: always
+    command:
+      - /bin/sh
+      - -c
+      - |
+        spring.sh avm-start
+        spring.sh avr-start
 
   fronted:
     build:
