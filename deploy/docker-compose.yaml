@@ -44,11 +44,7 @@ services:
     volumes:
       - ./web:/www/web/
       - ./log/nginx:/var/log/nginx
+      - ./fronted/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - backend
     restart: always
-    command:
-      - /bin/sh
-      - -c
-      - |
-        echo "init ok!!!"
