@@ -22,9 +22,7 @@ services:
     restart: always
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: ./backend/Dockerfile
+    build: backend/
     ports:
       - "8086:8086"
       - "8084:8084"
@@ -36,13 +34,11 @@ services:
       - /bin/sh
       - -c
       - |
-        spring.sh avm-start
-        spring.sh avr-start
+        /app/spring.sh avm-start
+        /app/spring.sh avr-start
 
   fronted:
-    build:
-      context: ./fronted
-      dockerfile: ./fronted/Dockerfile
+    build: fronted/
     ports:
       - "8088:80"
     volumes:
@@ -51,4 +47,8 @@ services:
     depends_on:
       - backend
     restart: always
-
+    command:
+      - /bin/sh
+      - -c
+      - |
+        echo "init ok!!!"
