@@ -34,8 +34,8 @@ services:
       - /bin/sh
       - -c
       - |
-        /app/spring.sh avm-start
-        /app/spring.sh avr-start
+        java -jar /app/avm.jar
+        java -jar /app/avr.jar
 
   fronted:
     build: fronted/
