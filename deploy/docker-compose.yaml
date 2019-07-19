@@ -22,7 +22,7 @@ services:
     restart: always
 
   backend:
-    build: backend/
+    image: java:8
     ports:
       - "8086:8086"
       - "8084:8084"
@@ -30,6 +30,8 @@ services:
       - mysql
       - redis
     restart: always
+    volumes:
+      - "/app"
     command:
       - /bin/sh
       - -c
@@ -38,13 +40,12 @@ services:
         java -jar /app/avr.jar
 
   fronted:
-    build: fronted/
+    image: nginx
     ports:
       - "8088:80"
     volumes:
-      - ./web:/www/web/
-      - ./log/nginx:/var/log/nginx
-      - ./fronted/default.conf:/etc/nginx/conf.d/default.conf
+      - ./fronted/dist:/usr/share/nginx/html
+#      - ./fronted/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - backend
     restart: always
