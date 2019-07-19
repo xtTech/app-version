@@ -45,7 +45,7 @@ services:
       - "8088:80"
     volumes:
       - ./fronted/dist:/usr/share/nginx/html
-#      - ./fronted/nginx.conf:/etc/nginx/nginx.conf
+      - ./fronted/fronted.conf:/etc/nginx/conf.d/fronted.conf
     depends_on:
       - backend
     restart: always
