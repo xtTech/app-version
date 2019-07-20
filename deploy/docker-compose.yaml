@@ -8,21 +8,29 @@ services:
     volumes:
       - ./db_data/mysql:/var/lib/mysql
       - ./log/mysql:/var/log/mysql
+      - ./backend:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: admin111
+      MYSQL_ROOT_PASSWORD: admin111
+      MYSQL_DATABASE: app_version_manager
     restart: always
+    command: [
+      'mysqld --user=root',
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci',
+      '--default-time-zone=+8:00'
+    ]
 
   redis:
     image: redis:latest
     ports:
-      - "32768:6379"
+      - "32772:6379"
     volumes:
       - ./db_data/redis/:/var/lib/redis/
     restart: always
 
   backend:
     image: java:8
+    container_name: app-version-backend
     ports:
       - "8086:8086"
       - "8084:8084"
@@ -30,22 +38,27 @@ services:
       - mysql
       - redis
     restart: always
+    working_dir: /app
     volumes:
-      - "/app"
+      - ./backend/app-version-manager-1.0.0-RC.jar:/app/avm.jar
+      - ./backend/app-version-rest-1.0.0-RC.jar:/app/avr.jar
     command:
       - /bin/sh
       - -c
       - |
         java -jar /app/avm.jar
         java -jar /app/avr.jar
+    environment:
+      - TZ=Asia/Shanghai
 
   fronted:
     image: nginx
+    container_name: app-version-fronted
     ports:
       - "8088:80"
     volumes:
       - ./fronted/dist:/usr/share/nginx/html
-      - ./fronted/fronted.conf:/etc/nginx/conf.d/fronted.conf
+      - ./fronted/app.conf:/etc/nginx/conf.d/app.conf
     depends_on:
       - backend
     restart: always
