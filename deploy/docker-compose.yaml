@@ -14,7 +14,6 @@ services:
       MYSQL_DATABASE: app_version_manager
     restart: always
     command: [
-      'mysqld --user=root',
       '--character-set-server=utf8mb4',
       '--collation-server=utf8mb4_unicode_ci',
       '--default-time-zone=+8:00'
@@ -29,7 +28,7 @@ services:
     restart: always
 
   backend:
-    image: java:8
+    build: ./backend
     container_name: app-version-backend
     ports:
       - "8086:8086"
@@ -38,10 +37,6 @@ services:
       - mysql
       - redis
     restart: always
-    working_dir: /app
-    volumes:
-      - ./backend/app-version-manager-1.0.0-RC.jar:/app/avm.jar
-      - ./backend/app-version-rest-1.0.0-RC.jar:/app/avr.jar
     command:
       - /bin/sh
       - -c
