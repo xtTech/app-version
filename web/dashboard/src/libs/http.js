@@ -5,7 +5,7 @@ import { hasObject, hasValue } from './util';
 import { clearCurrentApp, getAppId, getUser, appId } from './account';
 
 const ajax = axios.create({
-    baseURL: process.env.VUE_APP_HTTP_API,
+    baseURL: "/manager/",
     timeout: process.env.VUE_APP_HTTP_TIMEOUT
 });
 
