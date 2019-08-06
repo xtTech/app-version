@@ -11,8 +11,8 @@
  Date: 27/02/2019 15:28:24
 */
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+-- SET NAMES utf8mb4;
+-- SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for access_log
@@ -305,4 +305,4 @@ CREATE TABLE `user_app_rel`  (
   PRIMARY KEY (`user_id`, `app_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
-SET FOREIGN_KEY_CHECKS = 1;
+-- SET FOREIGN_KEY_CHECKS = 1;
