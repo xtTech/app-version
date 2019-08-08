@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.tairanchina.csp.avm</groupId>
         <artifactId>app-version</artifactId>
-        <version>1.0.0-RC</version>
+        <version>1.0.1-RC</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 

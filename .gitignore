@@ -36,3 +36,4 @@ metastore_db/
 api-docs/
 
 *.crc
+docs/

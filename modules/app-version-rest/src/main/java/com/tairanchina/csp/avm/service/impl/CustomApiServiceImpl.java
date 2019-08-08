@@ -10,6 +10,7 @@ import com.tairanchina.csp.avm.entity.CustomApi;
 import com.tairanchina.csp.avm.mapper.CustomApiMapper;
 import com.tairanchina.csp.avm.service.AppService;
 import com.tairanchina.csp.avm.service.CustomApiService;
+import com.tairanchina.csp.avm.utils.VersionCompareUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class CustomApiServiceImpl implements CustomApiService {
     private AppService appService;
 
     @Override
-    public ServiceResult getCustomContent(String tenantAppId, String key, String platfrom, String version) {
+    public ServiceResult getCustomContent(String tenantAppId, String key, String platform, String version) {
         App app = appService.findAppByTenantAppId(tenantAppId);
         if (app == null) {
             return ServiceResultConstants.APP_NOT_EXISTS;
@@ -43,14 +44,10 @@ public class CustomApiServiceImpl implements CustomApiService {
         customApi.setCustomKey(key);
         customApi.setCustomStatus(1);
         customApi.setDelFlag(0);
-        if ("ios".equalsIgnoreCase(platfrom)) {
+        if ("ios".equalsIgnoreCase(platform)) {
             customApi.setIosEnabled(1);
-            wrapper.and().gt("ios_max", version);
-            wrapper.and().le("ios_min", version);
-        } else if ("android".equalsIgnoreCase(platfrom)) {
+        } else if ("android".equalsIgnoreCase(platform)) {
             customApi.setAndroidEnabled(1);
-            wrapper.and().gt("android_max", version);
-            wrapper.and().le("android_min", version);
         }
         wrapper.setEntity(customApi);
         wrapper.orderBy("created_time", false);
@@ -58,7 +55,27 @@ public class CustomApiServiceImpl implements CustomApiService {
         if (customApis.isEmpty()) {
             return ServiceResultConstants.CUSTOM_API_NOT_FOUND;
         }
-        CustomApi customApiNew = customApis.get(0);
+
+        CustomApi customApiNew = null;
+        if ("ios".equalsIgnoreCase(platform)) {
+            for (CustomApi c : customApis) {
+                if (VersionCompareUtils.compareVersion(c.getIosMax(), version) > 0 && VersionCompareUtils.compareVersion(version, c.getIosMin()) >= 0) {
+                    customApiNew = c;
+                    break;
+                }
+            }
+        } else if ("android".equalsIgnoreCase(platform)) {
+            for (CustomApi c : customApis) {
+                if (VersionCompareUtils.compareVersion(c.getAndroidMax(), version) > 0 && VersionCompareUtils.compareVersion(version, c.getAndroidMin()) >= 0) {
+                    customApiNew = c;
+                    break;
+                }
+            }
+        }
+        if (null == customApiNew) {
+            return ServiceResultConstants.CUSTOM_API_NOT_FOUND;
+        }
+
         String customContent = customApiNew.getCustomContent();
         try {
             JsonNode jsonNode = $.json.getMapper().readTree(customContent);
