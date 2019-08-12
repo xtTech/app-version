@@ -16,7 +16,6 @@
     <packaging>jar</packaging>
 
     <properties>
-        <project.fatjar.name>avm</project.fatjar.name>
     </properties>
 
     <dependencies>

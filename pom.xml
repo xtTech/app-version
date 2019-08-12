@@ -29,7 +29,6 @@
         <mybatisplus-spring-boot-starter.version>1.0.2</mybatisplus-spring-boot-starter.version>
         <maven.deploy.skip>true</maven.deploy.skip>
         <jsonwebtoken.jjwt.version>0.10.5</jsonwebtoken.jjwt.version>
-        <project.fatjar.name></project.fatjar.name>
     </properties>
 
     <developers>
@@ -131,29 +130,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <profiles>
-        <profile>
-            <id>fatjar</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>repackage</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <finalName>${project.fatjar.name}</finalName>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
     <build>
         <!--<defaultGoal>process-resources</defaultGoal>-->
         <!--<resources>-->

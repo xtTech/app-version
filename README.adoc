@@ -54,6 +54,12 @@ link:src/main/asciidoc/_chapter/rest-manual.adoc[版本查询 API 接口]
 image::show1.png[]
 image::show2.png[]
 
+=== 答疑帮助
+
+NOTE: 有时候邮件回复的不是那么及时，推荐微信。
+
+微信: zoeminghong （备注：APP 管理系统）
+
 === License
 
 Apache Licensed. 具体查看 `License`

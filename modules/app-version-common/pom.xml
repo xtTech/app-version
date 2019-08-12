@@ -55,8 +55,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <finalName>app-version-common</finalName>
-    </build>
 </project>
