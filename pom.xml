@@ -11,7 +11,7 @@
 
     <groupId>com.tairanchina.csp.avm</groupId>
     <artifactId>app-version</artifactId>
-    <version>1.0.1-RC</version>
+    <version>1.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>app-version</name>
     <description>App版本管理</description>
@@ -29,6 +29,9 @@
         <mybatisplus-spring-boot-starter.version>1.0.2</mybatisplus-spring-boot-starter.version>
         <maven.deploy.skip>true</maven.deploy.skip>
         <jsonwebtoken.jjwt.version>0.10.5</jsonwebtoken.jjwt.version>
+        <docker.image.prefix>zoeminghong</docker.image.prefix>
+        <maven.install.skip>false</maven.install.skip>
+        <maven.deploy.skip>false</maven.deploy.skip>
     </properties>
 
     <developers>
@@ -204,6 +207,25 @@
                     <requires>
                         <require>asciidoctor-diagram</require>
                     </requires>
+                </configuration>
+            </plugin>
+            <!-- Docker maven plugin -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <imageTags>${project.version}</imageTags>
+                    <!--dockerfile 路径-->
+                    <dockerDirectory>./</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.artifactId}.jar</include>
+                        </resource>
+                    </resources>
                 </configuration>
             </plugin>
         </plugins>

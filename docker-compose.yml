@@ -1,0 +1,71 @@
+version : '3'
+services:
+  mysql:
+    image: mysql/mysql-server:5.7.18
+    container_name: mysql
+    networks:
+      - net-spring-db
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./tmp/mysql:/var/lib/mysql
+      - ./tmp/log/mysql:/var/log/mysql
+      - ./bin/app_version_manager.sql:/docker-entrypoint-initdb.d
+    restart: always
+    command: [
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci',
+      '--default-time-zone=+8:00']
+    environment:
+      MYSQL_DATABASE: app_version_manager
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: 123456
+
+  redis:
+    image: redis:3.2.10
+    container_name: redis
+    networks:
+      - net-spring-db
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./tmp/redis/:/var/lib/redis/
+    restart: always
+  managerservice:
+    image: zoeminghong/app-version-manager
+    container_name: app-version-manager
+    ports:
+      - "8086:8086"
+    networks:
+      - net-spring-db
+    volumes:
+      - /tmp:/tmp
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      - TZ=Asia/Shanghai
+      - APP_PROFILE=dev
+
+  restservice:
+    image: zoeminghong/app-version-rest
+    container_name: app-version-rest
+    ports:
+      - "8084:8084"
+    networks:
+      - net-spring-db
+    volumes:
+      - /tmp:/tmp
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      - TZ=Asia/Shanghai
+      - APP_PROFILE=dev
+
+
+
+networks:
+  net-spring-db:
+    driver: bridge
