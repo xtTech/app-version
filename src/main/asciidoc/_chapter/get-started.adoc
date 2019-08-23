@@ -3,10 +3,16 @@
 
 === 开发手册
 
+* 初次准备：
+
+** 数据库数据初始化，执行 `/bin/sql/` 路径下的 SQL 脚本
+
+** 修改 `app-version-manager` 和 `app-version-rest` 模块中的 resources 路径下的 mysql 和 redis 配置信息
+
+** 修改 `web/dashboard/.env.development` 文件中的相应配置
+
 * 启动项目(开发环境)： +
 ** 启动后端： +
-*** 请先配置mysql和redis数据库连接，并执行/bin/app_version_manager.sql,添加表结构
-*** 公共模块（app-version-common）：其他模块的公共类
 *** 管理系统模块（app-version-manager）： 启动类AppVersionManagerApplication
 *** REST接口模块（app-version-rest）： 启动类AppVersionRestApplication
 ** 启动前端： +
@@ -18,6 +24,8 @@ https://cli.vuejs.org/zh/guide/cli-service.html#cli-%E6%9C%8D%E5%8A%A1[vue-cli-s
      yarn install
      yarn serve
 
+NOTE: 若遇到无法正常启动模块服务，请先尝试 install 基础模块 `app-version-common`。
+
 === 部署手册
 
 ==== 环境相关
@@ -25,48 +33,47 @@ https://cli.vuejs.org/zh/guide/cli-service.html#cli-%E6%9C%8D%E5%8A%A1[vue-cli-s
 
 * JDK: 1.8.0_144
 
-* node: 8.11.4
+* Node: 8.11.4
 
-* mysql: 5.7.18
+* Mysql: 5.7.18
 
-* redis: 3.2.10
+* Redis: 3.2.10
+
+WARNING: 高版本 Mysql 存在一些特性的不再支持的情况。
 
 ==== 后端部署
 
-- 用maven打包
+- 用 Maven 打包
 
 [source,bash]
 ----
 git clone https://github.com/xtTech/app-version.git
-# 如有需要，注意自行将 app-version-common 模块发布至私服
-cd app-version/modules/app-version-common
-mvn -Dmaven.test.skip=true clean install
-cd app-version/modules/app-version-manager
-mvn -Dmaven.test.skip=true clean install -P fatjar
-cd ..
-cd app-version-rest
-mvn -Dmaven.test.skip=true clean install -P fatjar
-----
-    生成的jar包的位置：
-     ./modules/app-version-manager/target/`avm.jar`
-     ./modules/app-version-manager/target/`avr.jar`
 
+sh ./build.sh
+
+----
+
+生成的jar包的位置：
+[source,bash]
+----
+./modules/app-version-manager/target/app-version-manager.jar
+./modules/app-version-manager/target/app-version-rest.jar
+----
 - 启动项目
 
 启动脚本为：
 link:/bin/spring.sh[spring.sh]
 将脚本和打出的jar包放在同级目录下，执行
+
 [source/bash]
 ----
-./spring.sh avm-start
-./spring.sh avr-start
+./spring.sh start
+./spring.sh start
 ----
-相关命令参考：avm-start|avm-stop|avm-restart|avm-status|avr-start|avr-stop|avr-restart|avr-status
 
-[TIP]
-====
-注意修改各模块yml文件中相关的mysql、redis的连接配置
-====
+NOTE: spring.sh 脚本需要根据实际情况修改 app 参数，详细参见注释
+
+TIP: 注意修改各模块yml文件中相关的mysql、redis的连接配置
 
 ==== 前端部署
 
@@ -74,11 +81,15 @@ link:/bin/spring.sh[spring.sh]
 [source:bash]
 ----
 cd web/dashboard
+
 npm install
-npm build
+
+# 这里以生产为例，还存在 development、test、uat
+npm build:production
 ----
-然后会在dashboard目录下生成一个dist文件夹，将文件夹下内容复制到nginx的html文件夹内。
-参考以下内容配置你的nginx的nginx.conf文件。
+然后会在 dashboard 目录下生成一个 dist 文件夹，将文件夹下内容复制到 nginx 的 html 文件夹内。
+参考以下内容配置你的 nginx 的 nginx.conf 文件。
+
 [source,bash]
 ----
 http {
@@ -89,7 +100,7 @@ http {
 	   location / {
 			 try_files $uri $uri/ /index.html;
 			 index index.html;
-			 root /data/static/;   # 前端打包后的存储位置
+			 root /data/static/;   # 前端打包后的存储位置，注意，要根据自己的 Nginx 相应变动，不是所有的都是这个路径下哦
 			 allow all;
 	   }
 	   location ^~ /rest/ {
@@ -107,5 +118,5 @@ http {
 
 [TIP]
 ====
-注意修改env文件的配置
+注意修改env文件的配置，Nginx 配置需要根据自己的实际情况进行修改，这里只是一个参考。
 ====

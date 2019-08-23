@@ -21,7 +21,7 @@ app-version
 └───modules
 │   └───app-version-common (公共代码 实体类 工具类等)
 │   └───app-version-manager (后台管理模块)
-│   └───app-version-rest (与APP交互的Rest接口模块)
+│   └───app-version-rest (与APP交互的 Rest 接口模块)
 └───web
 │   └───dashboard (前端)
 └───src
@@ -55,6 +55,16 @@ image::show1.png[]
 image::show2.png[]
 
 === 答疑帮助
+
+* 链接地址对的，但是请求返回 <没有权限访问该地址，请先登录> 提示信息？
+
+这个问题可能原因：
+
+1、地址本身就需要登录之后才可以使用
+
+2、地址存在有误，可以确认一下
+
+3、数据库表没有成功初始化
 
 NOTE: 有时候邮件回复的不是那么及时，推荐微信。
 

@@ -1,0 +1,45 @@
+== Docker Started
+
+
+=== 使用
+
+==== 安装 Docker
+
+前往官网下载：https://docs.docker.com/
+
+==== 安装 Docker Compose
+
+前往官网下载：https://docs.docker.com/compose/install/
+
+==== 安装 Java
+
+前往官网下载：https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+
+==== 安装 Maven
+
+前往官网下载：https://maven.apache.org/download.cgi
+
+==== 启动服务
+
+[source,shell]
+----
+
+# 项目路径下
+sh ./docker-run.sh
+
+----
+
+==== 初始化数据表
+
+执行 `bin/sql` 目录下 SQL 脚本。
+
+
+==== 访问 http://localhost:8088 , 注册/登录
+
+==== 创建应用
+
+创建应用：`管理员 > 应用管理 > 添加应用`
+
+用户绑定应用：`管理员 > 用户管理 > 绑定应用`
+
+更加详细的请参见【使用手册】

@@ -36,7 +36,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         String authorization = request.getHeader("Authorization");
         if (StringUtils.isEmpty(authorization)) {
-            this.print(response, ServiceResult.failed(1003, "没有Authorization").toString());
+            this.print(response, ServiceResult.failed(1003, "没有权限访问该地址，请先登录").toString());
             return false;
         }
         if (authorization.startsWith("Bearer ")) {
