@@ -64,7 +64,7 @@ services:
       - TZ=Asia/Shanghai
       - APP_PROFILE=dev
   web:
-    image: nginx:test
+    image: nginx:latest
     container_name: app-version-web
     ports:
       - "8088:80"
