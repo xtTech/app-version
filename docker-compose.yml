@@ -33,7 +33,7 @@ services:
       - ./tmp/redis/:/var/lib/redis/
     restart: always
   managerservice:
-    image: zoeminghong/app-version-manager
+    image: app/app-version-manager
     container_name: app-version-manager
     ports:
       - "8086:8086"
@@ -49,7 +49,7 @@ services:
       - APP_PROFILE=dev
 
   restservice:
-    image: zoeminghong/app-version-rest
+    image: app/app-version-rest
     container_name: app-version-rest
     ports:
       - "8084:8084"
