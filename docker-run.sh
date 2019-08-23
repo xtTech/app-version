@@ -10,4 +10,10 @@ cd ../app-version-rest
 
 mvn clean package -Dmaven.test.skip=true -P fatjar docker:build
 
+cd ../../web/dashboard
+
+npm install
+
+npm run build:dev
+
 docker-compose up -d

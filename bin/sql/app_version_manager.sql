@@ -1,22 +1,5 @@
-/*
- Navicat Premium Data Transfer
+use app_version_manager;
 
- Source Server Type    : MySQL
- Source Schema         : app_version_manager_open_source
-
- Target Server Type    : MySQL
- Target Server Version : 50718
- File Encoding         : 65001
-
- Date: 27/02/2019 15:28:24
-*/
-
--- SET NAMES utf8mb4;
--- SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for access_log
--- ----------------------------
 DROP TABLE IF EXISTS `access_log`;
 CREATE TABLE `access_log`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -41,9 +24,7 @@ CREATE TABLE `access_log`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for android_version
--- ----------------------------
+
 DROP TABLE IF EXISTS `android_version`;
 CREATE TABLE `android_version`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -64,9 +45,7 @@ CREATE TABLE `android_version`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for apk
--- ----------------------------
+
 DROP TABLE IF EXISTS `apk`;
 CREATE TABLE `apk`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -84,9 +63,6 @@ CREATE TABLE `apk`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for apk_download_record
--- ----------------------------
 DROP TABLE IF EXISTS `apk_download_record`;
 CREATE TABLE `apk_download_record`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -103,9 +79,7 @@ CREATE TABLE `apk_download_record`  (
   INDEX `version_idx`(`app_id`, `version_id`) USING BTREE COMMENT '版本的索引'
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for app
--- ----------------------------
+
 DROP TABLE IF EXISTS `app`;
 CREATE TABLE `app`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -119,9 +93,6 @@ CREATE TABLE `app`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for channel
--- ----------------------------
 DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -139,9 +110,6 @@ CREATE TABLE `channel`  (
   UNIQUE INDEX `unique_app_channel_code`(`app_id`, `channel_code`) USING BTREE COMMENT '某个app不可以有重复的渠道码'
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for chat_bot
--- ----------------------------
 DROP TABLE IF EXISTS `chat_bot`;
 CREATE TABLE `chat_bot`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -157,9 +125,7 @@ CREATE TABLE `chat_bot`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for custom_api
--- ----------------------------
+
 DROP TABLE IF EXISTS `custom_api`;
 CREATE TABLE `custom_api`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -182,9 +148,7 @@ CREATE TABLE `custom_api`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for ios_version
--- ----------------------------
+
 DROP TABLE IF EXISTS `ios_version`;
 CREATE TABLE `ios_version`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -206,9 +170,7 @@ CREATE TABLE `ios_version`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for operation_record_log
--- ----------------------------
+
 DROP TABLE IF EXISTS `operation_record_log`;
 CREATE TABLE `operation_record_log`  (
   `id` int(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '操作记录id主键',
@@ -228,9 +190,6 @@ CREATE TABLE `operation_record_log`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作记录日志表' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for rn_package
--- ----------------------------
 DROP TABLE IF EXISTS `rn_package`;
 CREATE TABLE `rn_package`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -253,9 +212,6 @@ CREATE TABLE `rn_package`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'RN包版本明细表' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for rn_route
--- ----------------------------
 DROP TABLE IF EXISTS `rn_route`;
 CREATE TABLE `rn_route`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '路由id主键',
@@ -278,9 +234,6 @@ CREATE TABLE `rn_route`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'RN路由地址明细表' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for user
--- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户ID',
@@ -294,9 +247,6 @@ CREATE TABLE `user`  (
   UNIQUE INDEX `idx_phone`(`phone`) USING BTREE COMMENT '手机号唯一索引'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for user_app_rel
--- ----------------------------
 DROP TABLE IF EXISTS `user_app_rel`;
 CREATE TABLE `user_app_rel`  (
   `user_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户ID',
@@ -305,4 +255,3 @@ CREATE TABLE `user_app_rel`  (
   PRIMARY KEY (`user_id`, `app_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
--- SET FOREIGN_KEY_CHECKS = 1;
