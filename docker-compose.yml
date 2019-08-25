@@ -15,6 +15,7 @@ services:
     command: [
       '--character-set-server=utf8mb4',
       '--collation-server=utf8mb4_unicode_ci',
+      '--lower_case_table_names=1',
       '--default-time-zone=+8:00']
     environment:
       MYSQL_DATABASE: app_version_manager
