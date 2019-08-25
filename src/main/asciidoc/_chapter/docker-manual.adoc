@@ -19,6 +19,10 @@
 
 前往官网下载：https://maven.apache.org/download.cgi
 
+==== 安装 NodeJS
+
+前往官网下载：https://nodejs.org/zh-cn/download/current/
+
 ==== 启动服务
 
 [source,shell]
