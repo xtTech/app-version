@@ -85,7 +85,7 @@ cd web/dashboard
 npm install
 
 # 这里以生产为例，还存在 development、test、uat
-npm build:production
+npm run build:prod  # 使用此命令，请修改.env.production文件中的配置
 ----
 然后会在 dashboard 目录下生成一个 dist 文件夹，将文件夹下内容复制到 nginx 的 html 文件夹内。
 参考以下内容配置你的 nginx 的 nginx.conf 文件。
