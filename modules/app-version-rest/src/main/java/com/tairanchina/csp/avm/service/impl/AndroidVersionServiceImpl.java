@@ -80,10 +80,6 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
                 String androidVersionMin = a.getAppVersion();
                 if (VersionCompareUtils.compareVersion(version, androidVersionMin) >= 0) {
                     androidVersionsResult.remove(a);
-                } else {
-                    if(a.getUpdateType().equals(0)) {
-                        forceUpdate.set(true);
-                    }
                 }
             }
         }
