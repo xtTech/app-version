@@ -85,6 +85,10 @@ image::https://raw.githubusercontent.com/birdmichael/app-version-swift/master/sh
 
 3、数据库表没有成功初始化
 
+* OSS 跨域问题
+
+https://help.aliyun.com/video_detail/39695.html?spm=5176.10695662.1996646101.searchclickresult.791c4a496p15UY
+
 NOTE: 有时候邮件回复的不是那么及时，推荐微信。
 
 微信: zoeminghong （备注：APP 管理系统）
