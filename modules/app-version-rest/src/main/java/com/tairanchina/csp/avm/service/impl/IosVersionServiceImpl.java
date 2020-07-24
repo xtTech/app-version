@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by hzlizx on 2018/6/21 0021
@@ -54,6 +55,8 @@ public class IosVersionServiceImpl implements IosVersionService {
         }
         // 将查询结果再次进行筛选，选出大于传入version的版本，然后再找出最新版本
         List<IosVersion> iosVersionsResult = new LinkedList<>();
+        //是否强制更新
+        AtomicBoolean forceUpdate = new AtomicBoolean(false);
         iosVersionsResult.addAll(iosVersions);
         iosVersions.forEach(iosVersion -> logger.debug(iosVersion.getAppVersion()));
         if (VersionCompareUtils.compareVersion(version, iosVersions.get(iosVersions.size() - 1).getAppVersion()) > 0) {
@@ -71,7 +74,11 @@ public class IosVersionServiceImpl implements IosVersionService {
         }
         logger.debug("查询到的版本：");
         iosVersionsResult.forEach(iosVersion -> logger.debug(iosVersion.getAppVersion()));
-
+        iosVersionsResult.forEach(iosVersion -> {
+            if(iosVersion.getUpdateType().equals(0)) {
+                forceUpdate.set(true);
+            }
+        });
         IosVersion iosVersion = iosVersionsResult.get(0);
         logger.debug("当前最新版本为：{}", iosVersion.getAppVersion());
 
@@ -80,7 +87,7 @@ public class IosVersionServiceImpl implements IosVersionService {
         map.put("allowLowestVersion", iosVersion.getAllowLowestVersion());
         map.put("appStoreUrl", iosVersion.getAppStoreUrl());
         map.put("description", iosVersion.getVersionDescription());
-        map.put("forceUpdate", iosVersion.getUpdateType());
+        map.put("forceUpdate", forceUpdate.get() ? 0 : iosVersion.getUpdateType());
         map.put("version", iosVersion.getAppVersion());
         ServiceResult ok = ServiceResult.ok(map);
         logger.debug("结果：{}", $.json.toJsonString(ok));
