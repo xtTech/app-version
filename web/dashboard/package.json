@@ -17,6 +17,7 @@
     "axios": "^0.18.0",
     "co": "^4.6.0",
     "codemirror": "^5.39.0",
+    "cos-js-sdk-v5": "^0.5.27",
     "filesize": "^3.6.1",
     "iview": "^3.2.2",
     "js-beautify": "^1.7.5",
