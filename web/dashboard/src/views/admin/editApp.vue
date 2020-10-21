@@ -76,11 +76,11 @@ export default {
             if (response.data.code !== 200) {
                 this.$Notice.error({
                     title: '错误',
-                    desc: response.message
+                    desc: response.data.info
                 });
                 this.$emit('close-edit-modal');
             } else {
-                let data = response.data.data;
+                let data = response.data.record;
                 this.disabledAppId = data.id;
                 this.editForm = {
                     appName: data.appName,
@@ -122,7 +122,7 @@ export default {
                     if (response.code === 200) {
                         this.$Notice.success({
                             title: '请求成功',
-                            desc: `${eventText}应用 ${response.data.appName} 成功`
+                            desc: `${eventText}应用 ${response.record.appName} 成功`
                         });
 
                         if (this.isEdit) {
@@ -143,7 +143,7 @@ export default {
                     } else {
                         this.$Notice.error({
                             title: '请求失败',
-                            desc: response.message
+                            desc: response.info
                         });
                     }
                 };

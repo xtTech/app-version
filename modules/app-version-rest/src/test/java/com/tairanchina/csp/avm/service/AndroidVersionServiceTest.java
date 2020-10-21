@@ -30,38 +30,38 @@ public class AndroidVersionServiceTest extends BaseTest {
         if ("android".equalsIgnoreCase(platform)) {
             ServiceResult serviceResult = androidVersionService.findNewestVersion(tenantAppId, version, channelCode);
             if (serviceResult.getCode() == 200) {
-                HashMap<String, Object> data = (HashMap<String, Object>) serviceResult.getData();
+                HashMap<String, Object> data = (HashMap<String, Object>) serviceResult.getRecord();
                 String downloadUrl = (String) data.get("downloadUrl");
                 downloadUrl = baseUrl + downloadUrl;
                 data.put("downloadUrl", downloadUrl);
             }
-            if (serviceResult.getData() != null) {
-                logger.info(serviceResult.getData().toString());
+            if (serviceResult.getRecord() != null) {
+                logger.info(serviceResult.getRecord().toString());
             }
         }
 
         channelCode = "aaaa2";
         ServiceResult serviceResult = androidVersionService.findNewestVersion(tenantAppId, version, channelCode);
-        if (serviceResult.getData() != null) {
-            logger.info(serviceResult.getData().toString());
+        if (serviceResult.getRecord() != null) {
+            logger.info(serviceResult.getRecord().toString());
         }
 
         channelCode = "aaaa3";
         serviceResult = androidVersionService.findNewestVersion(tenantAppId, version, channelCode);
-        if (serviceResult.getData() != null) {
-            logger.info(serviceResult.getData().toString());
+        if (serviceResult.getRecord() != null) {
+            logger.info(serviceResult.getRecord().toString());
         }
 
         channelCode = "";
         serviceResult = androidVersionService.findNewestVersion(tenantAppId, version, channelCode);
-        if (serviceResult.getData() != null) {
-            logger.info(serviceResult.getData().toString());
+        if (serviceResult.getRecord() != null) {
+            logger.info(serviceResult.getRecord().toString());
         }
 
         channelCode = "qudaotest";
         serviceResult = androidVersionService.findNewestVersion(tenantAppId, version, channelCode);
-        if (serviceResult.getData() != null) {
-            logger.info(serviceResult.getData().toString());
+        if (serviceResult.getRecord() != null) {
+            logger.info(serviceResult.getRecord().toString());
         }
     }
 
@@ -69,14 +69,14 @@ public class AndroidVersionServiceTest extends BaseTest {
     public void getDownloadUrl() throws Exception {
         Integer apkId = 38;
         ServiceResult serviceResult = androidVersionService.getDownloadUrl(apkId);
-        if (serviceResult.getData() != null) {
-            logger.info(serviceResult.getData().toString());
+        if (serviceResult.getRecord() != null) {
+            logger.info(serviceResult.getRecord().toString());
         }
 
         apkId = 9999999;
         serviceResult = androidVersionService.getDownloadUrl(apkId);
-        if (serviceResult.getData() != null) {
-            logger.info(serviceResult.getData().toString());
+        if (serviceResult.getRecord() != null) {
+            logger.info(serviceResult.getRecord().toString());
         }
     }
 

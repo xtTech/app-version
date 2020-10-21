@@ -34,20 +34,20 @@ public class ApkServiceTest extends BaseTest {
         Apk apk = new Apk();
         ServiceResult serviceResult = channelService.findByChannelCode(uploadFileEntity.getChannel());
         if (serviceResult.getCode() == 200) {
-            Channel channel = (Channel) serviceResult.getData();
+            Channel channel = (Channel) serviceResult.getRecord();
             apk.setChannelId(channel.getId());
             apk.setVersionId(uploadFileEntity.getVersionId());
             apk.setOssUrl(uploadFileEntity.getOssUrl());
             apk.setMd5(uploadFileEntity.getMd5());
             ServiceResult result = apkService.create(apk);
-            if (result.getData() != null) {
-                logger.info(result.getData().toString());
+            if (result.getRecord() != null) {
+                logger.info(result.getRecord().toString());
             }
         } else {
             logger.info("找不到Channel");
             ServiceResult.failed(
                     ServiceResultConstants.APK_SAVE_ERROR.getCode(),
-                    "文件[ " + uploadFileEntity.getFileName() + " ]录入失败，原因：" + serviceResult.getMessage()
+                    "文件[ " + uploadFileEntity.getFileName() + " ]录入失败，原因：" + serviceResult.getInfo()
             );
         }
     }
@@ -72,21 +72,21 @@ public class ApkServiceTest extends BaseTest {
         }
         wrapper.and().eq("del_flag", 0);
         ServiceResult result = apkService.list(1, 2, wrapper, versionId);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         md5 = "dsgfggggggggggg";
         wrapper.and().like("md5", "%" + md5 + "%");
         result = apkService.list(1, 2, wrapper, versionId);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         versionId = 9999999;
         result = apkService.list(1, 2, wrapper, versionId);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -94,20 +94,20 @@ public class ApkServiceTest extends BaseTest {
     public void delivery() throws Exception {
         Integer id = 32;
         ServiceResult result = apkService.delivery(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 45465454;
         result = apkService.delivery(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 27;
         result = apkService.delivery(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -115,20 +115,20 @@ public class ApkServiceTest extends BaseTest {
     public void undelivery() throws Exception {
         Integer id = 32;
         ServiceResult result = apkService.undelivery(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 45465454;
         result = apkService.undelivery(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 27;
         result = apkService.undelivery(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -136,20 +136,20 @@ public class ApkServiceTest extends BaseTest {
     public void delete() throws Exception {
         Integer id = 32;
         ServiceResult result = apkService.delete(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 45465454;
         result = apkService.delete(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 27;
         result = apkService.delete(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -158,20 +158,20 @@ public class ApkServiceTest extends BaseTest {
         String channelCode = "qudao";
         Integer versionId = 14;
         ServiceResult result = apkService.exists(channelCode, versionId);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         channelCode = "dsfdfdffds";
         result = apkService.exists(channelCode, versionId);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         channelCode = "aaaa2";
         result = apkService.exists(channelCode, versionId);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -182,14 +182,14 @@ public class ApkServiceTest extends BaseTest {
         String md5 = "";
         Integer deliveryStatus = null;
         ServiceResult result = apkService.getApkPageWithChannelCode(1, 10, versionId, channelCode, md5, deliveryStatus);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         versionId = 999999;
         result = apkService.getApkPageWithChannelCode(1, 10, versionId, channelCode, md5, deliveryStatus);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 

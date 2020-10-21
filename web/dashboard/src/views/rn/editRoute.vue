@@ -259,7 +259,7 @@ export default {
                 });
                 this.$emit('close-edit-modal');
             } else {
-                let data = response.data.data;
+                let data = response.data.record;
                 this.editForm = {
                     iosEnabled: data.iosEnabled === 1,
                     androidEnabled: data.androidEnabled === 1,

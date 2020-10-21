@@ -66,8 +66,8 @@ public class BasicServiceTest extends BaseTest {
         customApi.setCustomContent("content");
         customApi.setCustomKey("key");
         ServiceResult result = basicService.checkVersion(customApi);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 

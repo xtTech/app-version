@@ -21,14 +21,14 @@ public class CustomApiServiceTest extends BaseTest {
         String platfrom = "ios";
         String version = "1.0.0.0.1";
         ServiceResult result = customApiService.getCustomContent(tenantAppId, key, platfrom, version);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         platfrom = "android";
         result = customApiService.getCustomContent(tenantAppId, key, platfrom, version);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 

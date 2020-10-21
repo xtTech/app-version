@@ -1,13 +1,12 @@
 spring:
   profiles:
-    active: dev
+    active: pro
   application:
     name: app-version-rest
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     joda-date-time-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-
 
 #mybatis
 mybatis-plus:
@@ -46,7 +45,6 @@ dew:
     desc: 负责公司APP的版本信息，RN路由等信息的管理
     web-site: app.com
 
-
-logging:
-  file: avr.log
-  path: ./logs
+#logging:
+#  file: avr.log
+#  path: ./logs

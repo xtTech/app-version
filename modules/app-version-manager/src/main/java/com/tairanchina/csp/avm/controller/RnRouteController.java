@@ -79,7 +79,7 @@ public class RnRouteController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PostMapping
-    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.RN_ROUTE, description = OperationRecordLog.OperationDescription.CREATE_RN_ROUTE)
+    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.RN_ROUTE, description = OperationRecordLog.OperationDescription.CREATE_RN_ROUTE,content="添加RN路由")
     public ServiceResult create(@RequestBody RnRouteRequestDTO rnRouteRequestDTO) {
         if (StringUtilsExt.hasBlank(
                 rnRouteRequestDTO.getRouteName(),
@@ -102,7 +102,7 @@ public class RnRouteController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.RN_ROUTE, description = OperationRecordLog.OperationDescription.UPDATE_RN_ROUTE)
+    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.RN_ROUTE, description = OperationRecordLog.OperationDescription.UPDATE_RN_ROUTE,content="修改RN路由")
     public ServiceResult update(@PathVariable int id, @RequestBody RnRouteRequestDTO rnRouteRequestDTO) {
         if (id < 1) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -123,7 +123,7 @@ public class RnRouteController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @DeleteMapping("/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.RN_ROUTE, description = OperationRecordLog.OperationDescription.DELETE_RN_ROUTE)
+    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.RN_ROUTE, description = OperationRecordLog.OperationDescription.DELETE_RN_ROUTE,content="删除RN路由")
     public ServiceResult delete(@PathVariable int id) {
         if (id < 1) {
             return ServiceResultConstants.NEED_PARAMS;

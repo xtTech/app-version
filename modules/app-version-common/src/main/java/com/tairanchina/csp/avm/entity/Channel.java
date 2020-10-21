@@ -1,11 +1,12 @@
-package com.tairanchina.csp.avm.entity;
 
+package com.tairanchina.csp.avm.entity;
 
 /**
  * 渠道
  * Created by hzlizx on 2018/6/6 0006
  */
 public class Channel extends BasicEntity {
+
     private Integer id;
     private Integer appId;
     private String channelName;
@@ -13,6 +14,7 @@ public class Channel extends BasicEntity {
     private Integer channelType;
     private Integer delFlag;
     private Integer channelStatus;
+    private String uploadFolder; //上传文件夹
 
     public Integer getChannelType() {
         return channelType;
@@ -69,4 +71,13 @@ public class Channel extends BasicEntity {
     public void setChannelStatus(Integer channelStatus) {
         this.channelStatus = channelStatus;
     }
+
+    public String getUploadFolder() {
+        return uploadFolder;
+    }
+
+    public void setUploadFolder(String uploadFolder) {
+        this.uploadFolder = uploadFolder;
+    }
+
 }

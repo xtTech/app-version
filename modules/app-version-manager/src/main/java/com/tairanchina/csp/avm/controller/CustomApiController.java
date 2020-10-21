@@ -86,7 +86,7 @@ public class CustomApiController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PostMapping("/add")
-    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.CUSTOM_API, description = OperationRecordLog.OperationDescription.CREATE_CUSTOM_API)
+    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.CUSTOM_API, description = OperationRecordLog.OperationDescription.CREATE_CUSTOM_API,content="添加自定义接口")
     public ServiceResult addCustomApi(@Valid @RequestBody CustomApiRequestDTO customApiRequestDTO) {
         if (StringUtils.isBlank(customApiRequestDTO.getCustomKey())) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -111,7 +111,7 @@ public class CustomApiController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/update/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.CUSTOM_API, description = OperationRecordLog.OperationDescription.UPDATE_CUSTOM_API)
+    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.CUSTOM_API, description = OperationRecordLog.OperationDescription.UPDATE_CUSTOM_API,content="修改自定义接口")
     public ServiceResult updateCustomApi(@PathVariable Integer id, @Valid @RequestBody CustomApiRequestDTO customApiRequestDTO) {
         if (1 > id) {
             return ServiceResult.failed(40001, "id不正确");
@@ -142,7 +142,7 @@ public class CustomApiController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @DeleteMapping("/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.DELETE_FOREVER, resource = OperationRecordLog.OperationResource.CUSTOM_API, description = OperationRecordLog.OperationDescription.DELETE_FOREVER_CUSTOM_API)
+    @OperationRecord(type = OperationRecordLog.OperationType.DELETE_FOREVER, resource = OperationRecordLog.OperationResource.CUSTOM_API, description = OperationRecordLog.OperationDescription.DELETE_FOREVER_CUSTOM_API,content="永久删除自定义接口")
     public ServiceResult deleteCustomApiForver(@PathVariable Integer id) {
         return customApiService.deleteCustomApiForver(id);
     }
@@ -162,7 +162,7 @@ public class CustomApiController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.CUSTOM_API, description = OperationRecordLog.OperationDescription.DELETE_CUSTOM_API)
+    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.CUSTOM_API, description = OperationRecordLog.OperationDescription.DELETE_CUSTOM_API,content="删除自定义接口")
     public ServiceResult deleteCustomApi(@PathVariable Integer id) {
         return customApiService.deleteCustomApi(id);
     }

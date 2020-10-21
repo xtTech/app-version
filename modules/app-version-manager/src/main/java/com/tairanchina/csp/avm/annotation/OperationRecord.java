@@ -15,4 +15,6 @@ public @interface OperationRecord {
 
     OperationRecordLog.OperationDescription description();
 
+    String content();
+
 }

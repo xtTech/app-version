@@ -45,7 +45,7 @@ public class AppController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
-    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.APP, description = OperationRecordLog.OperationDescription.CREATE_APP)
+    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.APP, description = OperationRecordLog.OperationDescription.CREATE_APP,content="添加APP")
     @PostMapping
     public ServiceResult createApp(@RequestBody AppRequestDTO appRequestDTO){
         return appService.createApp(appRequestDTO.getAppName(), appRequestDTO.getTenantAppId());

@@ -2,7 +2,7 @@ package com.tairanchina.csp.avm.controller;
 
 import com.ecfront.dew.common.$;
 import com.tairanchina.csp.avm.entity.LoginInfo;
-import com.tairanchina.csp.avm.AppVersionManagerApplication;
+import com.tairanchina.AppVersionManagerApplication;
 import com.tairanchina.csp.avm.utils.ThreadLocalUtils;
 import org.junit.Before;
 import org.junit.Test;

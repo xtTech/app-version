@@ -21,19 +21,19 @@ public class RnServiceTest extends BaseTest {
         String platform = "ios";
         Integer status = 1;
         ServiceResult result = rnService.route(version, tenantAppId, platform, status);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         platform = "android";
         result = rnService.route(version, tenantAppId, platform, status);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
         platform = "2323";
         result = rnService.route(version, tenantAppId, platform, status);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -44,20 +44,20 @@ public class RnServiceTest extends BaseTest {
         String platform = "ios";
         Integer status = 1;
         ServiceResult result = rnService.bundles(version, tenantAppId, platform, status);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         tenantAppId = "ghgfhfgdhg";
         result = rnService.bundles(version, tenantAppId, platform, status);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         platform = "android";
         result = rnService.bundles(version, tenantAppId, platform, status);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 

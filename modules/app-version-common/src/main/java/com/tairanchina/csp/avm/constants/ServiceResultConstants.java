@@ -17,7 +17,11 @@ public class ServiceResultConstants {
     public static final ServiceResult RESOURCE_NOT_BELONG_APP = ServiceResult.failed(1005, "所操作的资源不属于该应用");
     public static final ServiceResult USER_NOT_FOUND = ServiceResult.failed(1006, "找不到该用户");
     public static final ServiceResult WRONG_PHONE_PASSWORD = ServiceResult.failed(1007, "手机号或者密码错误");
+    public static final ServiceResult WRONG_USER_DISABLE = ServiceResult.failed(1007, "用户被禁用");
+    public static final ServiceResult WRONG_USER_DEL = ServiceResult.failed(1007, "用户已删除");
+
     public static final ServiceResult JWT_ERROR = ServiceResult.failed(1008, "令牌不合法，请重新登录");
+
 
     /**
      * 注册错误
@@ -60,6 +64,7 @@ public class ServiceResultConstants {
     public static final ServiceResult CUSTOM_API_NOT_EXISTS = ServiceResult.failed(20019, "该自定义接口不存在");
     public static final ServiceResult OPERATION_LOG_NOT_EXISTS = ServiceResult.failed(20020, "该操作记录不存在");
     public static final ServiceResult APK_EXISTS = ServiceResult.failed(20021, "APK包已经存在");
+    public static final ServiceResult APK_EXISTS_WITH_CHANNEL = ServiceResult.failed(20221, "APK包已经关联渠道码");
     public static final ServiceResult WHITE_LIST_BATCH_EXISTS = ServiceResult.failed(20022, "该白名单组的名称已存在");
     public static final ServiceResult WHITE_LIST_BATCH_ERROR = ServiceResult.failed(20023, "白名单组对应的名称存在多个");
     public static final ServiceResult WHITE_LIST_NOT_EXISITS = ServiceResult.failed(20024, "白名单（组）不存在");
@@ -86,6 +91,7 @@ public class ServiceResultConstants {
      */
     public static final ServiceResult PLATFORM_ERROR = ServiceResult.failed(30001, "请指定查询的版本iOS还是Andorid版本");
     public static final ServiceResult NO_NEW_VERSION = ServiceResult.failed(30002, "查询不到新版本或者新版本未上架，没有更新的版本");
+    public static final ServiceResult NO_EXISTS_VERSION = ServiceResult.failed(30009, "版本号不存在");
     public static final ServiceResult CHANNEL_STATUS_2 = ServiceResult.failed(30003, "当前渠道已经被废弃，请联系管理员");
     public static final ServiceResult CHANNEL_STATUS_3 = ServiceResult.failed(30004, "当前渠道已经被停用，请联系管理员");
     public static final ServiceResult APK_NOT_EXISTS_EXT = ServiceResult.failed(30005, "该渠道还没有上传APK包，请联系管理员");

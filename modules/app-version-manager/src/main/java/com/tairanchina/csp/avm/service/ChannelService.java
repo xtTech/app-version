@@ -10,13 +10,26 @@ import com.tairanchina.csp.avm.entity.Channel;
  */
 public interface ChannelService {
 
-    /**
+    /****
      * 创建渠道
      * @param channelName   渠道名称
      * @param channelCode   渠道号
+     * @param channelType   渠道类型
+     * @param uploadFolder   上传文件夹
      * @return              是否成功
-     */
-    ServiceResult createChannel(String channelName, String channelCode, Integer channelType);
+     ****/
+    ServiceResult createChannel(String channelName, String channelCode, Integer channelType,String uploadFolder);
+
+    /****
+     * 编辑渠道
+     * @param channelId
+     * @param channelName
+     * @param channelCode
+     * @param channelType
+     * @param uploadFolder
+     * @return
+     ****/
+    ServiceResult editChannel(Integer channelId,String channelName, String channelCode, Integer channelType,String uploadFolder);
 
     /**
      * 删除渠道（软删除）
@@ -69,4 +82,27 @@ public interface ChannelService {
      * @return              渠道信息
      */
     ServiceResult findByChannelCode(String channelCode);
+
+   /****
+    * 根据channelId找到Channel
+    * @param channelId   渠道ID
+    * @return            渠道信息
+    ****/
+    Channel findChannelByChannelId(int channelId);
+
+   /****
+    *
+    * @param channelCode   渠道码
+    * @return              渠道信息
+    ****/
+    Channel findChannelByChannelCode(String channelCode);
+
+    /****
+     * 根据appId和channelCode找到Channel
+     * @param appId：渠道ID
+     * @param channelCode: 渠道编码
+     * @return
+     ****/
+    Channel findChannelByChannelCode(Integer appId,String channelCode);
+
 }

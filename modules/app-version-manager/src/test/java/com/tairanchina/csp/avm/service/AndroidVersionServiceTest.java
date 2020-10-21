@@ -48,8 +48,8 @@ public class AndroidVersionServiceTest extends BaseTest {
             logger.info("VERSION_TOO_LONG");
         }
         ServiceResult result = androidVersionService.createAndroidVersion(androidVersion);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
     }
@@ -58,8 +58,8 @@ public class AndroidVersionServiceTest extends BaseTest {
     public void deleteAndroidVersion() throws Exception {
         Integer id = 14;
         ServiceResult result = androidVersionService.deleteAndroidVersion(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -67,8 +67,8 @@ public class AndroidVersionServiceTest extends BaseTest {
     public void deleteAndroidVersionForever() throws Exception {
         Integer id = 14;
         ServiceResult result = androidVersionService.deleteAndroidVersionForever(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -86,8 +86,8 @@ public class AndroidVersionServiceTest extends BaseTest {
             logger.info("ALLOWLOWESTVERSION_BIG_THAN_APPVERSION");
         }
         ServiceResult result = androidVersionService.updateAndroidVersion(androidVersion);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -110,8 +110,8 @@ public class AndroidVersionServiceTest extends BaseTest {
             wrapper.and().eq("version_status", versionStatus);
         }
         ServiceResult result = androidVersionService.list(1, 1, wrapper);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -119,16 +119,16 @@ public class AndroidVersionServiceTest extends BaseTest {
     public void findById() throws Exception {
         Integer id = 14;
         ServiceResult result = androidVersionService.findById(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
     @Test
     public void listAllVersion() throws Exception {
         ServiceResult result = androidVersionService.listAllVersion();
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -136,8 +136,8 @@ public class AndroidVersionServiceTest extends BaseTest {
     public void delivery() throws Exception {
         Integer id = 14;
         ServiceResult result = androidVersionService.delivery(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -145,20 +145,20 @@ public class AndroidVersionServiceTest extends BaseTest {
     public void undelivery() throws Exception {
         Integer id = 14;
         ServiceResult result = androidVersionService.undelivery(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 44444;
         result = androidVersionService.undelivery(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 8;
         result = androidVersionService.undelivery(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 

@@ -1,6 +1,8 @@
 package com.tairanchina.csp.avm.dto;
 
-import com.ecfront.dew.common.$;
+//import com.ecfront.dew.common.$;
+
+import cn.hutool.json.JSONUtil;
 
 /**
  * Service返回
@@ -14,18 +16,18 @@ public class ServiceResult {
      * data     需要封装往前台传的对象
      */
     private int code;
-    private String message;
-    private Object data;
+    private String info;
+    private Object record;
 
-    public ServiceResult(int code, String message, Object data) {
+    public ServiceResult(int code, String info, Object record) {
         this.code = code;
-        this.message = message;
-        this.data = data;
+        this.info = info;
+        this.record = record;
     }
 
-    public ServiceResult(int code, String message) {
+    public ServiceResult(int code, String info) {
         this.code = code;
-        this.message = message;
+        this.info = info;
     }
 
     public int getCode() {
@@ -37,27 +39,31 @@ public class ServiceResult {
         return this;
     }
 
-    public String getMessage() {
-        return message;
+    public String getInfo() {
+        return info;
     }
 
-    public ServiceResult setMessage(String message) {
-        this.message = message;
+    public ServiceResult setInfo(String info) {
+        this.info = info;
         return this;
     }
 
-    public Object getData() {
-        return data;
+    public Object getRecord() {
+        return record;
     }
 
-    public ServiceResult setData(Object data) {
-        this.data = data;
+    public ServiceResult setRecord(Object record) {
+        this.record = record;
         return this;
     }
 
-    public static ServiceResult ok(Object data) {
+    public static ServiceResult ok() {
         ServiceResult serviceResult = new ServiceResult(200, "请求成功");
-        serviceResult.setData(data);
+        return serviceResult;
+    }
+    public static ServiceResult ok(Object record) {
+        ServiceResult serviceResult = new ServiceResult(200, "请求成功");
+        serviceResult.setRecord(record);
         return serviceResult;
     }
 
@@ -65,11 +71,15 @@ public class ServiceResult {
         ServiceResult serviceResult = new ServiceResult(code, message);
         return serviceResult;
     }
+    public static ServiceResult failed() {
+        ServiceResult serviceResult = new ServiceResult(-1, "请求失败");
+        return serviceResult;
+    }
 
 
     @Override
     public String toString() {
-        return $.json.toJsonString(this);
+        return JSONUtil.toJsonStr(this);
     }
 
 }

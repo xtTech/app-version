@@ -39,6 +39,152 @@ public class UserServiceImpl implements UserService {
     private TokenService tokenService;
 
     @Override
+    public ServiceResult getUser(String userId) {
+        EntityWrapper userEntityWrapper = new EntityWrapper<>();
+        userEntityWrapper.eq(true,"user_id", userId);
+        List<User> userList = userMapper.selectList(userEntityWrapper);
+        if(userList==null || userList.size()==0){
+            return ServiceResultConstants.USER_NOT_FOUND;
+        }
+        if (userList.size()>0) {
+            return ServiceResult.ok(userList.get(0));
+        } else {
+            return ServiceResultConstants.DB_ERROR;
+        }
+    }
+
+    @Override
+    public ServiceResult addUser(String phone, String userName, String password, String nickName) {
+        if (StringUtilsExt.hasEmpty(password, phone)) {
+            return ServiceResultConstants.NEED_PARAMS;
+        }
+        EntityWrapper<User> userEntityWrapper = new EntityWrapper<>();
+        userEntityWrapper.eq("phone", phone);
+        Integer integer = userMapper.selectCount(userEntityWrapper);
+        if (integer > 0) {
+            return ServiceResultConstants.USER_EXISTS;
+        }
+        User user = new User();
+        user.setDelFlag(0); //启用用户
+        user.setIsAdmin(0); //添加的用户为非管理员角色
+        user.setUserId($.field.createUUID());
+        user.setUsername(userName);
+        user.setFirstLoginTime(new Date());
+        user.setPhone(phone);
+        if(StringUtils.isNotEmpty(nickName)){
+           user.setNickName(nickName);
+        }else{
+           user.setNickName(phone);
+        }
+        try {
+            String md5 = $.security.digest.digest(password + phone, ALGORITHM); // 加盐算法
+            user.setPassword(md5);
+            Integer insert = userMapper.insert(user);
+            if (insert > 0) {
+                return ServiceResult.ok(user);
+            } else {
+                return ServiceResultConstants.DB_ERROR;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            logger.error("密码加密出错", e);
+            return ServiceResultConstants.ERROR_500;
+        }
+    }
+
+    @Override
+    public ServiceResult editUser(String phone, String userName, String nickName, String userId) {
+        EntityWrapper<User> userEntityWrapper = new EntityWrapper<>();
+        userEntityWrapper.where("phone={0}", phone);
+        userEntityWrapper.where("user_id!={0}", userId);
+        Integer integer = userMapper.selectCount(userEntityWrapper);
+        if (integer > 0) {
+            return ServiceResultConstants.USER_EXISTS;
+        }
+
+        userEntityWrapper = new EntityWrapper<>();
+        userEntityWrapper.eq("user_id", userId);
+        List<User> userList = userMapper.selectList(userEntityWrapper);
+        if(userList==null || userList.size()==0){
+            return ServiceResultConstants.USER_NOT_FOUND;
+        }
+        User user=userList.get(0);
+        if(StringUtils.isNotEmpty(userName)){
+           user.setUsername(userName);
+        }
+        user.setFirstLoginTime(new Date());
+        if(StringUtils.isNotEmpty(phone)){
+           user.setPhone(phone);
+        }
+        if(StringUtils.isNotEmpty(nickName)){
+            user.setNickName(nickName);
+        }else{
+            user.setNickName(phone);
+        }
+        EntityWrapper userUpdateWrapper = new EntityWrapper<>();
+        userUpdateWrapper.eq("user_id", userId);
+        Integer update = userMapper.update(user,userUpdateWrapper);
+        if (update > 0) {
+            return ServiceResult.ok(user);
+        } else {
+            return ServiceResultConstants.DB_ERROR;
+        }
+    }
+
+
+
+    @Override
+    public ServiceResult restPwd(String password, String userId) {
+        EntityWrapper<User> userEntityWrapper = new EntityWrapper<>();
+        userEntityWrapper.eq("user_id", userId);
+        List<User> userList = userMapper.selectList(userEntityWrapper);
+        if(userList==null || userList.size()==0){
+            return ServiceResultConstants.USER_NOT_FOUND;
+        }
+        User user=userList.get(0);
+        if(StringUtils.isNotEmpty(password)){
+            try {
+                String phone=user.getPhone();
+                String md5 = $.security.digest.digest(password + phone, ALGORITHM); // 加盐算法
+                user.setPassword(md5);
+            } catch (NoSuchAlgorithmException e) {
+                logger.error("密码加密出错", e);
+                return ServiceResultConstants.ERROR_500;
+            }
+        }
+        user.setFirstLoginTime(new Date());
+        EntityWrapper userUpdateWrapper = new EntityWrapper<>();
+        userUpdateWrapper.eq("user_id", userId);
+        Integer update = userMapper.update(user,userUpdateWrapper);
+        if (update > 0) {
+            return ServiceResult.ok(user);
+        } else {
+            return ServiceResultConstants.DB_ERROR;
+        }
+    }
+
+    @Override
+    public ServiceResult delUser(String userId) {
+
+        EntityWrapper<User> userEntityWrapper = new EntityWrapper<>();
+        userEntityWrapper.eq("user_id", userId);
+        List<User> userList = userMapper.selectList(userEntityWrapper);
+        if(userList==null || userList.size()==0){
+            return ServiceResultConstants.USER_NOT_FOUND;
+        }
+        User user=userList.get(0);
+        user.setFirstLoginTime(new Date());
+        user.setDelFlag(-1); //软删除
+        EntityWrapper userUpdateWrapper = new EntityWrapper<>();
+        userUpdateWrapper.eq("user_id", userId);
+        Integer update = userMapper.update(user,userUpdateWrapper);
+        if (update > 0) {
+            return ServiceResult.ok(user);
+        } else {
+            return ServiceResultConstants.DB_ERROR;
+        }
+    }
+
+    @Override
     public ServiceResult register(String phone, String password) {
         if (StringUtilsExt.hasEmpty(password, phone)) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -51,6 +197,7 @@ public class UserServiceImpl implements UserService {
         }
         Integer count = userMapper.selectCount(new EntityWrapper<>());
         User user = new User();
+        user.setDelFlag(0); //注册用户为启用
         if (count > 0) {
             user.setIsAdmin(0);
         } else {
@@ -83,8 +230,14 @@ public class UserServiceImpl implements UserService {
         User userQuery = new User();
         userQuery.setPhone(phone);
         User user = userMapper.selectOne(userQuery);
-        if (Objects.isNull(user)) {
-            return ServiceResultConstants.WRONG_PHONE_PASSWORD;
+        if (Objects.isNull(user)) { //
+           return ServiceResultConstants.USER_NOT_FOUND;
+        }
+        else if(user.getDelFlag()==-1){
+           return ServiceResultConstants.WRONG_USER_DEL;
+        }
+        else if(user.getDelFlag()==1){
+           return ServiceResultConstants.WRONG_USER_DISABLE;
         }
         try {
             String md5 = $.security.digest.digest(password + phone, ALGORITHM); // 加盐算法

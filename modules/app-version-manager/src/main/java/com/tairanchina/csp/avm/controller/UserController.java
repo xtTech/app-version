@@ -1,10 +1,10 @@
 package com.tairanchina.csp.avm.controller;
 
+import cn.hutool.core.io.FileUtil;
 import com.tairanchina.csp.avm.constants.ServiceResultConstants;
-import com.tairanchina.csp.avm.dto.ChangePasswordReq;
-import com.tairanchina.csp.avm.dto.LoginReq;
-import com.tairanchina.csp.avm.dto.RegisterReq;
-import com.tairanchina.csp.avm.dto.ServiceResult;
+import com.tairanchina.csp.avm.dto.*;
+import com.tairanchina.csp.avm.entity.Apk;
+import com.tairanchina.csp.avm.entity.Channel;
 import com.tairanchina.csp.avm.entity.OperationRecordLog;
 import com.tairanchina.csp.avm.annotation.OperationRecord;
 import com.tairanchina.csp.avm.service.UserService;
@@ -13,10 +13,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 
 /**
@@ -34,6 +39,20 @@ public class UserController {
     @PostMapping("/login")
     public ServiceResult login(@RequestBody LoginReq loginReq) {
         return userService.login(loginReq.getPhone(), loginReq.getPassword());
+    }
+
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
+    })
+    @DeleteMapping("/delUser/{userId}")
+    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.APK, description = OperationRecordLog.OperationDescription.DELETE_APK,content="删除APK包")
+    public ServiceResult delete(@PathVariable String userId) {
+        if (StringUtils.isEmpty(userId)) {
+            return ServiceResultConstants.NEED_PARAMS;
+        }
+        ServiceResult serviceResult=userService.delUser(userId); //先删除文件
+        return serviceResult;
     }
 
 
@@ -98,10 +117,59 @@ public class UserController {
             @ApiImplicitParam(name = "nickName", value = "用户昵称", required = true),
     })
     @PutMapping("/update/{nickName}")
-    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.USER, description = OperationRecordLog.OperationDescription.UPDATE_USER)
+    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.USER, description = OperationRecordLog.OperationDescription.UPDATE_USER,content="修改用户信息")
     public ServiceResult changeNickName(@PathVariable String nickName) {
         String userId = ThreadLocalUtils.USER_THREAD_LOCAL.get().getUserId();
         return userService.updateUserNickNameByUserId(userId, nickName);
+    }
+
+
+    @ApiOperation(value = "获取用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
+    })
+    @GetMapping("/getUser/{userId}")
+    public ServiceResult getUser(@PathVariable String userId) {
+        if (StringUtils.isEmpty(userId)) {
+            return ServiceResultConstants.NEED_PARAMS;
+        }
+        return userService.getUser(userId);
+    }
+
+
+    @ApiOperation(value = "添加用户")
+    @PostMapping("/addUser")
+    public ServiceResult addUser(@RequestBody UserDTO userDTO) {
+
+        int length = userDTO.getPassword().trim().length();
+        if (length < 6 || length > 32) {
+            return ServiceResultConstants.PASSWORD_ERROR;
+        }
+        return userService.addUser(userDTO.getPhone(),userDTO.getUsername(),userDTO.getPassword(),userDTO.getNickName());
+    }
+
+    @ApiOperation(value = "编辑用户")
+    @PutMapping("/editUser/{userId}")
+    public ServiceResult editUser(@PathVariable String userId,@RequestBody UserDTO userDTO) {
+        if(StringUtils.isNotEmpty(userDTO.getPassword())){ //输入密码，对密码做校验
+            int length = userDTO.getPassword().trim().length();
+            if (length < 6 || length > 32) {
+                return ServiceResultConstants.PASSWORD_ERROR;
+            }
+        }
+        return userService.editUser(userDTO.getPhone(),userDTO.getUsername(),userDTO.getNickName(),userId);
+    }
+
+    @ApiOperation(value = "重置密码")
+    @PutMapping("/restPwd/{userId}")
+    public ServiceResult restPwd(@PathVariable String userId,@RequestBody UserDTO userDTO) {
+        if(StringUtils.isNotEmpty(userDTO.getPassword())){ //输入密码，对密码做校验
+            int length = userDTO.getPassword().trim().length();
+            if (length < 6 || length > 32) {
+                return ServiceResultConstants.PASSWORD_ERROR;
+            }
+        }
+        return userService.restPwd(userDTO.getPassword(),userId);
     }
 
 }

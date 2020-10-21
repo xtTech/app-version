@@ -1,8 +1,9 @@
 package com.tairanchina.csp.avm.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.ecfront.dew.common.$;
 import com.tairanchina.csp.avm.constants.ServiceResultConstants;
 import com.tairanchina.csp.avm.dto.ServiceResult;
 import com.tairanchina.csp.avm.entity.App;
@@ -17,6 +18,7 @@ import com.tairanchina.csp.avm.utils.ThreadLocalUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +46,9 @@ public class AppServiceImpl implements AppService{
     @Autowired
     private ChannelMapper channelMapper;
 
+    @Value("${defaultUploadFilePath}")
+    private String defaultUploadFilePath; //创建默认渠道时指定的上传文件夹
+
     @Override
     public ServiceResult getAppListWithUserId(int page, int pageSize, String userId) {
         EntityWrapper<UserAppRel> entityWrapper = new EntityWrapper<>();
@@ -62,14 +67,9 @@ public class AppServiceImpl implements AppService{
 
         collect.removeAll(Collections.singleton(null));
         Page<App> appPage = new Page<>();
-        try {
-            $.bean.copyProperties(appPage, userAppRelPage);
-            appPage.setRecords(collect);
-            return ServiceResult.ok(appPage);
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            logger.error("App参数转换出错", e);
-        }
-        return ServiceResultConstants.ERROR_500;
+        BeanUtil.copyProperties(appPage, userAppRelPage);
+        appPage.setRecords(collect);
+        return ServiceResult.ok(appPage);
     }
 
     @Override
@@ -100,6 +100,7 @@ public class AppServiceImpl implements AppService{
         channel.setChannelCode("official");
         channel.setChannelName("官方渠道");
         channel.setChannelStatus(1);
+        channel.setUploadFolder(appName); //默认上传文件夹为渠道的应用名称
         Integer insert1 = channelMapper.insert(channel);
         if (insert > 0 && insert2>0 && insert1>0) {
             return ServiceResult.ok(app);

@@ -123,7 +123,7 @@ export default {
             } else if (response.data.code === 200) {
                 // 变成编辑模式
                 this.isEdit = true;
-                let data = response.data.data;
+                let data = response.data.record;
                 this.disabledAppId = data.id;
                 this.editForm = {
                     name: data.name,

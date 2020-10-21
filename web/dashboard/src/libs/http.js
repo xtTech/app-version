@@ -31,7 +31,7 @@ ajax.interceptors.response.use(response => {
     } else if (response.data.code === 1003) {
         Notice.error({
             title: '错误',
-            desc: response.data.message
+            desc: response.data.info
         });
         clearCurrentApp();
         Vue.$router.push({

@@ -18,6 +18,7 @@ public class User {
     private String nickName;
     private Date firstLoginTime;
     private Integer isAdmin;
+    private Integer delFlag; //-1:删除, 0:启用，1:禁用
 
     public String getUserId() {
         return userId;
@@ -73,5 +74,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(Integer delFlag) {
+        this.delFlag = delFlag;
     }
 }

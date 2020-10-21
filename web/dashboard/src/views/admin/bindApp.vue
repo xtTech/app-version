@@ -108,7 +108,7 @@ export default {
             if (userApps.code !== 200) {
                 this.$Notice.error({
                     title: '请求失败',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
                 this.handleClose();
                 return false;
@@ -119,13 +119,13 @@ export default {
             });
 
             if (response.data.code === 200) {
-                this.tableList = response.data.data.records;
-                this.total = response.data.data.total;
-                this.currentPage = response.data.data.current;
+                this.tableList = response.data.record.records;
+                this.total = response.data.record.total;
+                this.currentPage = response.data.record.current;
             } else {
                 this.$Notice.error({
                     title: '请求失败',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
             }
 
@@ -152,7 +152,7 @@ export default {
             } else {
                 this.$Notice.error({
                     title: '请求失败',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
             }
 

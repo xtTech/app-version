@@ -63,7 +63,7 @@ export const getApps = async () => {
     if (user === false) return false;
     let response = await http.get('/app/bind');
 
-    return response.data.code === 200 && response.data.data.length > 0 ? response.data.data : false;
+    return response.data.code === 200 && response.data.record.length > 0 ? response.data.record : false;
 };
 
 export const getAppId = () => {
@@ -98,6 +98,7 @@ export const switchApp = (app) => {
             location.reload();
         });
     } else {
+		//Vue.$router.push(Vue.$router.history.current.meta.refresh);
         location.reload();
     }
 };

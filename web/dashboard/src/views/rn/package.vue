@@ -311,8 +311,8 @@ export default {
             });
 
             if (response.data.code === 200) {
-                this.tableList = response.data.data.records;
-                this.total = response.data.data.total;
+                this.tableList = response.data.record.records;
+                this.total = response.data.record.total;
             } else {
                 this.total = 0;
                 this.tableList = [];
@@ -325,7 +325,7 @@ export default {
             if (response.data.code !== 200) {
                 this.$Notice.error({
                     title: '错误',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
             } else {
                 this.$Message.success('删除成功!');

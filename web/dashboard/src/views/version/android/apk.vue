@@ -58,7 +58,11 @@ const deliveryStatus = [
         value: 1
     }
 ];
+
+var VUE_APP_HTTP_REQUEST_URL=process.env.VUE_APP_HTTP_REQUEST_URL;
+
 export default {
+	
     data () {
         return {
             androidId: 0,
@@ -97,6 +101,7 @@ export default {
                     title: '下载地址',
                     minWidth: 140,
                     render: (h, params) => {
+						let ossUrl = VUE_APP_HTTP_REQUEST_URL + params.row.ossUrl;
                         return h('div', {
                             style: `display: -webkit-box;
                                 -webkit-box-orient: vertical;
@@ -110,14 +115,40 @@ export default {
                                         render: (h) => {
                                             return h('p', {
                                             	style: 'word-wrap: break-word;'
-                                            }, params.row.ossUrl);
+                                            }, ossUrl);
                                         }
                                     });
                                 }
                             }
-                        }, params.row.ossUrl);
+                        }, ossUrl);
                     }
                 },
+				{
+				    title: 'APK下载地址',
+				    minWidth: 140,
+				    render: (h, params) => {
+						let downloadApkUrl =VUE_APP_HTTP_REQUEST_URL + params.row.downloadApkUrl;
+				        return h('div', {
+				            style: `display: -webkit-box;
+				                -webkit-box-orient: vertical;
+				                -webkit-line-clamp: 2;
+				                height: 24px;
+				                overflow: hidden;`,
+				            on: {
+				                click: () => {
+				                    this.$Modal.confirm({
+				                        cancelText: ' ',
+				                        render: (h) => {
+				                            return h('p', {
+				                            	style: 'word-wrap: break-word;'
+				                            }, downloadApkUrl);
+				                        }
+				                    });
+				                }
+				            }
+				        }, downloadApkUrl);
+				    }
+				},
                 {
                     title: '上下架',
                     width: 90,
@@ -209,13 +240,13 @@ export default {
             if (response.data.code !== 200) {
                 this.$Notice.error({
                     title: '请求失败,请返回',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
             }
 
             await this.getApks();
 
-            this.appVersion = response.data.data.appVersion;
+            this.appVersion = response.data.record.appVersion;
 
             try {
                 let app = JSON.parse(localStorage.getItem('app') ? localStorage.getItem('app') : '{}');
@@ -238,13 +269,13 @@ export default {
             });
 
             if (response.data.code === 200) {
-                this.tableList = response.data.data.records;
-                this.total = response.data.data.total;
-                this.currentPage = response.data.data.current;
+                this.tableList = response.data.record.records;
+                this.total = response.data.record.total;
+                this.currentPage = response.data.record.current;
             } else {
                 this.$Notice.error({
                     title: '请求失败',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
             }
 
@@ -255,12 +286,12 @@ export default {
             if (response.data.code === 200) {
                 this.$Notice.success({
                     title: '请求成功',
-                    desc: `删除渠道[${response.data.data.versionId}]的版本成功`
+                    desc: `删除渠道[${response.data.record.versionId}]的版本成功`
                 });
             } else {
                 this.$Notice.error({
                     title: '请求失败',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
             }
 
@@ -278,7 +309,7 @@ export default {
             } else {
                 this.$Notice.error({
                     title: '请求失败',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
             }
 

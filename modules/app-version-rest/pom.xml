@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+    <groupId>com.tairanchina.csp.avm</groupId>
+    <artifactId>app-version-rest</artifactId>
+    <name>app-version-rest</name>
+    <version>1.0.0-RC-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <description>APP版本管理REST端</description>
 
     <parent>
         <groupId>com.tairanchina.csp.avm</groupId>
         <artifactId>app-version</artifactId>
-        <version>1.1.0-RC</version>
+        <version>1.0.0-RC-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-
-    <artifactId>app-version-rest</artifactId>
-    <name>app-version-rest</name>
-    <description>APP 版本管理 REST 端</description>
-    <packaging>jar</packaging>
-
-    <properties>
-        <maven.install.skip>true</maven.install.skip>
-        <maven.deploy.skip>true</maven.deploy.skip>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -28,20 +25,79 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.6</version>
         </dependency>
-        <!--UA解析-->
         <dependency>
-            <groupId>eu.bitwalker</groupId>
-            <artifactId>UserAgentUtils</artifactId>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
         </dependency>
-        <!-- Test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
+
+
+    <build>
+        <finalName>app_version_rest</finalName>
+        <plugins>
+
+           <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven.war.plugin.version}</version>
+                <configuration>
+                    <!--输出war包到指定目录-->
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                </configuration>
+           </plugin>
+
+           <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <version>${tomcat-maven-plugin}</version>
+                <configuration>
+                    <url>http://192.168.1.173/manager/text</url>
+                    <server>devTomcat</server>
+                    <path>/dev</path>
+                </configuration>
+           </plugin>
+
+           <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.maven.plugin.version}</version>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+                <!--<dependencies>-->
+                <!--spring热部署-->
+                <!--<dependency>-->
+                <!--<groupId>org.springframework</groupId>-->
+                <!--<artifactId>springloaded</artifactId>-->
+                <!--<version>1.2.5.RELEASE</version>-->
+                <!--</dependency>-->
+                <!--</dependencies>-->
+           </plugin>
+
+           <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+           </plugin>
+
+           <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+           </plugin>
+
+        </plugins>
+    </build>
 
 
 </project>

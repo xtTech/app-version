@@ -3,17 +3,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>com.tairanchina.csp.dew</groupId>
-        <artifactId>parent-starter</artifactId>
-        <version>1.5.0-RC</version>
-    </parent>
+    <!--<parent>-->
+        <!--<groupId>com.tairanchina.csp.dew</groupId>-->
+        <!--<artifactId>parent-starter</artifactId>-->
+        <!--<version>1.5.0-RC</version>-->
+    <!--</parent>-->
 
     <groupId>com.tairanchina.csp.avm</groupId>
     <artifactId>app-version</artifactId>
-    <version>1.1.0-RC</version>
-    <packaging>pom</packaging>
     <name>app-version</name>
+    <version>1.0.0-RC-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <description>App版本管理</description>
 
     <properties>
@@ -23,15 +23,38 @@
         <asciidoctorj.diagram.version>1.5.4.1</asciidoctorj.diagram.version>
         <jruby.version>1.7.26</jruby.version>
         <asciidoctorj.pdf.version>1.5.0-alpha.16</asciidoctorj.pdf.version>
+
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <mybatisplus-spring-boot-starter.version>1.0.2</mybatisplus-spring-boot-starter.version>
-        <maven.deploy.skip>true</maven.deploy.skip>
-        <jsonwebtoken.jjwt.version>0.10.5</jsonwebtoken.jjwt.version>
+
+        <!-- spring cloud version -start -->
+        <org.springframework.cloud.version>Camden.SR7</org.springframework.cloud.version>
+        <io.spring.platform.version>Brussels-SR10</io.spring.platform.version>
+
+        <!--<maven.deploy.skip>true</maven.deploy.skip>-->
         <docker.image.prefix>app</docker.image.prefix>
-        <maven.install.skip>false</maven.install.skip>
-        <maven.deploy.skip>false</maven.deploy.skip>
+        <!--<maven.install.skip>false</maven.install.skip>-->
+        <!--<maven.deploy.skip>false</maven.deploy.skip>-->
+        <!-- 编译插件 -->
+        <maven.compiler.plugin.version>3.7.0</maven.compiler.plugin.version>
+        <maven.source.plugin.version>3.0.1</maven.source.plugin.version>
+        <maven.resources.plugin.version>3.0.2</maven.resources.plugin.version>
+        <maven.war.plugin.version>3.2.2</maven.war.plugin.version>
+        <maven.gpg.plugin.version>1.6</maven.gpg.plugin.version>
+        <spring.boot.maven.plugin.version>1.5.13.RELEASE</spring.boot.maven.plugin.version>
+        <tomcat-maven-plugin>1.1</tomcat-maven-plugin>
+        <maven.surefire.plugin.version>2.21.0</maven.surefire.plugin.version>
+        <maven.javadoc.plugin.version>3.0.0</maven.javadoc.plugin.version>
+        <eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
+        <eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
+        <maven.jxr.plugin.version>2.5</maven.jxr.plugin.version>
+        <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
+        <maven.site.plugin.version>3.7.1</maven.site.plugin.version>
+        <maven.project.info.reports.plugin.version>3.1.0</maven.project.info.reports.plugin.version>
+
+
     </properties>
 
     <developers>
@@ -62,6 +85,20 @@
         <url>https://github.com/xtTech/app-version.git</url>
     </scm>
 
+    <!-- 配置私服 -->
+    <distributionManagement>
+        <repository>
+            <id>itc-nexus-releases</id>
+            <name>maven-releases</name>
+            <url>http://47.104.184.31:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>itc-nexus-snapshots</id>
+            <name>maven-snapshots</name>
+            <url>http://47.104.184.31:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <modules>
         <module>modules/app-version-common</module>
         <module>modules/app-version-manager</module>
@@ -70,67 +107,38 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- spring cloud version -start -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${org.springframework.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.spring.platform</groupId>
+                <artifactId>platform-bom</artifactId>
+                <version>${io.spring.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring cloud version -end -->
             <dependency>
                 <groupId>com.tairanchina.csp.avm</groupId>
                 <artifactId>app-version-common</artifactId>
-                <version>${project.version}</version>
+                <version>1.0.0-RC-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>commons-lang</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>2.6</version>
+                <groupId>com.tairanchina.csp.avm</groupId>
+                <artifactId>app-version-manager</artifactId>
+                <version>1.0.0-RC-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjweaver</artifactId>
-                <version>1.9.1</version>
+                <groupId>com.tairanchina.csp.avm</groupId>
+                <artifactId>app-version-rest</artifactId>
+                <version>1.0.0-RC-SNAPSHOT</version>
             </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatisplus-spring-boot-starter</artifactId>
-                <version>${mybatisplus-spring-boot-starter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>6.0.6</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>3.4</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>1.2.47</version>
-            </dependency>
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt-api</artifactId>
-                <version>${jsonwebtoken.jjwt.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt-impl</artifactId>
-                <version>${jsonwebtoken.jjwt.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt-jackson</artifactId>
-                <version>${jsonwebtoken.jjwt.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>poi</artifactId>
-                <version>3.12</version>
-            </dependency>
-            <!--UA解析-->
-            <dependency>
-                <groupId>eu.bitwalker</groupId>
-                <artifactId>UserAgentUtils</artifactId>
-                <version>1.21</version>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>
@@ -141,94 +149,193 @@
         <!--<targetPath>${project.build.directory}/book</targetPath>-->
         <!--</resource>-->
         <!--</resources>-->
-        <plugins>
-            <plugin>
-                <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctor-maven-plugin</artifactId>
-                <version>1.5.5</version>
-                <executions>
-                    <execution>
-                        <id>output-html</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>process-asciidoc</goal>
-                        </goals>
-                        <configuration>
-                            <backend>html5</backend>
-                            <sourceHighlighter>prettify</sourceHighlighter>
-                            <attributes>
-                                <toc>left</toc>
-                                <icons>font</icons>
-                                <sectanchors>true</sectanchors>
-                                <!-- set the idprefix to blank -->
-                                <idprefix/>
-                                <!--<snippets>${project.build.directory}/generated-snippets</snippets>-->
-                            </attributes>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <!-- Comment this section to use the default jruby artifact provided by the plugin -->
-                    <dependency>
-                        <groupId>org.jruby</groupId>
-                        <artifactId>jruby-complete</artifactId>
-                        <version>${jruby.version}</version>
-                        <optional>true</optional>
-                    </dependency>
-                    <!-- Comment this section to use the default AsciidoctorJ artifact provided by the plugin -->
-                    <dependency>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctorj</artifactId>
-                        <version>${asciidoctorj.version}</version>
-                        <optional>true</optional>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctorj-diagram</artifactId>
-                        <version>${asciidoctorj.diagram.version}</version>
-                        <optional>true</optional>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <resources>
-                        <resource>
-                            <directory>src/main/resources</directory>
-                            <includes>
-                                <include>**/*.jpg</include>
-                                <include>**/*.png</include>
-                            </includes>
-                        </resource>
-                    </resources>
-                    <outputDirectory>${project.basedir}/docs</outputDirectory>
-                    <sourceDirectory>${project.basedir}/src/main/asciidoc</sourceDirectory>
-                    <!--<sourceDocumentName>book.adoc</sourceDocumentName>-->
-                    <!--<imagesDir>./</imagesDir>-->
-                    <preserveDirectories>true</preserveDirectories>
-                    <requires>
-                        <require>asciidoctor-diagram</require>
-                    </requires>
-                </configuration>
-            </plugin>
-            <!-- Docker maven plugin -->
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>1.0.0</version>
-                <configuration>
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                    <imageTags>${project.version}</imageTags>
-                    <!--dockerfile 路径-->
-                    <dockerDirectory>./</dockerDirectory>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.artifactId}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+
+            <plugins>
+                <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>1.5.5</version>
+                    <executions>
+                        <execution>
+                            <id>output-html</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <configuration>
+                                <backend>html5</backend>
+                                <sourceHighlighter>prettify</sourceHighlighter>
+                                <attributes>
+                                    <toc>left</toc>
+                                    <icons>font</icons>
+                                    <sectanchors>true</sectanchors>
+                                    <!-- set the idprefix to blank -->
+                                    <idprefix/>
+                                    <!--<snippets>${project.build.directory}/generated-snippets</snippets>-->
+                                </attributes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <!-- Comment this section to use the default jruby artifact provided by the plugin -->
+                        <dependency>
+                            <groupId>org.jruby</groupId>
+                            <artifactId>jruby-complete</artifactId>
+                            <version>${jruby.version}</version>
+                            <optional>true</optional>
+                        </dependency>
+                        <!-- Comment this section to use the default AsciidoctorJ artifact provided by the plugin -->
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj</artifactId>
+                            <version>${asciidoctorj.version}</version>
+                            <optional>true</optional>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj-diagram</artifactId>
+                            <version>${asciidoctorj.diagram.version}</version>
+                            <optional>true</optional>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <resources>
+                            <resource>
+                                <directory>src/main/resources</directory>
+                                <includes>
+                                    <include>**/*.jpg</include>
+                                    <include>**/*.png</include>
+                                </includes>
+                            </resource>
+                        </resources>
+                        <outputDirectory>${project.basedir}/docs</outputDirectory>
+                        <sourceDirectory>${project.basedir}/src/main/asciidoc</sourceDirectory>
+                        <!--<sourceDocumentName>book.adoc</sourceDocumentName>-->
+                        <!--<imagesDir>./</imagesDir>-->
+                        <preserveDirectories>true</preserveDirectories>
+                        <requires>
+                            <require>asciidoctor-diagram</require>
+                        </requires>
+                    </configuration>
+                </plugin>
+
+                <!-- Docker maven plugin -->
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                        <imageTags>${project.version}</imageTags>
+                        <!--dockerfile 路径-->
+                        <dockerDirectory>./</dockerDirectory>
+                        <resources>
+                            <resource>
+                                <targetPath>/</targetPath>
+                                <directory>${project.build.directory}</directory>
+                                <include>${project.artifactId}.jar</include>
+                            </resource>
+                        </resources>
+                    </configuration>
+                </plugin>
+                <!-- 编译插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <!-- 源码插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven.source.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 资源文件拷贝插件 -->
+                <!-- 加载依赖模块的resources start -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven.resources.plugin.version}</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <!-- 加载依赖模块的resources end -->
+                <!-- 打包插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${maven.war.plugin.version}</version>
+                </plugin>
+
+                <!-- 自动签名插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${maven.gpg.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 生成说明文档插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven.javadoc.plugin.version}</version>
+                    <!-- 配置导出配置 -->
+                    <configuration>
+                        <outputDirectory>target\javadoc</outputDirectory>
+                        <reportOutputDirectory>target\javadoc</reportOutputDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <phase>site</phase>
+                            <goals>
+                                <goal>aggregate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.4.2</version>
+                    <configuration>
+                        <!-- 跳过测试类 -->
+                        <skipTests>true</skipTests>
+                    </configuration>
+
+                    <!-- 网上收集还有这个标签也可以跳过test
+                    <configuration>
+                      <testFailureIgnore>true</testFailureIgnore>
+                    </configuration>
+                     -->
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+
     </build>
 
 </project>

@@ -9,17 +9,24 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by hzlizx on 2018/6/22 0022
  */
 
-@Api(value = "/", description = "RN相关接口")
+/**
+ * Created by hzlizx on 2018/6/14 0014
+ */
+@Api(tags= "RN相关接口")
 @RestController
+@RequestMapping("/app/api/appVersion/rnController")
 public class RnController {
+
 
     @Autowired
     private RnService rnService;

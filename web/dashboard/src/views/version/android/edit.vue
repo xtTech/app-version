@@ -131,14 +131,20 @@ export default {
                 appVersion: [
                     { required: true, message: '请输入版本号', trigger: 'blur' },
                     { required: true, type: 'string', max: 32, message: '过长的版本号', trigger: 'blur' },
-                    { required: true, pattern: /^([0]|[1-9][0-9]{0,5})\.([0]|[1-9][0-9]{0,5})\.([0]|[1-9][0-9]{0,5})\.([0]|[1-9][0-9]{0,5})$/g, message: '请输入符合规范的版本号，最大版本号为999999.999999.999999.999999', trigger: 'blur' },
-                    { required: true, validator: validateInput, trigger: 'blur' }
+                    /**
+					  { required: true, pattern: /^([0]|[1-9][0-9]{0,5})\.([0]|[1-9][0-9]{0,5})\.([0]|[1-9][0-9]{0,5})\.([0]|[1-9][0-9]{0,5})$/g, message: '请输入符合规范的版本号，最大版本号为99999', trigger: 'blur' },
+                     **/
+					{ required: true, pattern: /^([0]|[1-9][0-9]{0,5})$/g, message: '请输入符合规范的版本号，最大版本号为99999', trigger: 'blur' },
+					{ required: true, validator: validateInput, trigger: 'blur' }
                 ],
                 allowLowestVersion: [
                     { required: true, message: '请输入最低版本号', trigger: 'blur' },
                     { required: true, type: 'string', max: 32, message: '过长的版本号', trigger: 'blur' },
-                    { required: true, pattern: /^([0]|[1-9][0-9]{0,5})\.([0]|[1-9][0-9]{0,5})\.([0]|[1-9][0-9]{0,5})\.([0]|[1-9][0-9]{0,5})$/g, message: '请输入符合规范的版本号，最大版本号为999999.999999.999999.999999', trigger: 'blur' },
-                    { required: true, validator: validateInput, trigger: 'blur' }
+                    /**
+					  { required: true, pattern: /^([0]|[1-9][0-9]{0,5})\.([0]|[1-9][0-9]{0,5})\.([0]|[1-9][0-9]{0,5})\.([0]|[1-9][0-9]{0,5})$/g, message: '请输入符合规范的版本号，最大版本号为99999', trigger: 'blur' },
+                     **/
+					{ required: true, pattern: /^([0]|[1-9][0-9]{0,5})$/g, message: '请输入符合规范的版本号，最大版本号为99999', trigger: 'blur' },
+					{ required: true, validator: validateInput, trigger: 'blur' }
                 ],
                 updateType: [
                     { type: 'number', required: true, message: '请选择更新类型', trigger: 'change' }
@@ -185,18 +191,18 @@ export default {
 
             if (response.data.code === 200) {
                 this.editForm = {
-                    appVersion: response.data.data.appVersion,
-                    allowLowestVersion: response.data.data.allowLowestVersion,
-                    updateType: response.data.data.updateType,
-                    versionDescription: response.data.data.versionDescription,
-                    grayReleased: response.data.data.grayReleased
+                    appVersion: response.data.record.appVersion,
+                    allowLowestVersion: response.data.record.allowLowestVersion,
+                    updateType: response.data.record.updateType,
+                    versionDescription: response.data.record.versionDescription,
+                    grayReleased: response.data.record.grayReleased
                 };
 
                 this.inLoading = false;
             } else {
                 this.$Notice.error({
                     title: '请求失败,请返回',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
             }
         },
@@ -241,7 +247,7 @@ export default {
                     if (response.code === 200) {
                         this.$Notice.success({
                             title: '请求成功',
-                            desc: `${eventText}版本 ${response.data.appVersion} 成功`
+                            desc: `${eventText}版本 ${response.record.appVersion} 成功`
                         });
 
                         this.$router.push({
@@ -250,7 +256,7 @@ export default {
                     } else {
                         this.$Notice.error({
                             title: '请求失败',
-                            desc: response.message
+                            desc: response.info
                         });
                     }
                 };
