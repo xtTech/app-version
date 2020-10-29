@@ -17,4 +17,6 @@ public interface ApkMapper extends BaseMapper<Apk> {
 
     List<ApkExt> selectApkWithChannelCode(Pagination page , @Param("versionId") Integer versionId, @Param("channelCode") String channelCode, @Param("md5") String md5, @Param("deliveryStatus") Integer deliveryStatus);
 
+    List<ApkExt> selectApkByChannelCode(@Param("channelCode") String channelCode);
+
 }

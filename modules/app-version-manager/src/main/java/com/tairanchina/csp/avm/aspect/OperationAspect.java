@@ -7,6 +7,7 @@ import com.tairanchina.csp.avm.entity.OperationRecordLog;
 import com.tairanchina.csp.avm.mapper.OperationRecordLogMapper;
 import com.tairanchina.csp.avm.annotation.OperationRecord;
 import com.tairanchina.csp.avm.utils.ThreadLocalUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
@@ -30,9 +31,9 @@ public class OperationAspect {
         logger.info("开始记录[{}]操作日志...", operationRecord.resource());
         OperationRecordLog log = new OperationRecordLog();
         if (200 == serviceResult.getCode()) {
-            if (null != serviceResult.getData()) {
+            if (null != serviceResult.getRecord()) {
                 logger.info("记录操作成功内容...");
-                String content = $.json.toJsonString(serviceResult.getData());
+                String content = $.json.toJsonString(serviceResult.getRecord());
                 log.setOperationContent(content);
             }
             log.setOperationResult(OperationRecordLog.OperationResult.SUCCESS);
@@ -41,7 +42,7 @@ public class OperationAspect {
             log.setOperationContent($.json.toJsonString(joinPoint.getArgs()));
             log.setOperationResult(OperationRecordLog.OperationResult.FAILD);
         }
-        String resultMessage = serviceResult.getMessage();
+        String resultMessage = serviceResult.getInfo();
         String operator = ThreadLocalUtils.USER_THREAD_LOCAL.get().getUserId();
         Integer appId = ThreadLocalUtils.USER_THREAD_LOCAL.get().getAppId();
         if (null != appId) {
@@ -52,6 +53,7 @@ public class OperationAspect {
                 .setOperationResource(operationRecord.resource())
                 .setOperationType(operationRecord.type())
                 .setOperationDescription(operationRecord.description().getDescription())
+                .setOperationContent(StringUtils.isNotEmpty(operationRecord.content())?operationRecord.content():StringUtils.EMPTY)
                 .setResultMessage(resultMessage)
                 .setCreatedBy(operator);
 
@@ -63,7 +65,7 @@ public class OperationAspect {
                 Integer id = (Integer) args[0];
                 log.setAppId(id);
             } else if (operationRecord.type().equals(OperationRecordLog.OperationType.CREATE)) {
-                App app = (App) serviceResult.getData();
+                App app = (App) serviceResult.getRecord();
                 if(Objects.nonNull(app)){
                     log.setAppId(app.getId());
                 }

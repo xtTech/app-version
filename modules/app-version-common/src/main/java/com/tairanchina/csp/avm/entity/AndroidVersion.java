@@ -104,4 +104,78 @@ public class AndroidVersion extends BasicEntity{
     public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
     }
+
+
+    /**
+     [
+     {
+     label: '不更新',
+     value: -1
+     },
+     {
+     label: '强制更新',
+     value: 0
+     },
+     {
+     label: '一般更新',
+     value: 1
+     },
+     {
+     label: '静默更新',
+     value: 2
+     },
+     {
+     label: '可忽略更新',
+     value: 3
+     },
+     {
+     label: '静默可忽略更新',
+     value: 4
+     }
+     **/
+    public enum UpdateType {
+        UPDATETYPE_NO(-1, "不更新"),
+        UPDATETYPE_FORCE_UPDATE(0, "强制更新"),
+        UPDATETYPE_GENERAL_UPDATE(1, "一般更新"),
+        UPDATETYPE_SILENT_UPDATE(2, "静默更新"),
+        UPDATETYPE_NEGLIGIBLE_UPDATES(3, "可忽略更新"),
+        UPDATETYPE_SILENT_IGNORE_UPDATES(4, "静默可忽略更新");
+
+
+        private Integer code;
+        private String info;
+
+        private UpdateType(Integer code, String info) {
+            this.code = code;
+            this.info = info;
+        }
+
+        public Integer code() {
+            return code;
+        }
+
+        public String info() {
+            return info;
+        }
+
+        public static UpdateType codeOf(Integer code) {
+            switch (code) {
+                case -1:
+                    return UpdateType.UPDATETYPE_NO;
+                case 0:
+                    return UpdateType.UPDATETYPE_FORCE_UPDATE;
+                case 1:
+                    return UpdateType.UPDATETYPE_GENERAL_UPDATE;
+                case 2:
+                    return UpdateType.UPDATETYPE_SILENT_UPDATE;
+                case 3:
+                    return UpdateType.UPDATETYPE_NEGLIGIBLE_UPDATES;
+                case 4:
+                    return UpdateType.UPDATETYPE_SILENT_IGNORE_UPDATES;
+                default:
+                      return UpdateType.UPDATETYPE_NO;
+            }
+        }
+    }
+
 }

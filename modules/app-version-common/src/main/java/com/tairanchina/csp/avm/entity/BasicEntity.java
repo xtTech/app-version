@@ -1,6 +1,6 @@
 package com.tairanchina.csp.avm.entity;
 
-import com.ecfront.dew.common.$;
+import cn.hutool.json.JSONUtil;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -52,6 +52,6 @@ public class BasicEntity implements Serializable {
 
     @Override
     public String toString() {
-        return $.json.toJsonString(this);
+        return JSONUtil.toJsonStr(this);
     }
 }

@@ -29,8 +29,8 @@ public class OperationRecordLogServiceTest extends BaseTest {
                 .setResultMessage("test")
                 .setCreatedBy("test");
         ServiceResult result = operationRecordLogService.createOperationRecordLog(operationRecordLog);
-        if (result.getData() != null) {
-            System.out.println(result.getData());
+        if (result.getRecord() != null) {
+            System.out.println(result.getRecord());
         }
     }
 
@@ -38,9 +38,9 @@ public class OperationRecordLogServiceTest extends BaseTest {
     public void deleteOperationRecordLog() throws Exception {
         Integer id = 50;
         ServiceResult result = operationRecordLogService.deleteOperationRecordLogForever(id);
-        if (result.getData() != null) {
-            if (result.getData() != null) {
-                System.out.println(result.getData());
+        if (result.getRecord() != null) {
+            if (result.getRecord() != null) {
+                System.out.println(result.getRecord());
             }
         }
     }
@@ -49,8 +49,8 @@ public class OperationRecordLogServiceTest extends BaseTest {
     public void deleteOperationRecordLogForever() throws Exception {
         Integer id = 50;
         ServiceResult result = operationRecordLogService.deleteOperationRecordLogForever(id);
-        if (result.getData() != null) {
-            System.out.println(result.getData());
+        if (result.getRecord() != null) {
+            System.out.println(result.getRecord());
         }
     }
 
@@ -58,7 +58,7 @@ public class OperationRecordLogServiceTest extends BaseTest {
     public void getOperationRecordLogById() throws Exception {
         Integer id = 54;
         ServiceResult result = operationRecordLogService.getOperationRecordLogById(id);
-        OperationRecordLog operationRecordLog = (OperationRecordLog) result.getData();
+        OperationRecordLog operationRecordLog = (OperationRecordLog) result.getRecord();
         Object jsonObject = operationRecordLog.getOperationContent();
         System.out.println(jsonObject);
     }
@@ -87,16 +87,16 @@ public class OperationRecordLogServiceTest extends BaseTest {
         wrapper.andNew().eq("del_flag", 0);
         wrapper.orderBy("created_time", false);
         ServiceResult result = operationRecordLogService.list(page, pageSize, wrapper);
-        if (result.getData() != null) {
-            System.out.println(result.getData());
+        if (result.getRecord() != null) {
+            System.out.println(result.getRecord());
         }
     }
 
     @Test
     public void getListByQuery() throws Exception {
         ServiceResult result = operationRecordLogService.getListByQuery(1, 10, null, null, null, null, null, null,null,null);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 

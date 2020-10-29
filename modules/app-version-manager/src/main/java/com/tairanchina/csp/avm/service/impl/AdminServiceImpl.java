@@ -1,8 +1,8 @@
 package com.tairanchina.csp.avm.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.ecfront.dew.common.$;
 import com.tairanchina.csp.avm.constants.RedisKey;
 import com.tairanchina.csp.avm.constants.ServiceResultConstants;
 import com.tairanchina.csp.avm.dto.ServiceResult;
@@ -20,6 +20,7 @@ import com.tairanchina.csp.avm.utils.ThreadLocalUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,6 +58,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Value("${defaultUploadFilePath}")
+    private String defaultUploadFilePath; //创建默认渠道时指定的上传文件夹
 
     @Override
     public ServiceResult bindUserAndApp(String userId, int appId) {
@@ -109,6 +114,8 @@ public class AdminServiceImpl implements AdminService {
         if (!appMapper.selectList(wrapper).isEmpty()) {
             return ServiceResultConstants.TENANT_APP_ID_OR_APP_NAME_EXISTS;
         }
+        Date now=new Date();
+
         App app = new App();
         app.setDelFlag(0);
         app.setTenantAppId(tenantAppId);
@@ -125,6 +132,7 @@ public class AdminServiceImpl implements AdminService {
             channel.setChannelCode("official");
             channel.setChannelName("官方渠道");
             channel.setChannelStatus(1);
+            channel.setUploadFolder(defaultUploadFilePath+appName); //默认上传文件夹
             Integer insert1 = channelMapper.insert(channel);
             if (insert1 > 0) {
                 logger.info("创建官方渠道成功");
@@ -151,9 +159,7 @@ public class AdminServiceImpl implements AdminService {
         wrapper.and().ne("id", appId);
         List<App> apps = appMapper.selectList(wrapper);
         if (!apps.isEmpty()) {
-            return new ServiceResult(
-                    ServiceResultConstants.APP_EXISTS.getCode(),
-                    "已经有其他应用取名为[" + appName + "]，或AppId为[ " + tenantAppId + " ]，请换一个名称或AppId");
+            return new ServiceResult(ServiceResultConstants.APP_EXISTS.getCode(),"已经有其他应用取名为[" + appName + "]，或AppId为[ " + tenantAppId + " ]，请换一个名称或AppId");
         }
         App app = new App();
         app.setId(appId);
@@ -253,14 +259,9 @@ public class AdminServiceImpl implements AdminService {
         }).collect(Collectors.toList());
 
         Page<HashMap<String, Object>> hashMapPage = new Page<>();
-        try {
-            $.bean.copyProperties(hashMapPage, pageEntity);
-            hashMapPage.setRecords(collect);
-            return ServiceResult.ok(hashMapPage);
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            logger.error("参数转换出错", e);
-        }
-        return ServiceResultConstants.ERROR_500;
+        BeanUtil.copyProperties(hashMapPage, pageEntity);
+        hashMapPage.setRecords(collect);
+        return ServiceResult.ok(hashMapPage);
     }
 
     @Override
@@ -296,4 +297,5 @@ public class AdminServiceImpl implements AdminService {
             return ServiceResult.ok(false);
         }
     }
+
 }

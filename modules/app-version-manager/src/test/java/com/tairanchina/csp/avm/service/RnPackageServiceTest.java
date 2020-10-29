@@ -34,8 +34,8 @@ public class RnPackageServiceTest extends BaseTest {
 //        ServiceResult serviceResult = basicService.checkVersion(rnPackage);
 
         ServiceResult result = rnPackageService.create(rnPackage);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
     }
@@ -44,14 +44,14 @@ public class RnPackageServiceTest extends BaseTest {
     public void delete() throws Exception {
         Integer id = 17;
         ServiceResult result = rnPackageService.delete(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 3;
         result = rnPackageService.delete(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -67,32 +67,32 @@ public class RnPackageServiceTest extends BaseTest {
         rnPackage.setRnVersion("rnversion");
         rnPackage.setRnUpdateLog("log");
         ServiceResult result = rnPackageService.update(rnPackage);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         rnPackage.setId(null);
         result = rnPackageService.update(rnPackage);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         rnPackage.setId(0);
         result = rnPackageService.update(rnPackage);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         rnPackage.setId(17);
         result = rnPackageService.update(rnPackage);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         rnPackage.setAppId(333);
         result = rnPackageService.update(rnPackage);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
     }
@@ -117,8 +117,8 @@ public class RnPackageServiceTest extends BaseTest {
 
         wrapper.orderBy("created_time", false);
         ServiceResult result = rnPackageService.list(1, 10, wrapper);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -126,14 +126,14 @@ public class RnPackageServiceTest extends BaseTest {
     public void find() throws Exception {
         Integer id = 17;
         ServiceResult result = rnPackageService.find(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 3333;
         result = rnPackageService.find(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 

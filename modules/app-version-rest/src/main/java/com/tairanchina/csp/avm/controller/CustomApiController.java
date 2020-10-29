@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by hzlizx on 2018/6/14 0014
  */
-@Api(value = "/c", description = "自定义接口相关")
+@Api(tags= "自定义接口相关")
 @RestController
-@RequestMapping("/c")
+@RequestMapping("/app/api/appVersion/customApiController")
 public class CustomApiController {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomApiController.class);

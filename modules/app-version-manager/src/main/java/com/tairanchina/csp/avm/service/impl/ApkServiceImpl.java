@@ -212,7 +212,7 @@ public class ApkServiceImpl implements ApkService {
             map.put("exists", true);
         }
         ServiceResult ok = ServiceResult.ok(map);
-        ok.setMessage(message);
+        ok.setInfo(message);
         return ok;
     }
 

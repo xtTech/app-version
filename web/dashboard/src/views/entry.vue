@@ -1,3 +1,4 @@
+
 <template>
     <div id="page-admin">
         <v-sidebar></v-sidebar>
@@ -10,6 +11,7 @@
         </div>
     </div>
 </template>
+
 <script>
 import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';

@@ -64,7 +64,7 @@ public class IosController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PostMapping
-    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.IOS_VERSION, description = OperationRecordLog.OperationDescription.CREATE_IOS_VERSION)
+    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.IOS_VERSION, description = OperationRecordLog.OperationDescription.CREATE_IOS_VERSION,content="添加IOS版本")
     public ServiceResult create(@RequestBody IosVersionRequestDTO iosVersionRequestDTO) {
 
         String appVersion = iosVersionRequestDTO.getAppVersion();
@@ -98,7 +98,7 @@ public class IosController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.IOS_VERSION, description = OperationRecordLog.OperationDescription.UPDATE_IOS_VERSION)
+    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.IOS_VERSION, description = OperationRecordLog.OperationDescription.UPDATE_IOS_VERSION,content="修改IOS版本")
     public ServiceResult update(@RequestBody IosVersionRequestDTO iosVersionRequestDTO, @PathVariable int id) {
         if (id < 1) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -121,7 +121,7 @@ public class IosController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @DeleteMapping("/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.IOS_VERSION, description = OperationRecordLog.OperationDescription.DELETE_IOS_VERSION)
+    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.IOS_VERSION, description = OperationRecordLog.OperationDescription.DELETE_IOS_VERSION,content="删除IOS版本")
     public ServiceResult delete(@PathVariable int id) {
         if (id < 1) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -152,7 +152,7 @@ public class IosController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/{id}/delivery")
-    @OperationRecord(type = OperationRecordLog.OperationType.DELIVERY, resource = OperationRecordLog.OperationResource.IOS_VERSION, description = OperationRecordLog.OperationDescription.DELIVERY_IOS_VERSION)
+    @OperationRecord(type = OperationRecordLog.OperationType.DELIVERY, resource = OperationRecordLog.OperationResource.IOS_VERSION, description = OperationRecordLog.OperationDescription.DELIVERY_IOS_VERSION,content="IOS版本上架")
     public ServiceResult delivery(@PathVariable int id) {
         return iosVersionService.delivery(id);
     }
@@ -161,7 +161,7 @@ public class IosController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/{id}/undelivery")
-    @OperationRecord(type = OperationRecordLog.OperationType.UNDELIVERY, resource = OperationRecordLog.OperationResource.IOS_VERSION, description = OperationRecordLog.OperationDescription.UNDELIVERY_IOS_VERSION)
+    @OperationRecord(type = OperationRecordLog.OperationType.UNDELIVERY, resource = OperationRecordLog.OperationResource.IOS_VERSION, description = OperationRecordLog.OperationDescription.UNDELIVERY_IOS_VERSION,content="IOS版本下架")
     public ServiceResult undelivery(@PathVariable int id) {
         return iosVersionService.undelivery(id);
     }

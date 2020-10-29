@@ -1,6 +1,6 @@
 package com.tairanchina.csp.avm.controller;
 
-import com.tairanchina.csp.avm.AppVersionRestApplication;
+import com.tairanchina.csp.AppVersionRestApplication;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

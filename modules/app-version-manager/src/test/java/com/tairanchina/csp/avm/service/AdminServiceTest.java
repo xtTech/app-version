@@ -30,14 +30,14 @@ public class AdminServiceTest extends BaseTest {
         String userId = "test";
         int appId = 31;
         ServiceResult result = adminService.bindUserAndApp(userId, appId);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         appId = 44444444;
         result = adminService.bindUserAndApp(userId, appId);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -46,9 +46,9 @@ public class AdminServiceTest extends BaseTest {
         String userId = "test";
         int appId = 31;
         ServiceResult result = adminService.unbindUserAndApp(userId, appId);
-        if (result.getData() != null) {
+        if (result.getRecord() != null) {
 
-            logger.info(result.getData().toString());
+            logger.info(result.getRecord().toString());
 
         }//todo ?  用户和APP未绑定，调用方法提示 {"code":10002,"message":"数据库插入错误","data":null}
     }
@@ -60,8 +60,8 @@ public class AdminServiceTest extends BaseTest {
         app.setAppName("testAPP");
         app.setTenantAppId("testTenantAppId");
         ServiceResult result = adminService.createApp(app.getAppName(), app.getTenantAppId());
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -71,8 +71,8 @@ public class AdminServiceTest extends BaseTest {
         app.setAppName("testEditAPP");
         app.setTenantAppId("testEditTenantAppId");
         ServiceResult result = adminService.editApp(app.getId(), app.getAppName(), app.getTenantAppId());
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         } //todo ?  如果要编辑的APP不存在，调用方法提示 {"code":10002,"message":"数据库插入错误","data":null}
     }
 
@@ -80,8 +80,8 @@ public class AdminServiceTest extends BaseTest {
     public void deleteApp() throws Exception {
         Integer appId = 24;
         ServiceResult result = adminService.deleteApp(appId);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -89,8 +89,8 @@ public class AdminServiceTest extends BaseTest {
     public void getApp() throws Exception {
         Integer id = 24;
         ServiceResult result = adminService.getApp(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -99,8 +99,8 @@ public class AdminServiceTest extends BaseTest {
 //        Integer appId = 24;
         Integer appId = 20;
         ServiceResult result = adminService.deleteAppForever(appId);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -113,8 +113,8 @@ public class AdminServiceTest extends BaseTest {
             wrapper.andNew().like("app_name", "%" + appName + "%");
         }
         ServiceResult result = adminService.listApp(1, 10, wrapper);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -124,8 +124,8 @@ public class AdminServiceTest extends BaseTest {
         String userId = "b9e980c1495e4d0582c257901d86b4ff";
         wrapper.and().eq("del_flag", 0);
         ServiceResult result = adminService.listAppWithBindInfo(1, 10, wrapper, userId);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -133,8 +133,8 @@ public class AdminServiceTest extends BaseTest {
     public void listBindApp() throws Exception {
         String userId = "b9e980c1495e4d0582c257901d86b4ff";
         ServiceResult result = adminService.listBindApp(userId);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -150,8 +150,8 @@ public class AdminServiceTest extends BaseTest {
             wrapper.and().like("phone", "%" + phone + "%");
         }
         ServiceResult result = adminService.listUser(1, 10, wrapper);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -159,8 +159,8 @@ public class AdminServiceTest extends BaseTest {
     public void isAdmin() throws Exception {
         LoginInfo loginInfo = ThreadLocalUtils.USER_THREAD_LOCAL.get();
         ServiceResult result = adminService.isAdmin(loginInfo.getUserId());
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 

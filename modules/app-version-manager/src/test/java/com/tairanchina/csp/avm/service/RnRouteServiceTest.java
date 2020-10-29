@@ -36,8 +36,8 @@ public class RnRouteServiceTest extends BaseTest {
             logger.info("code is not 200..............");
         } else {
             ServiceResult result = rnRouteService.create(rnRoute);
-            if (result.getData() != null) {
-                logger.info(result.getData().toString());
+            if (result.getRecord() != null) {
+                logger.info(result.getRecord().toString());
             }
         }
     }
@@ -46,20 +46,20 @@ public class RnRouteServiceTest extends BaseTest {
     public void delete() throws Exception {
         Integer id = 17;
         ServiceResult result = rnRouteService.delete(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 9;
         result = rnRouteService.delete(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 999999;
         result = rnRouteService.delete(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -80,40 +80,40 @@ public class RnRouteServiceTest extends BaseTest {
             logger.info("code is not 200..............");
         } else {
             ServiceResult result = rnRouteService.update(rnRoute);
-            if (result.getData() != null) {
-                logger.info(result.getData().toString());
+            if (result.getRecord() != null) {
+                logger.info(result.getRecord().toString());
             }
         }
 
         rnRoute.setId(null);
         ServiceResult result = rnRouteService.update(rnRoute);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         rnRoute.setId(0);
         result = rnRouteService.update(rnRoute);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         rnRoute.setId(9);
         result = rnRouteService.update(rnRoute);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         rnRoute.setId(999999);
         result = rnRouteService.update(rnRoute);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         rnRoute.setId(17);
         rnRoute.setAppId(2222);
         result = rnRouteService.update(rnRoute);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -141,8 +141,8 @@ public class RnRouteServiceTest extends BaseTest {
         }
         wrapper.orderBy("created_time", false);
         ServiceResult result = rnRouteService.list(1, 10, wrapper);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -150,20 +150,20 @@ public class RnRouteServiceTest extends BaseTest {
     public void find() throws Exception {
         Integer id = 17;
         ServiceResult result = rnRouteService.find(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 999999;
         result = rnRouteService.find(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 7;
         result = rnRouteService.find(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 

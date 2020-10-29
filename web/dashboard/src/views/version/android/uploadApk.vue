@@ -39,10 +39,11 @@
                             :remote-method="getChannels">
                         <Option v-for="option in channelCodes" :value="option.channelCode" :key="option.channelCode + file.md5" :label="option.channelCode" />
                     </Select>
-                    <Progress v-if="file.disabled" :percent="file.percent" status="active" :stroke-width="3"></Progress>
-                    <p :label="file.channelCodeMsg"></p>
-                </div>
-                <Row style="text-align: right;margin-top: 6px">
+					<Progress v-if="file.disabled" :percent="file.percent" status="active" :stroke-width="3" style="margin-top: 10%;"></Progress>
+					<p :label="file.channelCodeMsg"></p>
+				</div>
+				
+                <Row style="text-align: right;margin-top: 50px">
                     <Col>
                          <template v-if="file.percent !== 100">
                              <template v-if="!file.disabled">
@@ -70,6 +71,7 @@
     </div>
 </template>
 <script>
+
 import {
     getFileMd5,
     getFileName,
@@ -79,6 +81,7 @@ import {
     hasValue
 } from '@/libs/util';
 import uploadFileToOSS from '@/libs/oss';
+
 export default {
     name: 'upload-apk',
     props: {
@@ -105,11 +108,9 @@ export default {
             if (this.channelsLoading) {
                 return false;
             }
-
             this.channelsLoading = true;
             // setTimeout(() => {
-            http
-                .get('/channel', {
+            http.get('/channel', {
                     params: {
                         page: 1,
                         pageSize: 20,
@@ -120,11 +121,11 @@ export default {
                 })
                 .then(response => {
                     if (response.data.code === 200) {
-                        this.channelCodes = response.data.data.records;
+                        this.channelCodes = response.data.record.records;
                     } else {
                         this.$Notice.error({
                             title: '请求失败',
-                            desc: response.data.message
+                            desc: response.data.info
                         });
                     }
                     this.channelsLoading = false;
@@ -138,15 +139,15 @@ export default {
                     versionId: this.androidId
                 }
             });
-            if (response.data.data.exists) {
+            if (response.data.record.exists) {
                 this.$Notice.error({
                     title: '请求失败',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
             }
             return response.data;
         },
-        async postApk (file, ossUrl) {
+        async postApk (file, data) {
             // guid 如果不匹配则停止上传任务
             // 这里无法终止阿里云 OSS 的上传进程，所以在接口这里做限制
             if (file.guid !== file.constGUID) return false;
@@ -156,7 +157,10 @@ export default {
                 channel: file.channelCode,
                 versionId: this.androidId,
                 md5: file.md5,
-                ossUrl
+				apkName:data.fileName,
+				ossUrl:data.requestUrl,
+                downloadUrl:data.requestUrl,
+				downloadApkUrl:data.requestApkUrl
             });
 
             if (response.data.code === 200) {
@@ -173,7 +177,7 @@ export default {
                 this.stopUpload(file);
                 this.$Notice.error({
                     title: `上传${file.file.name}失败`,
-                    desc: `${response.data.message}`
+                    desc: `${response.data.info}`
                 });
             }
         },
@@ -187,7 +191,7 @@ export default {
 			 * 检查渠道是否存在
 			 */
             let response = await this.getExistsApk(file.channelCode);
-            if (response.code !== 200 || response.data.exists !== false) {
+            if (response.code !== 200 || response.record.exists !== false) {
                 file.channelCodeMsg = response.message;
                 return false;
             }
@@ -198,29 +202,79 @@ export default {
             file.channelCodeMsg = '';
             file.disabled = true;
 
-            /**
-			 * 拼接文件名称
-			 */
+           /****
+			*@description:拼接文件名称
+			****/
             file.name = `${this.appName}-${file.channelCode}-${this.appVersion}.${
                 file.ext
             }`;
 
-            /**
-			 * 上传至OSS
-			 */
-            uploadFileToOSS(
-                file.file,
-                file.name,
-                response => {
-                    /**
-					 * 创建 Apk
-					 */
-                    this.postApk(file, response.res.requestUrls[0]);
-                },
-                progress => {
-                    file.percent = parseInt(progress) - 1 < 0 ? 0 : parseInt(progress) - 1;
-                }
-            );
+           
+            /****
+			 *@description:上传至OSS
+			 ****/
+            //  uploadFileToOSS(
+            //      file.file,
+            //      file.name,
+            //      response => {
+            //          /****
+			// 	         * 创建 Apk
+			// 	         ****/
+            //           this.postApk(file, response.res.requestUrls[0]);
+            //      },
+            //      progress => {
+            //          file.percent = parseInt(progress) - 1 < 0 ? 0 : parseInt(progress) - 1;
+            //      }
+            //   );
+			
+			
+			/****
+			 *@description:上传至本地服务器
+			 ****/
+			 let vm=this;
+			 let returnResponse =null;
+			 let formData = new FormData();
+			 formData.append('file',file.file);
+			 formData.append('channelCode',file.channelCode);
+			 let config = {
+			    headers: {
+			         'Content-Type' : 'content-type=multipart/form-data'
+			    },
+				timeout: 0,
+				// `onUploadProgress` 允许为上传处理进度事件
+			    onUploadProgress: function (progressEvent) {
+				    // 对原生进度事件的处理
+					//let progress=progressEvent.total;
+					//console.log("progress:"+progressEvent.total);
+					//file.percent = parseInt(progress) - 1 < 0 ? 0 : parseInt(progress) - 1;
+					//if (progressCB !== null) { progressCB(percentage * 100); }
+					
+					 console.log("进度：");
+				     console.log(progressEvent);
+				     //属性lengthComputable主要表明总共需要完成的工作量和已经完成的工作是否可以被测量
+				     //如果lengthComputable为false，就获取不到e.total和e.loaded
+				     if (progressEvent.lengthComputable) {
+					    var rate = progressEvent.loaded / progressEvent.total;  //已上传的比例
+					    if (rate < 1) {
+						   //这里的进度只能表明文件已经上传到后台，但是后台有没有处理完还不知道
+						   //因此不能直接显示为100%，不然用户会误以为已经上传完毕，关掉浏览器的话就可能导致上传失败
+						   //等响应回来时，再将进度设为100%
+						   file.percent = (rate *100).toFixed(2);
+					    }
+				    }
+			    }
+				
+			 };
+			 http.post('apk/upload', formData, config).then(function (response) {
+				 /****
+				 * 创建 Apk
+				 ****/
+				 var data=response.data.record;
+				 vm.postApk(file,data);
+			 });
+			
+			
+
         },
         stopUpload (file, index) {
             file.disabled = false;
@@ -254,6 +308,7 @@ export default {
                 if (fileData.ext === 'apk') {
                     this.fileList.push(fileData);
                 }
+				
             });
 
             return false;

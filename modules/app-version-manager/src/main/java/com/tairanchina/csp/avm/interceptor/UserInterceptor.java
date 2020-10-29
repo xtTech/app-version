@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin, Authorization, appId, serviceId");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
         String authorization = request.getHeader("Authorization");
         if (StringUtils.isEmpty(authorization)) {
             this.print(response, ServiceResult.failed(1003, "没有权限访问该地址，请先登录").toString());
@@ -53,7 +55,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
                             logger.error("AppID转换错误", e);
                         }
                     }
-                    User userInDb = (User) validate.getData();
+                    User userInDb = (User) validate.getRecord();
                     String userId = userInDb.getUserId();
                     String nickName = userInDb.getNickName();
                     String phone = userInDb.getPhone();
@@ -80,6 +82,10 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
         return false;
     }
 
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        super.postHandle(request, response, handler, modelAndView);
+    }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {

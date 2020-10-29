@@ -20,9 +20,9 @@
                         <FormItem style="margin-bottom: 10px">
                             <Button type="primary" @click="handleSubmit()" long :loading="loading">登录</Button>
                         </FormItem>
-                        <FormItem style="margin-bottom: 0">
+                        <!-- <FormItem style="margin-bottom: 0">
                             <Button type="success" @click="goToRegister()" long>注册</Button>
-                        </FormItem>
+                        </FormItem> -->
                     </Form>
                 </Card>
             </Col>
@@ -72,14 +72,14 @@ export default {
                     if(resp.data.code!=200){
                         this.$Notice.error({
                             title: '登录失败',
-                            desc: resp.data.message
+                            desc: resp.data.info
                         });
                     }else{
                         this.$Notice.success({
                             title: '登录成功'
                         });
-                        setLogin(resp.data.data);
-                        setAdmin(resp.data.data.isAdmin === 1);
+                        setLogin(resp.data.record);
+                        setAdmin(resp.data.record.isAdmin === 1);
                         this.$router.push({
                             name: 'switch-app'
                         });

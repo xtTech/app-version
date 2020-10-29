@@ -24,15 +24,16 @@ public class ChannelServiceTest extends BaseTest {
         channel.setChannelName("name");
         channel.setChannelCode("code");
         channel.setChannelType(1);
-        ServiceResult result = channelService.createChannel(channel.getChannelName(), channel.getChannelCode(), channel.getChannelType());
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        channel.setUploadFolder("D:\\uploadFolder");
+        ServiceResult result = channelService.createChannel(channel.getChannelName(), channel.getChannelCode(), channel.getChannelType(),channel.getUploadFolder());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         channel.setChannelCode("fghfsghfshgfs");
-        result = channelService.createChannel(channel.getChannelName(), channel.getChannelCode(), channel.getChannelType());
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        result = channelService.createChannel(channel.getChannelName(), channel.getChannelCode(), channel.getChannelType(),channel.getUploadFolder());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -40,8 +41,8 @@ public class ChannelServiceTest extends BaseTest {
     public void deleteChannel() throws Exception {
         Integer id = 24;
         ServiceResult result = channelService.deleteChannel(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -49,8 +50,8 @@ public class ChannelServiceTest extends BaseTest {
     public void deleteChannelForever() throws Exception {
         Integer id = 24;
         ServiceResult result = channelService.deleteChannelForever(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -58,20 +59,20 @@ public class ChannelServiceTest extends BaseTest {
     public void scrapChannel() throws Exception {
         Integer id = 22;
         ServiceResult result = channelService.scrapChannel(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 44444;
         result = channelService.scrapChannel(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 34;
         result = channelService.scrapChannel(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -79,20 +80,20 @@ public class ChannelServiceTest extends BaseTest {
     public void openChannel() throws Exception {
         Integer id = 31;
         ServiceResult result = channelService.openChannel(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 444444;
         result = channelService.openChannel(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 28;
         result = channelService.openChannel(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -114,8 +115,8 @@ public class ChannelServiceTest extends BaseTest {
         }
         wrapper.orderBy("created_time", false);
         ServiceResult result = channelService.list(1, 10, wrapper);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -123,14 +124,14 @@ public class ChannelServiceTest extends BaseTest {
     public void findChannel() throws Exception {
         Integer id = 24;
         ServiceResult result = channelService.findChannel(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         id = 44444;
         result = channelService.findChannel(id);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 
@@ -138,14 +139,14 @@ public class ChannelServiceTest extends BaseTest {
     public void findByChannelCode() throws Exception {
         String channelCode = "tttt";
         ServiceResult result = channelService.findByChannelCode(channelCode);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         channelCode = "xxxx";
         result = channelService.findByChannelCode(channelCode);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 

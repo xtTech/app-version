@@ -21,21 +21,21 @@ public class IosVersionServiceTest extends BaseTest {
         String platform = "ios";
         if ("ios".equalsIgnoreCase(platform)) {
             ServiceResult serviceResult = iosVersionService.findNewestVersion(tenantAppId, version);
-            if (serviceResult.getData() != null) {
-                logger.info(serviceResult.getData().toString());
+            if (serviceResult.getRecord() != null) {
+                logger.info(serviceResult.getRecord().toString());
             }
         }
 
         version = "0.0.0.1.1111";
         ServiceResult serviceResult = iosVersionService.findNewestVersion(tenantAppId, version);
-        if (serviceResult.getData() != null) {
-            logger.info(serviceResult.getData().toString());
+        if (serviceResult.getRecord() != null) {
+            logger.info(serviceResult.getRecord().toString());
         }
 
         tenantAppId = "appdsfsddd";
         serviceResult = iosVersionService.findNewestVersion(tenantAppId, version);
-        if (serviceResult.getData() != null) {
-            logger.info(serviceResult.getData().toString());
+        if (serviceResult.getRecord() != null) {
+            logger.info(serviceResult.getRecord().toString());
         }
     }
 

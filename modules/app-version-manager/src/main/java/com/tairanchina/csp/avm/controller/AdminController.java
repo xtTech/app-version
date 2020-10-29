@@ -73,12 +73,13 @@ public class AdminController {
                                   @RequestParam(required = false, defaultValue = "") String phone) {
         EntityWrapper<User> wrapper = new EntityWrapper<>();
         if (admin == 1) {
-            wrapper.and().eq("is_admin", 1);
+            wrapper.and().eq("is_admin", 0);//普通用户
         }
         if (StringUtils.isNotBlank(phone)) {
-            wrapper.and().like("phone", "%" + phone + "%");
+            wrapper.and().like("phone", "%" + phone + "%"); //按照手机号查询
         }
-        wrapper.isNotNull("first_login_time");
+        wrapper.isNotNull("first_login_time"); //查询登陆时间存在的用户
+        wrapper.where("del_flag>-1"); //查询启用的用户
         wrapper.orderBy("first_login_time", false);
         return adminService.listUser(page, pageSize, wrapper);
     }
@@ -177,7 +178,7 @@ public class AdminController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PostMapping("/app")
-    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.APP, description = OperationRecordLog.OperationDescription.CREATE_APP)
+    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.APP, description = OperationRecordLog.OperationDescription.CREATE_APP,content = "添加APP")
     public ServiceResult createApp(@RequestBody AppRequestDTO appRequestDTO) {
         if (appRequestDTO == null || StringUtils.isBlank(appRequestDTO.getAppName()) || StringUtils.isBlank(appRequestDTO.getTenantAppId())) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -210,7 +211,7 @@ public class AdminController {
             @ApiImplicitParam(name = "id", value = "appId(int型)", required = true),
     })
     @PutMapping("/app/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.APP, description = OperationRecordLog.OperationDescription.UPDATE_APP)
+    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.APP, description = OperationRecordLog.OperationDescription.UPDATE_APP,content = "修改APP")
     public ServiceResult editApp(@PathVariable int id, @RequestBody AppRequestDTO appRequestDTO) {
         if (appRequestDTO == null || StringUtils.isBlank(appRequestDTO.getAppName()) || StringUtils.isBlank(appRequestDTO.getTenantAppId())) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -246,7 +247,7 @@ public class AdminController {
             @ApiImplicitParam(name = "appId", value = "appid(int型)", required = true),
     })
     @DeleteMapping("/app/{appId}")
-    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.APP, description = OperationRecordLog.OperationDescription.DELETE_APP)
+    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.APP, description = OperationRecordLog.OperationDescription.DELETE_APP,content = "删除APP")
     public ServiceResult deleteApp(@PathVariable int appId) {
         if (appId < 1) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -271,7 +272,7 @@ public class AdminController {
             @ApiImplicitParam(name = "appId", value = "appId，应用ID(int型)", required = true),
     })
     @PutMapping("/{userId}/{appId}/bind")
-    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.USER_APP_REL, description = OperationRecordLog.OperationDescription.CREATE_USER_APP_REL)
+    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.USER_APP_REL, description = OperationRecordLog.OperationDescription.CREATE_USER_APP_REL,content = "绑定用户和APP")
     public ServiceResult bind(@PathVariable String userId, @PathVariable int appId) {
         if (StringUtils.isEmpty(userId) || appId < 1) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -319,7 +320,7 @@ public class AdminController {
             @ApiImplicitParam(name = "appId", value = "appId，应用ID(int型)", required = true),
     })
     @PutMapping("/{userId}/{appId}/unBind")
-    @OperationRecord(type = OperationRecordLog.OperationType.DELETE_FOREVER, resource = OperationRecordLog.OperationResource.USER_APP_REL, description = OperationRecordLog.OperationDescription.DELETE_FOREVER_USER_APP_REL)
+    @OperationRecord(type = OperationRecordLog.OperationType.DELETE_FOREVER, resource = OperationRecordLog.OperationResource.USER_APP_REL, description = OperationRecordLog.OperationDescription.DELETE_FOREVER_USER_APP_REL,content = "删除用户和APP关联(解绑APP)")
     public ServiceResult unBind(@PathVariable String userId, @PathVariable int appId) {
         if (StringUtils.isEmpty(userId) || appId < 1) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -341,7 +342,7 @@ public class AdminController {
             @ApiImplicitParam(paramType = "header", dataType = "string", name = "Authorization", value = "用户凭证", required = true),
     })
     @PutMapping("/user")
-    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.USER, description = OperationRecordLog.OperationDescription.UPDATE_USER)
+    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.USER, description = OperationRecordLog.OperationDescription.UPDATE_USER,content = "修改用户信息")
     public ServiceResult changeNickName(@RequestBody AdminUpdateNickNameRequestDTO user) {
         String userId = user.getUserId();
         String nickName = user.getNickName();

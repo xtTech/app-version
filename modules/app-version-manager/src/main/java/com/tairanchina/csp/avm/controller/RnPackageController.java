@@ -70,7 +70,7 @@ public class RnPackageController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PostMapping
-    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.RN_PACKAGE, description = OperationRecordLog.OperationDescription.CREATE_RN_PACKAGE)
+    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.RN_PACKAGE, description = OperationRecordLog.OperationDescription.CREATE_RN_PACKAGE,content="添加RN包")
     public ServiceResult create(@RequestBody RnPackageRequestDTO rnPackageRequestDTO) {
         if (StringUtilsExt.hasEmpty(
                 rnPackageRequestDTO.getRnName(),
@@ -97,7 +97,7 @@ public class RnPackageController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.RN_PACKAGE, description = OperationRecordLog.OperationDescription.UPDATE_RN_PACKAGE)
+    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.RN_PACKAGE, description = OperationRecordLog.OperationDescription.UPDATE_RN_PACKAGE,content="修改RN包")
     public ServiceResult update(@PathVariable int id, @RequestBody RnPackageRequestDTO rnPackageRequestDTO) {
         if (id < 1) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -117,7 +117,7 @@ public class RnPackageController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @DeleteMapping("/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.RN_PACKAGE, description = OperationRecordLog.OperationDescription.DELETE_RN_PACKAGE)
+    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.RN_PACKAGE, description = OperationRecordLog.OperationDescription.DELETE_RN_PACKAGE,content="删除RN包")
     public ServiceResult delete(@PathVariable int id) {
         if (id < 1) {
             return ServiceResultConstants.NEED_PARAMS;

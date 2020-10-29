@@ -1,6 +1,7 @@
 package com.tairanchina.csp.avm.entity;
 
-import com.ecfront.dew.common.$;
+
+import cn.hutool.json.JSONUtil;
 
 /**
  * 当前登录用户的ID，APPID，以及是否为超级管理员
@@ -68,6 +69,6 @@ public class LoginInfo {
 
     @Override
     public String toString() {
-        return $.json.toJsonString(this);
+        return JSONUtil.toJsonStr(this);
     }
 }

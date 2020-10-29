@@ -19,6 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -49,6 +50,9 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
     @Autowired
     private ApkMapper apkMapper;
 
+    @Value("${rest.base.url}")
+    private String baseUrl;
+
     @Override
     public ServiceResult findNewestVersion(String tenantAppId, String version, String channelCode) {
         logger.debug("查询tenantAppId为{}的应用...", tenantAppId);
@@ -58,12 +62,25 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
         }
         logger.debug("找到应用:{}", appSelected.getAppName());
 
+        //检测传递的版本号是否真实存在
         ExtWrapper<AndroidVersion> androidVersionEntityWrapper = new ExtWrapper<>();
         androidVersionEntityWrapper.and().eq("app_id", appSelected.getId());
         androidVersionEntityWrapper.and().eq("del_flag", 0);
         androidVersionEntityWrapper.and().eq("version_status", 1);
-        androidVersionEntityWrapper.setVersionSort("app_version", false);
+        androidVersionEntityWrapper.and().eq("app_version", version);
         List<AndroidVersion> androidVersions = androidVersionMapper.selectList(androidVersionEntityWrapper);
+        if (androidVersions.isEmpty()) {
+            logger.debug("版本号不存在");
+            return ServiceResultConstants.NO_EXISTS_VERSION;
+        }
+
+        //查询该APP所有的版本
+        androidVersionEntityWrapper = new ExtWrapper<>();
+        androidVersionEntityWrapper.and().eq("app_id", appSelected.getId());
+        androidVersionEntityWrapper.and().eq("del_flag", 0);
+        androidVersionEntityWrapper.and().eq("version_status", 1);
+        androidVersionEntityWrapper.setVersionSort("app_version", false);
+        androidVersions = androidVersionMapper.selectList(androidVersionEntityWrapper);
         if (androidVersions.isEmpty()) {
             logger.debug("查询不到新版本或者新版本未上架，当前版本为最新");
             return ServiceResultConstants.NO_NEW_VERSION;
@@ -75,14 +92,17 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
             Collections.reverse(androidVersions);
             for (AndroidVersion a : androidVersions) {
                 String androidVersionMin = a.getAppVersion();
-                if (VersionCompareUtils.compareVersion(version, androidVersionMin) >= 0) {
-                    androidVersionsResult.remove(a);
-                }
+//                if(VersionCompareUtils.compareVersion(version, androidVersionMin) >= 0) {
+//                   androidVersionsResult.remove(a);
+//                }
+                  if(VersionCompareUtils.compareVersion(version, androidVersionMin) > 0) {
+                     androidVersionsResult.remove(a);
+                  }
             }
         }
         if (androidVersionsResult.isEmpty()) {
-            logger.debug("查询不到新版本或者新版本未上架，当前版本为最新");
-            return ServiceResultConstants.NO_NEW_VERSION;
+           logger.debug("查询不到新版本或者新版本未上架，当前版本为最新");
+           return ServiceResultConstants.NO_NEW_VERSION;
         }
         logger.debug("查询到的筛选过的版本：");
         androidVersionsResult.forEach(androidVersion -> logger.debug(androidVersion.getAppVersion()));
@@ -117,7 +137,7 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
         for (AndroidVersion androidVersion : androidVersionsResult) {
             if (channelSelected != null) {
                 if (channelSelected.getChannelStatus() == 1) {
-                    HashMap<String, Object> apk = this.findApk(androidVersion, appSelected.getId(), channelSelected.getId());
+                    HashMap<String, Object> apk = this.findApk(version,androidVersion, appSelected.getId(), channelSelected.getId());
                     if (apk != null) {
                         logger.debug("结果：{}", $.json.toJsonString(apk));
                         return ServiceResult.ok(apk);
@@ -125,7 +145,7 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
                 }
             }
             if (officialChannel != null) {
-                HashMap<String, Object> apk = this.findApk(androidVersion, appSelected.getId(), officialChannel.getId());
+                HashMap<String, Object> apk = this.findApk(version,androidVersion, appSelected.getId(), officialChannel.getId());
                 if (apk != null) {
                     logger.debug("结果：{}", $.json.toJsonString(apk));
                     return ServiceResult.ok(apk);
@@ -195,7 +215,8 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
             if (!apks.isEmpty()) {
                 try {
                     HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-                    response.sendRedirect(apks.get(0).getOssUrl());
+                    String downloadUrl= baseUrl + apks.get(0).getOssUrl();
+                    response.sendRedirect(downloadUrl);
                     break;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -224,12 +245,43 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
                 logger.debug("找到APK，开始组装返回值...");
                 HashMap<String, Object> map = new HashMap<>();
                 map.put("allowLowestVersion", androidVersion.getAllowLowestVersion());
-                map.put("downloadUrl", "/v/download/" + apkSelected.getId());
+                //map.put("downloadUrl", "/v/download/" + apkSelected.getId());
+                map.put("downloadUrl", apkSelected.getDownloadUrl());
                 map.put("description", androidVersion.getVersionDescription());
                 map.put("forceUpdate", androidVersion.getUpdateType());
                 map.put("version", androidVersion.getAppVersion());
                 return ServiceResult.ok(map);
             }
+        }
+        return null;
+    }
+
+    private HashMap<String, Object> findApk(String currentVersion,AndroidVersion androidVersion, int appId, int channelId) {
+        int versionId = androidVersion.getId();
+        Apk apk = new Apk();
+        apk.setAppId(appId);
+        apk.setChannelId(channelId);
+        apk.setVersionId(versionId);
+        apk.setDelFlag(0);
+        apk.setDeliveryStatus(1);
+        List<Apk> apks = apkMapper.selectList(new EntityWrapper<>(apk));
+        if (!apks.isEmpty()) {
+            Apk apkSelected = apks.get(0);
+            logger.debug("找到APK，开始组装返回值...");
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("allowLowestVersion", androidVersion.getAllowLowestVersion());
+            map.put("apkName", apkSelected.getApkName());
+//          map.put("downloadUrl", "/v/download/" + apkSelected.getId());
+            map.put("downloadUrl", apkSelected.getDownloadUrl());
+            map.put("downloadApkUrl", apkSelected.getDownloadApkUrl());
+            map.put("description", androidVersion.getVersionDescription());
+            if(currentVersion.equals(androidVersion.getAppVersion())){ //如果与最新版本号相同则不进行更新
+               map.put("forceUpdate", AndroidVersion.UpdateType.UPDATETYPE_NO.code());
+            }else{
+               map.put("forceUpdate", androidVersion.getUpdateType());
+            }
+            map.put("version", androidVersion.getAppVersion());
+            return map;
         }
         return null;
     }
@@ -248,7 +300,10 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
             logger.debug("找到APK，开始组装返回值...");
             HashMap<String, Object> map = new HashMap<>();
             map.put("allowLowestVersion", androidVersion.getAllowLowestVersion());
-            map.put("downloadUrl", "/v/download/" + apkSelected.getId());
+            map.put("apkName", apk.getApkName());
+//          map.put("downloadUrl", "/v/download/" + apkSelected.getId());
+            map.put("downloadUrl", apkSelected.getDownloadUrl());
+            map.put("downloadApkUrl", apkSelected.getDownloadApkUrl());
             map.put("description", androidVersion.getVersionDescription());
             map.put("forceUpdate", androidVersion.getUpdateType());
             map.put("version", androidVersion.getAppVersion());

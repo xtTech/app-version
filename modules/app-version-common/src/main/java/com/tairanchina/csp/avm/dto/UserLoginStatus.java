@@ -1,6 +1,6 @@
 package com.tairanchina.csp.avm.dto;
 
-import com.ecfront.dew.common.$;
+import cn.hutool.json.JSONUtil;
 
 /**
  * Created by hzlizx on 2019/2/21
@@ -46,6 +46,6 @@ public class UserLoginStatus {
 
     @Override
     public String toString() {
-        return $.json.toJsonString(this);
+        return JSONUtil.toJsonStr(this);
     }
 }

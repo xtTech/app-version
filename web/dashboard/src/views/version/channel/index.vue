@@ -31,11 +31,14 @@
                :mask-closable="false">
             <Form ref="modelFormRule" :model="modelForm" :rules="modelFormRule">
                 <FormItem label="渠道名称" prop="channelName">
-                    <Input v-model="modelForm.channelName" placeholder=""/>
+                    <Input v-model="modelForm.channelName" placeholder="" />
                 </FormItem>
                 <FormItem label="渠道码" prop="channelCode">
                     <Input v-model="modelForm.channelCode" placeholder="" :disabled="modalEditId > 0"/>
                 </FormItem>
+				<FormItem label="上传文件夹" prop="uploadFolder">
+				    <Input v-model="modelForm.uploadFolder" placeholder="" :disabled="modalEditId > 0" />
+				</FormItem>
             </Form>
             <Spin size="large" fix v-if="inModalLoading">
                 <Icon type="load-c" size=18 class="spin-icon-load"></Icon>
@@ -84,6 +87,11 @@ export default {
                     minWidth: 140,
                     key: 'channelCode'
                 },
+				{
+				    title: '上传文件夹',
+				    minWidth: 140,
+				    key: 'uploadFolder'
+				},
                 {
                     title: '添加时间',
                     minWidth: 180,
@@ -208,7 +216,8 @@ export default {
                 channelName: '',
                 channelCode: '',
                 channelType: '',
-                channelStatus: ''
+                channelStatus: '',
+				uploadFolder: ''
             },
             modelFormRule: {
                 channelName: [
@@ -218,7 +227,12 @@ export default {
                 channelCode: [
                     { required: true, message: '请输入渠道码', trigger: 'blur' },
                     { required: true, validator: validateInput, trigger: 'blur' }
-                ]
+                ],
+				uploadFolder: [
+				    { required: true, message: '请输入上传文件夹', trigger: 'blur' },
+					{ required: true, pattern: /^[a-zA-Z]:(((\\(?! )[^/:*?<>\""|\\]+)+\\?)|(\\)?)\s*$/g, message: '不是标准的文件路径', trigger: 'blur' },
+					{ required: true, validator: validateInput, trigger: 'blur' }
+				]
             }
         };
     },
@@ -230,10 +244,11 @@ export default {
             let response = await http.get('/channel/' + this.modalEditId);
 
             if (response.data.code === 200) {
-                this.modelForm.channelName = response.data.data.channelName;
-                this.modelForm.channelCode = response.data.data.channelCode;
-                this.modelForm.channelType = response.data.data.channelType;
-                this.modelForm.channelStatus = response.data.data.channelStatus;
+                this.modelForm.channelName = response.data.record.channelName;
+                this.modelForm.channelCode = response.data.record.channelCode;
+                this.modelForm.channelType = response.data.record.channelType;
+                this.modelForm.channelStatus = response.data.record.channelStatus;
+				this.modelForm.uploadFolder = response.data.record.uploadFolder;
             }
 
             this.inModalLoading = false;
@@ -250,13 +265,13 @@ export default {
             });
 
             if (response.data.code === 200) {
-                this.tableList = response.data.data.records;
-                this.total = response.data.data.total;
-                this.currentPage = response.data.data.current;
+                this.tableList = response.data.record.records;
+                this.total = response.data.record.total;
+                this.currentPage = response.data.record.current;
             } else {
                 this.$Notice.error({
                     title: '请求失败',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
             }
             this.inLoading = false;
@@ -264,7 +279,8 @@ export default {
         async addChannel () {
             let query = {
                 channelName: this.modelForm.channelName,
-                channelCode: this.modelForm.channelCode
+                channelCode: this.modelForm.channelCode,
+				uploadFolder: this.modelForm.uploadFolder
             };
             let response = await http.post('/channel', query);
             return response.data;
@@ -274,7 +290,8 @@ export default {
                 channelName: this.modelForm.channelName,
                 channelCode: this.modelForm.channelCode,
                 channelType: this.modelForm.channelType,
-                channelStatus: this.modelForm.channelStatus
+                channelStatus: this.modelForm.channelStatus,
+				uploadFolder: this.modelForm.uploadFolder
             });
 
             return response.data;
@@ -286,12 +303,12 @@ export default {
             if (response.data.code === 200) {
                 this.$Notice.success({
                     title: '请求成功',
-                    desc: `${statusText}'${response.data.data.channelName}'渠道成功`
+                    desc: `${statusText}'${response.data.record.channelName}'渠道成功`
                 });
             } else {
                 this.$Notice.error({
                     title: '请求失败',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
             }
 
@@ -302,7 +319,7 @@ export default {
             if (response.data.code !== 200) {
                 this.$Notice.error({
                     title: '错误',
-                    desc: response.data.message
+                    desc: response.data.info
                 });
             } else {
                 this.$Message.success('删除成功!');
@@ -342,14 +359,14 @@ export default {
                     if (response.code === 200) {
                         this.$Notice.success({
                             title: '请求成功',
-                            desc: '添加渠道[' + response.data.channelName + ']成功'
+                            desc: '添加渠道[' + response.record.channelName + ']成功'
                         });
 
                         this.handleReset(name);
                     } else {
                         this.$Notice.error({
                             title: '请求失败',
-                            desc: response.message
+                            desc: response.info
                         });
                     }
                 };

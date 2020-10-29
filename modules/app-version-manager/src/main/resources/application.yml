@@ -1,12 +1,13 @@
 spring:
   profiles:
-    active: dev
+    active: pro
   application:
     name: app-version-manager
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     joda-date-time-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+
 
 
 #mybatis
@@ -51,6 +52,6 @@ dew:
     mq: redis
     config:
       ha-enabled: false #使用到MQ的时候最好设为true，提高MQ消息收发的完整性
-logging:
-  path: ./logs
-  file: avm.log
+#logging:
+#  path: ./logs
+#  file: avm.log

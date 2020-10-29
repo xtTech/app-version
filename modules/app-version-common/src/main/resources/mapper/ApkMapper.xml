@@ -26,4 +26,18 @@
         ORDER BY created_time DESC
     </select>
 
+
+    <select id="selectApkByChannelCode" parameterType="java.lang.String"
+            resultType="com.tairanchina.csp.avm.dto.ApkExt">
+        SELECT apk.*,c.channel_code,av.app_version AS version FROM apk
+        LEFT JOIN channel c ON apk.channel_id = c.id
+        LEFT JOIN android_version av ON apk.version_id = av.id
+        WHERE 1=1
+        <if test="channelCode != null">
+            AND c.channel_code LIKE "%"#{channelCode,jdbcType=VARCHAR}"%"
+        </if>
+        AND apk.del_flag = 0
+        ORDER BY created_time DESC
+    </select>
+
 </mapper>

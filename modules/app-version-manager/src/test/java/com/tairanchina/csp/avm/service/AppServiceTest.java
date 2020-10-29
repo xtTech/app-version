@@ -18,9 +18,9 @@ public class AppServiceTest extends BaseTest {
     @Test
     public void getAppListWithUserId() throws Exception {
         ServiceResult result = appService.getAppListWithUserId(1, 10, ThreadLocalUtils.USER_THREAD_LOCAL.get().getUserId());
-        if (result.getData() != null) {
-            if (result.getData() != null) {
-                logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            if (result.getRecord() != null) {
+                logger.info(result.getRecord().toString());
             }
         }
     }
@@ -28,9 +28,9 @@ public class AppServiceTest extends BaseTest {
     @Test
     public void getMyApp() throws Exception {
         ServiceResult result = appService.getMyApp();
-        if (result.getData() != null) {
-            if (result.getData() != null) {
-                logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            if (result.getRecord() != null) {
+                logger.info(result.getRecord().toString());
             }
         }
     }

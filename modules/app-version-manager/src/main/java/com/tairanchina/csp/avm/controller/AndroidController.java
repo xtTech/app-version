@@ -5,6 +5,7 @@ import com.tairanchina.csp.avm.dto.AndroidVersionRequestDTO;
 import com.tairanchina.csp.avm.dto.ServiceResult;
 import com.tairanchina.csp.avm.entity.AndroidVersion;
 import com.tairanchina.csp.avm.entity.OperationRecordLog;
+import com.tairanchina.csp.avm.mapper.AndroidVersionMapper;
 import com.tairanchina.csp.avm.utils.StringUtilsExt;
 import com.tairanchina.csp.avm.wapper.ExtWrapper;
 import com.tairanchina.csp.avm.annotation.OperationRecord;
@@ -30,6 +31,9 @@ public class AndroidController {
 
     @Autowired
     private AndroidVersionService androidVersionService;
+
+    @Autowired
+    private AndroidVersionMapper androidVersionMapper;
 
     @Autowired
     private BasicService basicService;
@@ -72,7 +76,7 @@ public class AndroidController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PostMapping
-    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.ANDROID_VERSION, description = OperationRecordLog.OperationDescription.CREATE_ANDROID_VERSION)
+    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.ANDROID_VERSION, description = OperationRecordLog.OperationDescription.CREATE_ANDROID_VERSION,content = "添加安卓版本")
     public ServiceResult create(@RequestBody AndroidVersionRequestDTO androidVersionRequestDTO) {
         String appVersion = androidVersionRequestDTO.getAppVersion();
         String allowLowestVersion = androidVersionRequestDTO.getAllowLowestVersion();
@@ -103,7 +107,7 @@ public class AndroidController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.ANDROID_VERSION, description = OperationRecordLog.OperationDescription.UPDATE_ANDROID_VERSION)
+    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.ANDROID_VERSION, description = OperationRecordLog.OperationDescription.UPDATE_ANDROID_VERSION,content="修改安卓版本")
     public ServiceResult update(@RequestBody AndroidVersionRequestDTO androidVersionRequestDTO, @PathVariable int id) {
         if (id < 1) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -125,11 +129,12 @@ public class AndroidController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @DeleteMapping("/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.ANDROID_VERSION, description = OperationRecordLog.OperationDescription.DELETE_ANDROID_VERSION)
+    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.ANDROID_VERSION, description = OperationRecordLog.OperationDescription.DELETE_ANDROID_VERSION,content="删除安卓版本")
     public ServiceResult delete(@PathVariable int id) {
         if (id < 1) {
             return ServiceResultConstants.NEED_PARAMS;
         }
+        AndroidVersion androidVersion=androidVersionMapper.selectById(id);
         return androidVersionService.deleteAndroidVersion(id);
     }
 
@@ -157,7 +162,7 @@ public class AndroidController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/{id}/delivery")
-    @OperationRecord(type = OperationRecordLog.OperationType.DELIVERY, resource = OperationRecordLog.OperationResource.ANDROID_VERSION, description = OperationRecordLog.OperationDescription.DELIVERY_ANDROID_VERSION)
+    @OperationRecord(type = OperationRecordLog.OperationType.DELIVERY, resource = OperationRecordLog.OperationResource.ANDROID_VERSION, description = OperationRecordLog.OperationDescription.DELIVERY_ANDROID_VERSION,content="安卓版本上架")
     public ServiceResult delivery(@PathVariable int id) {
         return androidVersionService.delivery(id);
     }
@@ -166,7 +171,7 @@ public class AndroidController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/{id}/undelivery")
-    @OperationRecord(type = OperationRecordLog.OperationType.UNDELIVERY, resource = OperationRecordLog.OperationResource.ANDROID_VERSION, description = OperationRecordLog.OperationDescription.UNDELIVERY_ANDROID_VERSION)
+    @OperationRecord(type = OperationRecordLog.OperationType.UNDELIVERY, resource = OperationRecordLog.OperationResource.ANDROID_VERSION, description = OperationRecordLog.OperationDescription.UNDELIVERY_ANDROID_VERSION,content="安卓版本下架")
     public ServiceResult undelivery(@PathVariable int id) {
         return androidVersionService.undelivery(id);
     }

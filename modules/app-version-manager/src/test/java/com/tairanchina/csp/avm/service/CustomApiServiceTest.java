@@ -37,8 +37,8 @@ public class CustomApiServiceTest extends BaseTest {
             logger.info("code is not 200..............");
         } else {
             ServiceResult result = customApiService.createCustomApi(customApi);
-            if (result.getData() != null) {
-                CustomApi a = (CustomApi) result.getData();
+            if (result.getRecord() != null) {
+                CustomApi a = (CustomApi) result.getRecord();
                 logger.info("createCustomApi:" + a.getCustomKey());
                 assertTrue(a != null);
             }
@@ -61,8 +61,8 @@ public class CustomApiServiceTest extends BaseTest {
             logger.info("code is not 200..............");
         } else {
             ServiceResult result = customApiService.updateCustomApi(customApi);
-            if (result.getData() != null) {
-                CustomApi a = (CustomApi) result.getData();
+            if (result.getRecord() != null) {
+                CustomApi a = (CustomApi) result.getRecord();
                 logger.info("updateCustomApi:" + a.getCustomName());
                 assertTrue(a != null);
             }
@@ -72,14 +72,14 @@ public class CustomApiServiceTest extends BaseTest {
     @Test
     public void deleteCustomApi() throws Exception {
         ServiceResult result = customApiService.deleteCustomApi(2);
-        if (result.getData() != null) {
-            String a = (String) result.getData();
+        if (result.getRecord() != null) {
+            String a = (String) result.getRecord();
             logger.info("软删" + a);
         }
 
         result = customApiService.deleteCustomApi(47);
-        if (result.getData() != null) {
-            String a = (String) result.getData();
+        if (result.getRecord() != null) {
+            String a = (String) result.getRecord();
             logger.info("软删" + a);
         }
     }
@@ -87,14 +87,14 @@ public class CustomApiServiceTest extends BaseTest {
     @Test
     public void deleteCustomApiForver() throws Exception {
         ServiceResult result = customApiService.deleteCustomApiForver(2);
-        if (result.getData() != null) {
-            Integer a = (Integer) result.getData();
+        if (result.getRecord() != null) {
+            Integer a = (Integer) result.getRecord();
             logger.info("硬删" + a);
         }
 
         result = customApiService.deleteCustomApiForver(47);
-        if (result.getData() != null) {
-            Integer a = (Integer) result.getData();
+        if (result.getRecord() != null) {
+            Integer a = (Integer) result.getRecord();
             logger.info("硬删" + a);
         }
     }
@@ -105,15 +105,15 @@ public class CustomApiServiceTest extends BaseTest {
         customApi.setId(16);
         customApi.setDelFlag(0);
         ServiceResult result = customApiService.getCustomApiByOne(customApi);
-        if (result.getData() != null) {
-            CustomApi a = (CustomApi) result.getData();
+        if (result.getRecord() != null) {
+            CustomApi a = (CustomApi) result.getRecord();
             logger.info("getCustomApiById:" + a.getCustomName());
         }
 
         customApi.setId(47);
         result = customApiService.getCustomApiByOne(customApi);
-        if (result.getData() != null) {
-            CustomApi a = (CustomApi) result.getData();
+        if (result.getRecord() != null) {
+            CustomApi a = (CustomApi) result.getRecord();
             logger.info("getCustomApiById:" + a.getCustomName());
         }
     }
@@ -136,14 +136,14 @@ public class CustomApiServiceTest extends BaseTest {
     public void getCustomApiByKeyAndAppId() throws Exception {
         String customKey = "key";
         ServiceResult result = customApiService.getCustomApiByKeyAndAppId(customKey);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
 
         customKey = "test21";
         result = customApiService.getCustomApiByKeyAndAppId(customKey);
-        if (result.getData() != null) {
-            logger.info(result.getData().toString());
+        if (result.getRecord() != null) {
+            logger.info(result.getRecord().toString());
         }
     }
 

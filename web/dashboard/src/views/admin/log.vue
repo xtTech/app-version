@@ -243,8 +243,8 @@ export default {
             });
 
             if (response.data.code === 200) {
-                this.tableList = response.data.data.records;
-                this.total = response.data.data.total;
+                this.tableList = response.data.record.records;
+                this.total = response.data.record.total;
             } else {
                 this.total = 0;
                 this.tableList = [];
@@ -256,11 +256,11 @@ export default {
         async getLogType () {
             let response = await http.get('/log/type');
             if (response.data.code === 200) {
-                let keys = Object.keys(response.data.data);
+                let keys = Object.keys(response.data.record);
                 keys.forEach(key => {
                     this.logTypeList.push({
                         key,
-                        value: response.data.data[key]
+                        value: response.data.record[key]
                     });
                 });
             }
@@ -270,7 +270,7 @@ export default {
             this.resourceList = [];
             let response = await http.get('/log/resource');
             if (response.data.code === 200) {
-                let keys = Object.keys(response.data.data);
+                let keys = Object.keys(response.data.record);
                 let datas = [
                     {
                         name: '版本管理',
@@ -312,7 +312,7 @@ export default {
                     });
                     data.datas.push({
                         key,
-                        value: response.data.data[key]
+                        value: response.data.record[key]
                     });
                 });
                 this.resourceList = datas;
@@ -324,12 +324,12 @@ export default {
             this.resourceTypeList = [];
             let response = await http.get(`/log/${key}/type`);
             if (response.data.code === 200) {
-                let keys = Object.keys(response.data.data);
+                let keys = Object.keys(response.data.record);
                 let datas = [];
                 keys.forEach(key => {
                     datas.push({
                         key: key,
-                        value: response.data.data[key]
+                        value: response.data.record[key]
                     });
                 });
                 this.resourceTypeList = datas;
@@ -344,7 +344,7 @@ export default {
                 }
             });
             if (response.data.code === 200) {
-                this.appList = response.data.data.records;
+                this.appList = response.data.record.records;
             }
         },
         searchLogs () {

@@ -53,25 +53,25 @@ public class ChannelController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PostMapping
-    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.CHANNEL, description = OperationRecordLog.OperationDescription.CREATE_CHANNEL)
+    @OperationRecord(type = OperationRecordLog.OperationType.CREATE, resource = OperationRecordLog.OperationResource.CHANNEL, description = OperationRecordLog.OperationDescription.CREATE_CHANNEL,content = "删除渠道")
     public ServiceResult create(@RequestBody Channel channel) {
-        if (StringUtils.isEmpty(channel.getChannelName()) || StringUtils.isEmpty(channel.getChannelCode())) {
-            return ServiceResultConstants.NEED_PARAMS;
+        if(StringUtils.isEmpty(channel.getChannelName()) || StringUtils.isEmpty(channel.getChannelCode())) {
+           return ServiceResultConstants.NEED_PARAMS;
         }
         if(channel.getChannelName().length()>32){
-            return ServiceResultConstants.CHANNEL_NAME_TOO_LONG;
+           return ServiceResultConstants.CHANNEL_NAME_TOO_LONG;
         }
         if(channel.getChannelCode().length()>32){
-            return ServiceResultConstants.CHANNEL_CODE_TOO_LONG;
+           return ServiceResultConstants.CHANNEL_CODE_TOO_LONG;
         }
-        return channelService.createChannel(channel.getChannelName(), channel.getChannelCode(), channel.getChannelType());
+        return channelService.createChannel(channel.getChannelName(), channel.getChannelCode(), channel.getChannelType(),channel.getUploadFolder());
     }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @DeleteMapping("/{id}")
-    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.CHANNEL, description = OperationRecordLog.OperationDescription.DELETE_CHANNEL)
+    @OperationRecord(type = OperationRecordLog.OperationType.DELETE, resource = OperationRecordLog.OperationResource.CHANNEL, description = OperationRecordLog.OperationDescription.DELETE_CHANNEL,content = "删除渠道")
     public ServiceResult delete(@PathVariable int id) {
         if (id < 1) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -79,11 +79,12 @@ public class ChannelController {
         return channelService.deleteChannel(id);
     }
 
+
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/{id}/scrap")
-    @OperationRecord(type = OperationRecordLog.OperationType.SCRAP, resource = OperationRecordLog.OperationResource.CHANNEL, description = OperationRecordLog.OperationDescription.SCRAP_CHANNEL)
+    @OperationRecord(type = OperationRecordLog.OperationType.SCRAP, resource = OperationRecordLog.OperationResource.CHANNEL, description = OperationRecordLog.OperationDescription.SCRAP_CHANNEL,content = "废弃渠道")
     public ServiceResult scrap(@PathVariable int id) {
         if (id < 1) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -95,7 +96,7 @@ public class ChannelController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/{id}/open")
-    @OperationRecord(type = OperationRecordLog.OperationType.OPEN, resource = OperationRecordLog.OperationResource.CHANNEL, description = OperationRecordLog.OperationDescription.OPEN_CHANNEL)
+    @OperationRecord(type = OperationRecordLog.OperationType.OPEN, resource = OperationRecordLog.OperationResource.CHANNEL, description = OperationRecordLog.OperationDescription.OPEN_CHANNEL,content = "开启渠道")
     public ServiceResult open(@PathVariable int id) {
         if (id < 1) {
             return ServiceResultConstants.NEED_PARAMS;
@@ -107,12 +108,13 @@ public class ChannelController {
             @ApiImplicitParam(name = "Authorization", value = "用户登录凭证", paramType = "header", dataType = "string", defaultValue = "Bearer ", required = true),
     })
     @PutMapping("/{id}/edit")
-    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.CHANNEL, description = OperationRecordLog.OperationDescription.UPDATE_CHANNEL)
+    @OperationRecord(type = OperationRecordLog.OperationType.UPDATE, resource = OperationRecordLog.OperationResource.CHANNEL, description = OperationRecordLog.OperationDescription.UPDATE_CHANNEL,content = "编辑渠道")
     public ServiceResult edit(@PathVariable int id, @RequestBody Channel channel) {
         if (id < 1) {
             return ServiceResultConstants.NEED_PARAMS;
         }
-        return ServiceResultConstants.SERVICE_NOT_SUPPORT;
+        ServiceResult serviceResult=this.channelService.editChannel(channel.getId(),channel.getChannelName(),channel.getChannelCode(),channel.getChannelType(),channel.getUploadFolder());
+        return serviceResult;
     }
 
 

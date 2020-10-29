@@ -7,8 +7,12 @@ Vue.use(iView);
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-    base: '/',
-    mode: 'history',
+    base: '/app_version',
+    //mode: 'history',
+	/***
+	 *
+	 ***/ 
+	mode:'hash', //路由模式将histroy改成hash模式，起初 mode:'history’	
     routes: [
         {
             path: '/',

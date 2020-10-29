@@ -1,0 +1,76 @@
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/app_version_manager?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: 123456
+
+#  redis:
+#    host: 47.104.184.31
+#    port: 6379
+#    database: 4
+#    pool:
+#      max-active: 10
+#      max-wait: -1
+#      max-idle: 1
+#      min-idle: 0
+#    password: itcchian.ny.com
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 4
+    pool:
+      max-active: 10
+      max-wait: -1
+      max-idle: 1
+      min-idle: 0
+    password: 123456
+
+##---------------------------------------------------------------------------
+##  upload config
+##---------------------------------------------------------------------------
+
+  http:
+    multipart:
+       enabled: true
+       max-file-size: 1000Mb
+       max-request-size: 1500Mb
+server:
+    port: 9996
+    context-path: /app_version_rest
+rest:
+  base:
+    url: http://111.204.83.200:6868/
+##---------------------------------------------------------------------------
+##  Log config
+##---------------------------------------------------------------------------
+logging:
+  level:
+  root: INFO
+  org:
+    springframework:
+      web: ERROR
+      data: ERROR
+    activiti:
+      engine:
+        impl:
+          persistence:
+            entity: trace
+  com:
+    tairanchina: INFO
+  springfox:
+    documentation: ERROR
+config:
+  classpath: logback-pro.xml
+log_dir: D:/logs/app_version_rest/pro
+
+
+
+is_use_project_path: false
+uploadFilePath: apk
+downloadFileUrl: app_version_manager/apk/downloadFile
+
+defaultUploadFilePath: D:\\uploadFile\\
+defaultDownloadFileContextPath: app_version_apk
