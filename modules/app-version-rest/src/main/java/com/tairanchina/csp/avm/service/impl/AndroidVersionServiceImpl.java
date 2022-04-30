@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by hzlizx on 2018/6/21 0021
@@ -70,6 +71,8 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
         }
         // 将查询结果再次进行筛选，选出大于传入version的安卓版本，然后再找出最新版本
         List<AndroidVersion> androidVersionsResult = new LinkedList<>();
+        //是否强制更新
+        AtomicBoolean forceUpdate = new AtomicBoolean(false);
         androidVersionsResult.addAll(androidVersions);
         if (VersionCompareUtils.compareVersion(version, androidVersions.get(androidVersions.size() - 1).getAppVersion()) > 0) {
             Collections.reverse(androidVersions);
@@ -86,7 +89,11 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
         }
         logger.debug("查询到的筛选过的版本：");
         androidVersionsResult.forEach(androidVersion -> logger.debug(androidVersion.getAppVersion()));
-
+        androidVersionsResult.forEach(androidVersion -> {
+            if (androidVersion.getUpdateType().equals(0)) {
+                forceUpdate.set(true);
+            }
+        });
         //查找指定渠道
         logger.debug("查询channelCode为{}的渠道...", channelCode);
         Channel channel = new Channel();
@@ -117,7 +124,7 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
         for (AndroidVersion androidVersion : androidVersionsResult) {
             if (channelSelected != null) {
                 if (channelSelected.getChannelStatus() == 1) {
-                    HashMap<String, Object> apk = this.findApk(androidVersion, appSelected.getId(), channelSelected.getId());
+                    HashMap<String, Object> apk = this.findApk(androidVersion, appSelected.getId(), channelSelected.getId(), forceUpdate.get());
                     if (apk != null) {
                         logger.debug("结果：{}", $.json.toJsonString(apk));
                         return ServiceResult.ok(apk);
@@ -125,7 +132,7 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
                 }
             }
             if (officialChannel != null) {
-                HashMap<String, Object> apk = this.findApk(androidVersion, appSelected.getId(), officialChannel.getId());
+                HashMap<String, Object> apk = this.findApk(androidVersion, appSelected.getId(), officialChannel.getId(), forceUpdate.get());
                 if (apk != null) {
                     logger.debug("结果：{}", $.json.toJsonString(apk));
                     return ServiceResult.ok(apk);
@@ -234,7 +241,7 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
         return null;
     }
 
-    private HashMap<String, Object> findApk(AndroidVersion androidVersion, int appId, int channelId) {
+    private HashMap<String, Object> findApk(AndroidVersion androidVersion, int appId, int channelId, boolean forceUpdate) {
         int versionId = androidVersion.getId();
         Apk apk = new Apk();
         apk.setAppId(appId);
@@ -250,7 +257,7 @@ public class AndroidVersionServiceImpl implements AndroidVersionService {
             map.put("allowLowestVersion", androidVersion.getAllowLowestVersion());
             map.put("downloadUrl", "/v/download/" + apkSelected.getId());
             map.put("description", androidVersion.getVersionDescription());
-            map.put("forceUpdate", androidVersion.getUpdateType());
+            map.put("forceUpdate", forceUpdate ? 0 : androidVersion.getUpdateType());
             map.put("version", androidVersion.getAppVersion());
             return map;
         }
