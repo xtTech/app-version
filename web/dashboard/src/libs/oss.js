@@ -18,7 +18,9 @@ const uploadFileToOSS = (file, fileName = '', callBack, progressCB = null) => {
         });
         // 上传完成
         let response = yield client.head(name);
-        callBack(response);
+        callBack({
+            fileCloudUrl: response.res.requestUrls[0]
+        });
     }).catch(() => {
     });
 };

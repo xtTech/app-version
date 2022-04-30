@@ -78,7 +78,8 @@ import {
     getGUID,
     hasValue
 } from '@/libs/util';
-import uploadFileToOSS from '@/libs/oss';
+import uploadFileToCloud from '@/libs/cloud';
+
 export default {
     name: 'upload-apk',
     props: {
@@ -206,16 +207,16 @@ export default {
             }`;
 
             /**
-			 * 上传至OSS
+			 * 上传至云存储
 			 */
-            uploadFileToOSS(
+            uploadFileToCloud(
                 file.file,
                 file.name,
                 response => {
                     /**
 					 * 创建 Apk
 					 */
-                    this.postApk(file, response.res.requestUrls[0]);
+                    this.postApk(file, response.fileCloudUrl);
                 },
                 progress => {
                     file.percent = parseInt(progress) - 1 < 0 ? 0 : parseInt(progress) - 1;

@@ -97,7 +97,7 @@
 <script>
     import { isLogin, getApp, getAppId, getApps, switchApp } from '@/libs/account';
 	import {http, hasValue, fmtFileSize, getGUID, getFileName} from '@/libs/util';
-	import uploadFileToOSS from '@/libs/oss';
+	import uploadFileToCloud from '@/libs/cloud';
 
 	export default {
 		name: 'rn-edit',
@@ -285,9 +285,9 @@
 				let fileData = getFileName(file.name);
 				this.fileItem.name = `${this.appId}-${this.editForm.rnName}-${fileData.name}-${this.editForm.rnVersion}.${fileData.ext}`;
 				let guid = this.fileItem.guid;
-				uploadFileToOSS(file, this.fileItem.name, response => {
+				uploadFileToCloud(file, this.fileItem.name, response => {
 					if (guid !== this.fileItem.guid) return false;
-					this.editForm.resourceUrl = response.res.requestUrls[0];
+					this.editForm.resourceUrl = response.fileCloudUrl;
 					this.editForm.rnSize = file.size / 1024;
 					this.fileItem = {
 						name: '',
